@@ -1,0 +1,26 @@
+services:
+  app:
+    volumes:
+      - ./docker/granboard-proxy.conf:/etc/nginx/scoretrackrr.d/granboard.conf:ro
+
+  granboard:
+    profiles: [granboard]
+    build: ./docker/granboard
+    restart: unless-stopped
+    user: '${GRANBOARD_UID:-1000}:${GRANBOARD_GID:-1000}'
+    environment:
+      DBUS_SYSTEM_BUS_ADDRESS: unix:path=/run/dbus/system_bus_socket
+      GRANBOARD_ADDRESS: '${GRANBOARD_ADDRESS:-}'
+      GRANBOARD_PAIRING_CODE: '${GRANBOARD_PAIRING_CODE:-}'
+    volumes:
+      - type: bind
+        source: /run/dbus/system_bus_socket
+        target: /run/dbus/system_bus_socket
+        read_only: true
+        bind:
+          create_host_path: false
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

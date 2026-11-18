@@ -1,4 +1,6 @@
 <script lang="ts">
+  import GranBoardControls from './GranBoardControls.svelte';
+  import type { BoardHit } from '#lib/application/granboard/protocol';
   import EntrySituation from './EntrySituation.svelte';
   import ScorePreview from './ScorePreview.svelte';
   import { entryDraft } from '../application/entry-draft.svelte';
@@ -6,7 +8,7 @@
   import Icon from './Icon.svelte';
   import GameHeader, { type HeaderRenderer } from './GameHeader.svelte';
   import type { MatchRecord } from '#lib/domain/records';
-  import type { JournalAction, JournalView } from '#lib/domain/journal';
+  import { MAX_JOURNAL_EVENTS, type JournalAction, type JournalView } from '#lib/domain/journal';
   import type { LocalDatabase } from '#lib/storage/database';
   import type { MatchJournal } from '#lib/storage/journal';
   import { createDartsMatchGame } from '#lib/domain/games/darts-match';
@@ -97,6 +99,87 @@
   let sector = $state(20);
   let multiplier = $state(1);
   let saving = $state(false);
+  let connected = $state(false);
+  let armed = $state(false);
+  let boardVersion = 0;
+  let boardMatchId = '';
+  let remaining = 0;
+  let pending: BoardHit[] = [];
+  let draining = $state(false);
+
+  function disarm() {
+    armed = false;
+    pending = [];
+    remaining = 0;
+  }
+  function boardConnection(value: boolean) {
+    disarm();
+    connected = value;
+    if (value) entryMode = 'dart';
+  }
+  function armBoard() {
+    if (!canArm || document.hidden) return;
+    boardMatchId = match.id;
+    boardVersion = view.projection.lastEventSequence;
+    remaining = 3 - position.dartsUsed;
+    armed = true;
+  }
+  const canArm = $derived(
+    connected &&
+      !saving &&
+      !draining &&
+      !progress?.nextStarterId &&
+      status === 'in_progress' &&
+      view.projection.lastEventSequence < MAX_JOURNAL_EVENTS,
+  );
+  async function boardHit(hit: BoardHit) {
+    if (
+      !armed ||
+      status !== 'in_progress' ||
+      document.hidden ||
+      boardMatchId !== match.id ||
+      remaining <= 0
+    )
+      return;
+    remaining--;
+    pending.push(hit);
+    if (draining) return;
+    draining = true;
+    try {
+      // The journal version prevents a stale UI or another tab from advancing this visit.
+      const ownerId = current;
+      while (armed && pending.length > 0) {
+        const result = await act(
+          { type: 'record', ownerId, values: pending.shift()! },
+          boardVersion,
+          true,
+        );
+        if (
+          !armed ||
+          !result ||
+          result.projection.status !== 'in_progress' ||
+          series?.getProgress(result.state, seriesConfig).nextStarterId
+        ) {
+          disarm();
+          break;
+        }
+        const leg = series ? series.inspect(result.state, seriesConfig).legState : result.state;
+        const legConfig = series?.getLegConfig(result.state, seriesConfig) ?? seriesConfig;
+        const next = game.inspect(leg, legConfig);
+        if (
+          next.dartsUsed === 0 ||
+          legConfig.ownerIds[next.turn] !== ownerId ||
+          result.projection.lastEventSequence >= MAX_JOURNAL_EVENTS
+        ) {
+          disarm();
+          break;
+        }
+        boardVersion = result.projection.lastEventSequence;
+      }
+    } finally {
+      draining = false;
+    }
+  }
   let notice = $state('');
   let error = $state('');
   let prompt = $state<JournalAction | null>(null);
@@ -109,25 +192,34 @@
       id
     );
   }
-  async function act(action: JournalAction, version = view.projection.lastEventSequence) {
+  async function act(
+    action: JournalAction,
+    version = view.projection.lastEventSequence,
+    fromBoard = false,
+  ) {
+    if (!fromBoard) disarm();
     if (saving) return;
     saving = true;
     error = '';
     notice = '';
+    const matchId = match.id;
+    const actorPlayerId = view.authority.playerId;
     try {
       const deviceId = await database.readOrCreateDeviceId(crypto.randomUUID());
-      await journal.submit({
-        matchId: match.id,
+      if (fromBoard && (!armed || match.id !== matchId)) return;
+      const result = await journal.submit({
+        matchId,
         eventId: crypto.randomUUID(),
         commandId: crypto.randomUUID(),
         expectedVersion: version,
-        actorPlayerId: view.authority.playerId,
+        actorPlayerId,
         deviceId,
         timestamp: new Date().toISOString(),
         action,
       });
       notice = '';
       if (dialog?.open) dialog.close();
+      return result;
     } catch (failure) {
       error =
         failure instanceof EngineError ? messages.darts.invalid : petanqueErrorMessage(failure);
@@ -136,6 +228,7 @@
     }
   }
   function confirm(action: JournalAction) {
+    disarm();
     prompt = action;
     promptVersion = view.projection.lastEventSequence;
     dialog.showModal();
@@ -146,7 +239,7 @@
       type: 'record',
       ownerId: current,
       values:
-        !isCricket && entryMode === 'visit'
+        !isCricket && !connected && entryMode === 'visit'
           ? { total: visitTotal, checkout: needsDouble && doubleFinish ? 1 : 0 }
           : { sector, multiplier },
     });
@@ -164,6 +257,12 @@
     },
   );
 </script>
+
+<svelte:document
+  onvisibilitychange={() => {
+    if (document.hidden) disarm();
+  }}
+/>
 
 {#if status === 'in_progress' && draft.recovered}<p class="draft-notice" role="status">
     {messages.play.draftRecovered}
@@ -251,7 +350,7 @@
             </p>
             {#if status === 'in_progress' && !selfOnly}<button
                 class="button"
-                disabled={saving || view.projection.lastEventSequence >= 1000}
+                disabled={saving || view.projection.lastEventSequence >= MAX_JOURNAL_EVENTS}
                 onclick={() =>
                   act({
                     type: 'record',
@@ -286,6 +385,18 @@
       </table>
     </div>{/if}
   {#if 'bust' in position && position.bust}<p role="status">{messages.darts.bust}</p>{/if}
+  {#if status === 'in_progress' && !selfOnly}
+    {#key match.id}
+      <GranBoardControls
+        matchId={match.id}
+        onhit={boardHit}
+        onconnection={boardConnection}
+        onarm={armBoard}
+        {armed}
+        {canArm}
+      />
+    {/key}
+  {/if}
   {#if status === 'in_progress' && !progress?.nextStarterId}
     {#if !isCricket}<aside
         class="checkout-panel"
@@ -323,7 +434,7 @@
             </div>{/if}
         {:else}<p>{messages.darts.noCheckout}</p>{/if}
       </aside>{/if}
-    {#if !isCricket}<div class="game-field">
+    {#if !isCricket && !connected}<div class="game-field">
         <label for="dart-entry-mode">{messages.darts.entryMode}</label><select
           id="dart-entry-mode"
           bind:value={entryMode}
@@ -334,7 +445,7 @@
       </div>{/if}
     {#if !selfOnly || allowedOwnerIds?.includes(current)}
       <form class="stack" onsubmit={record}>
-        {#if !isCricket && entryMode === 'visit'}
+        {#if !isCricket && !connected && entryMode === 'visit'}
           <div class="game-field">
             <label for="visit-total">{messages.darts.visitTotal(3 - position.dartsUsed)}</label
             ><input
@@ -390,13 +501,15 @@
           command={() => ({
             type: 'record',
             ownerId: current,
-            values: (!isCricket && entryMode === 'visit'
+            values: (!isCricket && !connected && entryMode === 'visit'
               ? { total: visitTotal, checkout: needsDouble && doubleFinish ? 1 : 0 }
               : { sector, multiplier }) as Record<string, number>,
           })}
         />
-        <button class="button" disabled={saving || view.projection.lastEventSequence >= 1000}
-          ><Icon name="check" />{!isCricket && entryMode === 'visit'
+        <button
+          class="button"
+          disabled={saving || view.projection.lastEventSequence >= MAX_JOURNAL_EVENTS}
+          ><Icon name="check" />{!isCricket && !connected && entryMode === 'visit'
             ? messages.darts.recordVisit
             : messages.darts.record}</button
         >

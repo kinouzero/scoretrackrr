@@ -41,6 +41,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm lint
+      - run: python3 -B -m unittest discover -s tests -p granboard_relay_test.py
       - run: pnpm test:coverage --maxWorkers=4
       - run: pnpm build
         env:

@@ -431,6 +431,42 @@
   "cricket.rules": {
     "defaultMessage": "Three marks close each target from 20 to 15 and bull. Single = one mark, double = two, triple = three (bull: single or double). In standard scoring, extra marks score the target’s value while at least one opponent has not closed it. Closing all targets with a score at least as high as every opponent wins immediately. Without points, the first to close everything wins. Three darts per turn; other sectors and misses score nothing. Order fixed at setup; more than two sides is free play."
   },
+  "granboard.title": {
+    "defaultMessage": "GranBoard"
+  },
+  "granboard.bluetooth": {
+    "defaultMessage": "Connect via Bluetooth"
+  },
+  "granboard.relay": {
+    "defaultMessage": "Connect via relay"
+  },
+  "granboard.code": {
+    "defaultMessage": "Relay pairing code"
+  },
+  "granboard.connecting": {
+    "defaultMessage": "Connecting to the board…"
+  },
+  "granboard.disconnect": {
+    "defaultMessage": "Disconnect the board"
+  },
+  "granboard.connected": {
+    "defaultMessage": "Board connected"
+  },
+  "granboard.ready": {
+    "defaultMessage": "Enable board for this turn"
+  },
+  "granboard.armed": {
+    "defaultMessage": "Recording hits for this turn"
+  },
+  "granboard.help": {
+    "defaultMessage": "Enable the board at each turn. Enter misses manually and remove the darts before enabling the next turn."
+  },
+  "granboard.failed": {
+    "defaultMessage": "Could not connect to the board. Check that it is on and available, and verify the relay code if you used one."
+  },
+  "granboard.reconnecting": {
+    "defaultMessage": "Board connection lost. Reconnecting…"
+  },
   "darts.title": {
     "defaultMessage": "Darts X01"
   },

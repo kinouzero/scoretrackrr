@@ -1,6 +1,6 @@
 {
   "name": "scoretrackrr",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@12.21.0",
@@ -17,8 +17,8 @@
     "preview": "vite preview --host 127.0.0.1",
     "check": "pnpm check:i18n && pnpm check:docs && node scripts/engine-validators.mjs --check && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && tsc -p src/service-worker/tsconfig.json",
     "generate:engine": "node scripts/engine-validators.mjs",
-    "lint": "eslint . && prettier --check src tests scripts *.json *.ts *.js compose.yaml .github/workflows/*.yml",
-    "format": "prettier --write src tests scripts *.json *.ts *.js compose.yaml .github/workflows/*.yml",
+    "lint": "eslint . && prettier --check src tests scripts *.json *.ts *.js compose*.yaml .github/workflows/*.yml",
+    "format": "prettier --write src tests scripts *.json *.ts *.js compose*.yaml .github/workflows/*.yml",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "coverage": "node scripts/run-coverage.mjs",

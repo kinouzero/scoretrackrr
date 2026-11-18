@@ -26,7 +26,7 @@ pnpm test:e2e --workers=2
 pnpm audit
 ```
 
-`check` verifies documentation links, ICU parity, generated-validator parity, Svelte/TypeScript and service-worker types. `lint` runs ESLint and Prettier. Tests exercise pure scoring, fake IndexedDB transactions/migrations and the production static build in Chromium/WebKit. Python 3 serves browser fixtures; it is not production infrastructure. Do not rebuild while browser tests are running.
+`check` verifies documentation links, ICU parity, generated-validator parity, Svelte/TypeScript and service-worker types. `lint` runs ESLint and Prettier. Tests exercise pure scoring, fake IndexedDB transactions/migrations and the production static build in Chromium/WebKit. Python 3 serves browser fixtures and runs the optional Linux GranBoard relay. Do not rebuild while browser tests are running.
 
 After changing trusted engine schemas, run `pnpm generate:engine`. Do not hand-edit generated validators or accept external runtime schemas/code. Keep focused tests for invalid input, state transitions, stale/concurrent commands, replay, compatibility and quota rollback. Do not add cosmetic tests that only lock exact markup/styles.
 

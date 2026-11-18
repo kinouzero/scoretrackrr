@@ -13,6 +13,7 @@
   import { findActiveMatch } from '#lib/storage/match-navigation';
   import type { LocalDatabase } from '#lib/storage/database';
   import type { MatchRecord } from '#lib/domain/records';
+  import { granBoard } from '../lib/application/granboard/session.svelte';
   import { historyGameName } from '#lib/i18n/presentation';
 
   let navigationDatabase = $state.raw<LocalDatabase>();
@@ -89,6 +90,21 @@
     }
   });
 
+  $effect(() => {
+    const matchId = granBoard.matchId;
+    const database = navigationDatabase;
+    const watch = observe;
+    if (!matchId || !database || !watch) return;
+    const subscription = watch(() => database.matches.get(matchId)).subscribe({
+      next(match) {
+        if (!match || match.status === 'finished' || match.status === 'cancelled') {
+          granBoard.stop(matchId);
+        }
+      },
+    });
+    return () => subscription.unsubscribe();
+  });
+
   let { children } = $props();
   const links = $derived([
     { href: '/', label: messages.nav.home, icon: 'home' },
@@ -152,6 +168,7 @@
     return () => {
       active = false;
       stopUpdates();
+      granBoard.stop();
       window.removeEventListener('languagechange', refreshSystemLanguage);
       document.removeEventListener('visibilitychange', refreshVisibleLanguage);
       cleanup();

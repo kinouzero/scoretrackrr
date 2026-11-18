@@ -385,6 +385,20 @@ export function bindMessages(resolve: Translator) {
         cell: (name: string, target: number, marks: number) =>
           translate('cricket.cell', { name, target, marks }),
       },
+      granboard: {
+        title: 'granboard.title',
+        bluetooth: 'granboard.bluetooth',
+        relay: 'granboard.relay',
+        code: 'granboard.code',
+        connecting: 'granboard.connecting',
+        disconnect: 'granboard.disconnect',
+        connected: 'granboard.connected',
+        ready: 'granboard.ready',
+        armed: 'granboard.armed',
+        help: 'granboard.help',
+        failed: 'granboard.failed',
+        reconnecting: 'granboard.reconnecting',
+      },
       darts: {
         title: 'darts.title',
         entryMode: 'darts.entryMode',

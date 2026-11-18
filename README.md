@@ -37,6 +37,8 @@ Skyjo · Belote / Coinche · Tarot · Rummy · UNO / UNO Flip · Scrabble · 7 W
 
 Each game has its own score-entry screen and a rules section. Available settings are listed in the [game catalog](https://github.com/kinouzero/scoretrackrr/wiki/Game-Catalog).
 
+X01 and Cricket can receive GranBoard 3s hits via Bluetooth in Chrome on Android or through an [optional Linux Compose relay for iPhone](https://github.com/kinouzero/scoretrackrr/wiki/Hosting#optional-granboard-relay-for-iphone).
+
 ## Your games, on your device
 
 Once the app has downloaded, scoring and saved matches work offline. You can correct an entry, pause or cancel a match, review earlier results and take a rematch. Language and appearance follow your device by default, with French and English available.

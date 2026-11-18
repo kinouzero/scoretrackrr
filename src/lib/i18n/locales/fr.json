@@ -431,6 +431,42 @@
   "cricket.rules": {
     "defaultMessage": "Trois marques ferment chacune des cibles 20 à 15 et bull. Simple = une marque, double = deux, triple = trois (bull : simple ou double). En points classiques, les marques au-delà de trois marquent la valeur de la cible tant qu’au moins un adversaire ne l’a pas fermée. Toutes les cibles fermées et un score au moins égal au meilleur adversaire donnent la victoire immédiate. Sans points, le premier à tout fermer gagne. Trois fléchettes par tour ; les autres secteurs et les ratés ne marquent rien. Ordre fixé à la création ; au-delà de deux camps, jeu libre."
   },
+  "granboard.title": {
+    "defaultMessage": "GranBoard"
+  },
+  "granboard.bluetooth": {
+    "defaultMessage": "Connecter en Bluetooth"
+  },
+  "granboard.relay": {
+    "defaultMessage": "Connecter via le relais"
+  },
+  "granboard.code": {
+    "defaultMessage": "Code de connexion au relais"
+  },
+  "granboard.connecting": {
+    "defaultMessage": "Connexion à la cible…"
+  },
+  "granboard.disconnect": {
+    "defaultMessage": "Déconnecter la cible"
+  },
+  "granboard.connected": {
+    "defaultMessage": "Cible connectée"
+  },
+  "granboard.ready": {
+    "defaultMessage": "Activer la cible pour ce tour"
+  },
+  "granboard.armed": {
+    "defaultMessage": "Impacts enregistrés pour ce tour"
+  },
+  "granboard.help": {
+    "defaultMessage": "Active la cible à chaque tour. Saisis les ratés à la main et retire les fléchettes avant d’activer le tour suivant."
+  },
+  "granboard.failed": {
+    "defaultMessage": "Connexion impossible. Vérifie que la cible est allumée et disponible, ainsi que le code si tu utilises le relais."
+  },
+  "granboard.reconnecting": {
+    "defaultMessage": "Connexion à la cible perdue. Reconnexion en cours…"
+  },
   "darts.title": {
     "defaultMessage": "Fléchettes X01"
   },

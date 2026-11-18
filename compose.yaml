@@ -1,0 +1,16 @@
+name: scoretrackrr
+
+services:
+  app:
+    build: .
+    image: scoretrackrr:local
+    restart: unless-stopped
+    ports:
+      - '${SCORETRACKRR_BIND_ADDRESS:-127.0.0.1}:${SCORETRACKRR_PORT:-8090}:8080'
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

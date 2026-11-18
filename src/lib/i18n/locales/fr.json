@@ -1,0 +1,3927 @@
+{
+  "backup.title": {
+    "defaultMessage": "Sauvegarde JSON"
+  },
+  "backup.help": {
+    "defaultMessage": "Exportez vos joueurs, équipes et parties dans un fichier JSON. L’import ajoute les données sans remplacer vos parties actuelles."
+  },
+  "backup.privacy": {
+    "defaultMessage": "Le fichier peut contenir des adresses e-mail et des photos de profil."
+  },
+  "backup.export": {
+    "defaultMessage": "Exporter en JSON"
+  },
+  "backup.import": {
+    "defaultMessage": "Importer un JSON"
+  },
+  "backup.file": {
+    "defaultMessage": "Fichier JSON à importer"
+  },
+  "backup.exported": {
+    "defaultMessage": "Export JSON lancé."
+  },
+  "backup.exportError": {
+    "defaultMessage": "Impossible d’exporter vos données. Réessayez."
+  },
+  "backup.working": {
+    "defaultMessage": "Traitement en cours…"
+  },
+  "backup.conflict": {
+    "defaultMessage": "Import impossible : certaines données diffèrent de celles déjà enregistrées. Vos données actuelles sont conservées."
+  },
+  "backup.invalid": {
+    "defaultMessage": "Ce fichier JSON est invalide, incompatible ou dépasse 20 Mo. Vos données actuelles sont conservées."
+  },
+  "sharing.handoffTitle": {
+    "defaultMessage": "Transfert d’organisateur"
+  },
+  "sharing.handoffPrepare": {
+    "defaultMessage": "Préparer le transfert à ce gestionnaire"
+  },
+  "sharing.handoffCommit": {
+    "defaultMessage": "Confirmer le transfert définitif"
+  },
+  "sharing.handoffCancel": {
+    "defaultMessage": "Annuler la préparation du transfert"
+  },
+  "sharing.handoffAccept": {
+    "defaultMessage": "Accepter et sauvegarder la copie"
+  },
+  "sharing.handoffDecline": {
+    "defaultMessage": "Refuser le transfert"
+  },
+  "sharing.handoffActivate": {
+    "defaultMessage": "Reprendre l’activation du transfert"
+  },
+  "sharing.handoffWaiting": {
+    "defaultMessage": "En attente de l’acceptation et de la copie vérifiée du destinataire."
+  },
+  "sharing.handoffReady": {
+    "defaultMessage": "Le destinataire a accepté et sauvegardé sa copie. Vous pouvez confirmer le transfert."
+  },
+  "sharing.handoffAccepted": {
+    "defaultMessage": "Copie sauvegardée sur cet appareil. L’organisateur doit maintenant confirmer."
+  },
+  "sharing.handoffAcceptHelp": {
+    "defaultMessage": "Acceptez pour sauvegarder les règles, participants et événements sans emails ni photos. Après la confirmation de l’organisateur, cet appareil devient le seul autorisé à continuer. Les autres participants devront se jumeler à nouveau."
+  },
+  "sharing.handoffError": {
+    "defaultMessage": "Transfert impossible ou version modifiée. Vérifiez les deux appareils. Tant que le transfert n’est pas confirmé, sa préparation peut être annulée."
+  },
+  "sharing.handoffRecovery": {
+    "defaultMessage": "Activation non terminée. L’ancien appareil reste bloqué en écriture. Conservez les données, récupérez son journal et reprenez l’activation sur cet appareil."
+  },
+  "sharing.boundPlayer": {
+    "defaultMessage": "Joueur associé à ce lecteur"
+  },
+  "sharing.role": {
+    "defaultMessage": "Droits de ce lecteur"
+  },
+  "sharing.roles.viewer": {
+    "defaultMessage": "Lecture seule"
+  },
+  "sharing.roles.scorer": {
+    "defaultMessage": "Saisir son propre score"
+  },
+  "sharing.roles.manager": {
+    "defaultMessage": "Gérer tous les scores"
+  },
+  "sharing.applyPermission": {
+    "defaultMessage": "Appliquer les droits"
+  },
+  "sharing.permissionError": {
+    "defaultMessage": "Impossible de modifier les droits. Vérifiez le jumelage et recommencez."
+  },
+  "sharing.proposalHelp": {
+    "defaultMessage": "Chaque saisie est une proposition : seul l’organisateur peut la valider. Les droits sont limités à ce jumelage. En cas de déconnexion, aucune modification isolée n’est fusionnée. Le score personnel est limité à votre camp ; les corrections et décisions de manche sont réservées au gestionnaire. Le transfert d’hôte nécessite une acceptation puis une confirmation distinctes."
+  },
+  "sharing.proposalUnknown": {
+    "defaultMessage": "Connexion interrompue ou réponse manquante : vérifiez le journal auprès de l’organisateur avant de saisir à nouveau. Aucune proposition isolée n’est appliquée sur cet appareil."
+  },
+  "sharing.proposalRejected": {
+    "defaultMessage": "Proposition refusée : droits retirés, score obsolète ou saisie invalide. Le journal est actualisé ; vérifiez-le avant de recommencer."
+  },
+  "sharing.proposalWorking": {
+    "defaultMessage": "Validation de la proposition par l’organisateur…"
+  },
+  "sharing.authorityTransferred": {
+    "defaultMessage": "L’autorité appartient à un autre appareil. Cette copie reste en lecture seule."
+  },
+  "sharing.authorityPrepared": {
+    "defaultMessage": "Transfert en préparation : les saisies sont suspendues jusqu’à confirmation ou annulation."
+  },
+  "sharing.journalRequest": {
+    "defaultMessage": "Récupérer et vérifier le journal"
+  },
+  "sharing.journalWorking": {
+    "defaultMessage": "Récupération du journal…"
+  },
+  "sharing.journalTitle": {
+    "defaultMessage": "Journal rejoué sur cet appareil"
+  },
+  "sharing.journalStale": {
+    "defaultMessage": "Le score a évolué depuis cette vérification. Récupérez le journal à nouveau pour actualiser le détail."
+  },
+  "sharing.journalError": {
+    "defaultMessage": "Journal indisponible, incomplet ou trop volumineux. Recommencez la récupération ou le jumelage ; la partie organisateur est conservée."
+  },
+  "sharing.superseded": {
+    "defaultMessage": "remplacée ou annulée"
+  },
+  "sharing.actions.authority_transfer": {
+    "defaultMessage": "Transfert d’organisateur"
+  },
+  "sharing.actions.start": {
+    "defaultMessage": "Début"
+  },
+  "sharing.actions.pause": {
+    "defaultMessage": "Pause"
+  },
+  "sharing.actions.resume": {
+    "defaultMessage": "Reprise"
+  },
+  "sharing.actions.cancel": {
+    "defaultMessage": "Annulation de la partie"
+  },
+  "sharing.actions.record": {
+    "defaultMessage": "Score saisi"
+  },
+  "sharing.actions.finish": {
+    "defaultMessage": "Fin"
+  },
+  "sharing.actions.correct": {
+    "defaultMessage": "Correction"
+  },
+  "sharing.actions.undo": {
+    "defaultMessage": "Saisie annulée"
+  },
+  "sharing.host": {
+    "defaultMessage": "Partager la partie en Wi-Fi local"
+  },
+  "sharing.join": {
+    "defaultMessage": "Rejoindre une partie en Wi-Fi local"
+  },
+  "sharing.scope": {
+    "defaultMessage": "Expérimental : même Wi-Fi local compatible requis. Deux lecteurs maximum. Sans serveur, STUN/TURN, caméra ni micro. L’organisateur valide les saisies. Il peut autoriser les participants à proposer leurs scores ou à les gérer. Le transfert de rôle demande l’accord explicite des deux appareils."
+  },
+  "sharing.steps": {
+    "defaultMessage": "L’organisateur crée une offre. Le lecteur la colle ici et renvoie sa réponse à l’organisateur. Collez cette réponse puis connectez. Ces textes servent uniquement au jumelage ; les scores passent ensuite par WebRTC. En cas d’échec, continuez sur le téléphone organisateur."
+  },
+  "sharing.add": {
+    "defaultMessage": "Créer une offre de lecture"
+  },
+  "sharing.offer": {
+    "defaultMessage": "Offre de jumelage"
+  },
+  "sharing.answer": {
+    "defaultMessage": "Réponse de jumelage"
+  },
+  "sharing.respond": {
+    "defaultMessage": "Créer ma réponse"
+  },
+  "sharing.connect": {
+    "defaultMessage": "Connecter ce lecteur"
+  },
+  "sharing.stop": {
+    "defaultMessage": "Fermer ce partage"
+  },
+  "sharing.scores": {
+    "defaultMessage": "Scores reçus de l’organisateur"
+  },
+  "sharing.saveRules": {
+    "defaultMessage": "Conserver ces règles sur cet appareil"
+  },
+  "sharing.unnamedRules": {
+    "defaultMessage": "Jeu partagé"
+  },
+  "sharing.rulesHelp": {
+    "defaultMessage": "Les règles reçues sont validées avant affichage. Vous pouvez en conserver une copie locale sans importer les participants ni la partie ; les jeux intégrés doivent correspondre à une version connue."
+  },
+  "sharing.error": {
+    "defaultMessage": "Connexion locale indisponible ou données incompatibles. Vérifiez le Wi-Fi et recommencez le jumelage ; la partie solo reste disponible."
+  },
+  "sharing.states.new": {
+    "defaultMessage": "En attente de jumelage"
+  },
+  "sharing.states.connecting": {
+    "defaultMessage": "Connexion en cours"
+  },
+  "sharing.states.connected": {
+    "defaultMessage": "Lecteur connecté"
+  },
+  "sharing.states.disconnected": {
+    "defaultMessage": "Connexion interrompue : jumelage à renouveler"
+  },
+  "sharing.states.failed": {
+    "defaultMessage": "Connexion impossible sur ce réseau"
+  },
+  "sharing.states.closed": {
+    "defaultMessage": "Partage fermé"
+  },
+  "history.filters": {
+    "defaultMessage": "Filtrer l’historique"
+  },
+  "history.game": {
+    "defaultMessage": "Jeu (nom)"
+  },
+  "history.player": {
+    "defaultMessage": "Joueur (nom conservé)"
+  },
+  "history.team": {
+    "defaultMessage": "Équipe (nom conservé)"
+  },
+  "history.status": {
+    "defaultMessage": "État de la partie"
+  },
+  "history.all": {
+    "defaultMessage": "Tous les états"
+  },
+  "history.from": {
+    "defaultMessage": "À partir du"
+  },
+  "history.until": {
+    "defaultMessage": "Jusqu’au"
+  },
+  "history.scanHint": {
+    "defaultMessage": "Chaque page examine au plus 120 parties et affiche jusqu’à 24 résultats. Une page sans résultat peut être suivie d’autres pages."
+  },
+  "history.replayRules": {
+    "defaultMessage": "Rejouer avec ces règles"
+  },
+  "history.export": {
+    "defaultMessage": "Exporter cette partie et son journal"
+  },
+  "history.download": {
+    "defaultMessage": "Télécharger l’archive JSON de la partie"
+  },
+  "history.exported": {
+    "defaultMessage": "Archive préparée."
+  },
+  "history.exportError": {
+    "defaultMessage": "Impossible de préparer cette archive."
+  },
+  "transfer.import": {
+    "defaultMessage": "Importer un jeu JSON"
+  },
+  "transfer.hint": {
+    "defaultMessage": "Les jeux personnalisés sont importés comme nouvelles copies. Les jeux intégrés doivent correspondre exactement à une version prise en charge. Les parties et profils ne sont pas inclus."
+  },
+  "transfer.imported": {
+    "defaultMessage": "Règles importées sur cet appareil."
+  },
+  "transfer.invalid": {
+    "defaultMessage": "Import impossible : fichier invalide, trop volumineux ou version incompatible."
+  },
+  "transfer.file": {
+    "defaultMessage": "Fichier JSON des règles"
+  },
+  "flip.title": {
+    "defaultMessage": "Flip 7"
+  },
+  "flip.play": {
+    "defaultMessage": "Jouer à Flip 7"
+  },
+  "flip.rules": {
+    "defaultMessage": "Édition 3.1 et FAQ éditeur : somme des numéros, puis ×2 éventuel, puis modificateurs +2 à +10, puis +15 pour sept numéros distincts. Un bust marque zéro. La victoire se vérifie après tous les résultats de la manche : meilleur score à partir de 200. En cas d’égalité en tête, tous les joueurs continuent. Les actions des cartes sont résolues physiquement ; ceci est une feuille de score, pas un simulateur de distribution. De 3 à 16 joueurs sur cet appareil."
+  },
+  "flip.cards": {
+    "defaultMessage": "Cartes Numéro conservées"
+  },
+  "flip.modifiers": {
+    "defaultMessage": "Modificateurs conservés"
+  },
+  "flip.double": {
+    "defaultMessage": "Multiplicateur ×2"
+  },
+  "flip.bust": {
+    "defaultMessage": "Bust : doublon non sauvé"
+  },
+  "flip.bustHint": {
+    "defaultMessage": "Un bust marque 0 point : aucune carte ni aucun bonus à renseigner."
+  },
+  "flip.handHint": {
+    "defaultMessage": "Saisissez la ligne de cartes finale après les actions physiques, y compris les cartes d’un joueur gelé ou ayant choisi de s’arrêter."
+  },
+  "flip.record": {
+    "defaultMessage": "Enregistrer la main"
+  },
+  "flip.pending": {
+    "defaultMessage": "à saisir"
+  },
+  "flip.complete": {
+    "defaultMessage": "Manche terminée. Si le seuil ou une égalité ne permet pas encore de désigner un vainqueur, continuez."
+  },
+  "flip.invalid": {
+    "defaultMessage": "Main invalide : vérifiez les cartes et les modificateurs déjà utilisés."
+  },
+  "skull.title": {
+    "defaultMessage": "Skull King"
+  },
+  "skull.play": {
+    "defaultMessage": "Jouer à Skull King"
+  },
+  "skull.rules": {
+    "defaultMessage": "Classique 2021, 3 à 8 joueurs, sans cartes avancées ni pouvoirs de pirates. Annonces avant résultats ; un pli par carte distribuée. Annonce exacte : 20 points par pli et primes. Écart : −10 par pli. Annonce zéro : +10 par carte si réussie, sinon −10 par carte. Dix manches ; en cas d’égalité, manches supplémentaires à dix cartes (huit à huit joueurs) jusqu’à un vainqueur unique. Pas de mode Graybeard à deux joueurs."
+  },
+  "skull.grid": {
+    "defaultMessage": "Annonces et résultats de la manche"
+  },
+  "skull.player": {
+    "defaultMessage": "Joueur"
+  },
+  "skull.bid": {
+    "defaultMessage": "Plis annoncés"
+  },
+  "skull.won": {
+    "defaultMessage": "Plis remportés"
+  },
+  "skull.bidPhase": {
+    "defaultMessage": "Enregistrez toutes les annonces avant de saisir les résultats."
+  },
+  "skull.resultPhase": {
+    "defaultMessage": "Saisissez les plis remportés et les captures de chaque joueur."
+  },
+  "skull.recordBid": {
+    "defaultMessage": "Enregistrer l’annonce"
+  },
+  "skull.recordResult": {
+    "defaultMessage": "Enregistrer le résultat"
+  },
+  "skull.bonuses": {
+    "defaultMessage": "Captures et primes"
+  },
+  "skull.bonusHint": {
+    "defaultMessage": "Renseignez les captures physiques. Les primes sont accordées uniquement si l’annonce est exacte."
+  },
+  "skull.bonusFields.c14": {
+    "defaultMessage": "14 de couleur capturés"
+  },
+  "skull.bonusFields.b14": {
+    "defaultMessage": "14 noir capturé"
+  },
+  "skull.bonusFields.mermaids": {
+    "defaultMessage": "Sirènes capturées par un pirate"
+  },
+  "skull.bonusFields.pirates": {
+    "defaultMessage": "Pirates capturés par le Skull King"
+  },
+  "skull.bonusFields.king": {
+    "defaultMessage": "Skull King capturé par une sirène"
+  },
+  "skull.complete": {
+    "defaultMessage": "Tous les résultats sont enregistrés."
+  },
+  "skull.overtime": {
+    "defaultMessage": "Égalité après dix manches : une manche supplémentaire départagera les joueurs."
+  },
+  "skull.next": {
+    "defaultMessage": "Manche suivante"
+  },
+  "skull.invalid": {
+    "defaultMessage": "Saisie invalide : vérifiez l’annonce, les captures et le total des plis de la manche."
+  },
+  "dartsMatch.enable": {
+    "defaultMessage": "Match en plusieurs legs"
+  },
+  "dartsMatch.twoCamps": {
+    "defaultMessage": "Sélectionnez exactement deux joueurs ou deux équipes pour ce mode match."
+  },
+  "dartsMatch.legsToWin": {
+    "defaultMessage": "Nombre de legs à gagner"
+  },
+  "dartsMatch.setupHint": {
+    "defaultMessage": "Duel entre deux joueurs ou deux équipes. Premier au nombre de legs choisi ; de 2 à 15 legs à gagner. Le premier lanceur est fixé pour chaque leg."
+  },
+  "dartsMatch.startRule": {
+    "defaultMessage": "Premier lanceur au leg suivant"
+  },
+  "dartsMatch.alternate": {
+    "defaultMessage": "Départs alternés"
+  },
+  "dartsMatch.loser": {
+    "defaultMessage": "Le perdant du leg précédent commence"
+  },
+  "dartsMatch.firstStarter": {
+    "defaultMessage": "Premier lanceur du premier leg"
+  },
+  "dartsMatch.title": {
+    "defaultMessage": "Score du match"
+  },
+  "cricket.title": {
+    "defaultMessage": "Fléchettes Cricket"
+  },
+  "cricket.grid": {
+    "defaultMessage": "Grille de Cricket"
+  },
+  "cricket.target": {
+    "defaultMessage": "Cible"
+  },
+  "cricket.marks.0": {
+    "defaultMessage": "—"
+  },
+  "cricket.marks.1": {
+    "defaultMessage": "/"
+  },
+  "cricket.marks.2": {
+    "defaultMessage": "×"
+  },
+  "cricket.marks.3": {
+    "defaultMessage": "⊗"
+  },
+  "cricket.rules": {
+    "defaultMessage": "Trois marques ferment chacune des cibles 20 à 15 et bull. Simple = une marque, double = deux, triple = trois (bull : simple ou double). En points classiques, les marques au-delà de trois marquent la valeur de la cible tant qu’au moins un adversaire ne l’a pas fermée. Toutes les cibles fermées et un score au moins égal au meilleur adversaire donnent la victoire immédiate. Sans points, le premier à tout fermer gagne. Trois fléchettes par tour ; les autres secteurs et les ratés ne marquent rien. Ordre fixé à la création ; au-delà de deux camps, jeu libre."
+  },
+  "darts.title": {
+    "defaultMessage": "Fléchettes X01"
+  },
+  "darts.entryMode": {
+    "defaultMessage": "Mode de saisie"
+  },
+  "darts.perDart": {
+    "defaultMessage": "Chaque fléchette"
+  },
+  "darts.perVisit": {
+    "defaultMessage": "Total de la volée"
+  },
+  "darts.visitHelp": {
+    "defaultMessage": "Saisissez les points marqués pendant cette volée, pas le score restant. La validation termine la volée. Si vous changez de mode après un impact, saisissez uniquement les points des fléchettes restantes."
+  },
+  "darts.doubleFinish": {
+    "defaultMessage": "Dernière fléchette sur un double ou bull à 50"
+  },
+  "darts.doubleFinishHint": {
+    "defaultMessage": "En sortie double, cochez si le dernier impact est un double. Sinon, atteindre zéro est un bust."
+  },
+  "darts.recordVisit": {
+    "defaultMessage": "Enregistrer le total de la volée"
+  },
+  "darts.checkoutHint": {
+    "defaultMessage": "S = simple, D = double, T = triple. Les parcours les plus courts sont affichés en premier. Les ratés sont omis."
+  },
+  "darts.noCheckout": {
+    "defaultMessage": "Aucune sortie possible pendant cette volée avec les fléchettes restantes."
+  },
+  "darts.previousCheckouts": {
+    "defaultMessage": "Sorties précédentes"
+  },
+  "darts.nextCheckouts": {
+    "defaultMessage": "Sorties suivantes"
+  },
+  "darts.shortMultipliers.0": {
+    "defaultMessage": "S"
+  },
+  "darts.shortMultipliers.1": {
+    "defaultMessage": "D"
+  },
+  "darts.shortMultipliers.2": {
+    "defaultMessage": "T"
+  },
+  "darts.innerBull": {
+    "defaultMessage": "Bull (50)"
+  },
+  "darts.outerBull": {
+    "defaultMessage": "Bull extérieur (25)"
+  },
+  "darts.play": {
+    "defaultMessage": "Jouer aux fléchettes"
+  },
+  "darts.rules": {
+    "defaultMessage": "Une manche, départ direct à 301 ou 501 selon les paramètres. Jusqu’à trois fléchettes par tour, puis le camp suivant. Il faut atteindre exactement zéro. En sortie double, le dernier impact doit être un double (bull à 50 accepté). Dépasser zéro, laisser un point ou finir sans double annule toute la volée en sortie double. En sortie simple, seul le dépassement annule la volée. Un raté vaut zéro et consomme une fléchette. Ordre des camps fixé à la création ; jeu libre pour plus de deux camps."
+  },
+  "darts.sector": {
+    "defaultMessage": "Secteur touché"
+  },
+  "darts.multiplier": {
+    "defaultMessage": "Multiplicateur"
+  },
+  "darts.miss": {
+    "defaultMessage": "Raté (0)"
+  },
+  "darts.bull": {
+    "defaultMessage": "Bull (25)"
+  },
+  "darts.multipliers.0": {
+    "defaultMessage": "Simple"
+  },
+  "darts.multipliers.1": {
+    "defaultMessage": "Double"
+  },
+  "darts.multipliers.2": {
+    "defaultMessage": "Triple"
+  },
+  "darts.record": {
+    "defaultMessage": "Enregistrer la fléchette"
+  },
+  "darts.bust": {
+    "defaultMessage": "Bust : la volée est annulée, retour au score de début et passage au camp suivant."
+  },
+  "darts.invalid": {
+    "defaultMessage": "Action invalide : vérifiez le camp, le secteur, le total réalisable et la sortie double."
+  },
+  "farkle.title": {
+    "defaultMessage": "5000 / 10000 · Dés à risque"
+  },
+  "farkle.play": {
+    "defaultMessage": "Jouer au 5000 / 10000"
+  },
+  "farkle.rules": {
+    "defaultMessage": "Règles Farkle : 1 = 100, 5 = 50 ; brelan de 1 = 300, autres brelans = face × 100. Quatre identiques = 1000, cinq = 2000, six = 3000 ; suite, trois paires ou carré + paire = 1500 ; deux brelans = 2500. Les combinaisons appartiennent à un même lancer. Six dés retenus permettent de repartir avec six dés. Un lancer sans aucun dé marquant fait perdre le tour. Le seuil d’entrée et l’objectif sont figés par les paramètres. Au seuil final, les autres camps disposent chacun d’un dernier tour ; les meilleurs scores partagent la victoire."
+  },
+  "farkle.rollHint": {
+    "defaultMessage": "Saisissez les faces de vos dés physiques, puis touchez les dés marquants à garder. Validez le lancer avant de continuer ou de garder les points du tour."
+  },
+  "farkle.bust": {
+    "defaultMessage": "Aucun point possible : les points du tour sont perdus."
+  },
+  "farkle.invalidSelection": {
+    "defaultMessage": "La sélection contient des dés non marquants."
+  },
+  "farkle.record": {
+    "defaultMessage": "Valider et continuer"
+  },
+  "farkle.recordBust": {
+    "defaultMessage": "Valider le tour perdu"
+  },
+  "farkle.bank": {
+    "defaultMessage": "Garder les points"
+  },
+  "farkle.invalid": {
+    "defaultMessage": "Action invalide : vérifiez le tour, les dés, la sélection et le seuil d’entrée."
+  },
+  "parameters.title": {
+    "defaultMessage": "Paramètres de la partie"
+  },
+  "parameters.teamPlay": {
+    "defaultMessage": "Jouer en équipe"
+  },
+  "parameters.cooperativePlay": {
+    "defaultMessage": "Score commun (coopératif)"
+  },
+  "parameters.history": {
+    "defaultMessage": "Historique des règles"
+  },
+  "parameters.savedRules": {
+    "defaultMessage": "Règles enregistrées"
+  },
+  "parameters.petanqueShort": {
+    "defaultMessage": "Partie en 11 points"
+  },
+  "parameters.petanqueHint": {
+    "defaultMessage": "Désactivé : objectif de 13 points."
+  },
+  "parameters.labels.upperBonus": {
+    "defaultMessage": "Prime supérieure"
+  },
+  "parameters.labels.target10000": {
+    "defaultMessage": "Objectif de 10 000 points"
+  },
+  "parameters.labels.entry500": {
+    "defaultMessage": "Seuil d’entrée de 500 points"
+  },
+  "parameters.labels.cricket": {
+    "defaultMessage": "Jouer au Cricket"
+  },
+  "parameters.labels.start501": {
+    "defaultMessage": "Départ à 501 points"
+  },
+  "parameters.labels.doubleOut": {
+    "defaultMessage": "Sortie double"
+  },
+  "parameters.labels.cricketPoints": {
+    "defaultMessage": "Compter les points"
+  },
+  "parameters.hints.upperBonus": {
+    "defaultMessage": "63 points dans la partie supérieure donnent une prime de 35 points."
+  },
+  "parameters.hints.target10000": {
+    "defaultMessage": "Désactivé : objectif de 5 000 points."
+  },
+  "parameters.hints.entry500": {
+    "defaultMessage": "Désactivé : aucun seuil pour commencer à encaisser."
+  },
+  "parameters.hints.cricket": {
+    "defaultMessage": "Désactivé : jouer au X01 (301 ou 501)."
+  },
+  "parameters.hints.start501": {
+    "defaultMessage": "Désactivé : départ à 301 points."
+  },
+  "parameters.hints.doubleOut": {
+    "defaultMessage": "Terminer avec un double ou un bull à 50."
+  },
+  "parameters.hints.cricketPoints": {
+    "defaultMessage": "Désactivé : fermer les cibles sans compter les points supplémentaires."
+  },
+  "sixNimmt.setupHint": {
+    "defaultMessage": "De 2 à 10 joueurs. La partie se termine après une manche où un cumul atteint au moins 66 têtes de bœuf."
+  },
+  "sixNimmt.title": {
+    "defaultMessage": "6 qui prend !"
+  },
+  "sixNimmt.play": {
+    "defaultMessage": "Jouer au 6 qui prend !"
+  },
+  "sixNimmt.points": {
+    "defaultMessage": "Têtes de bœuf de la manche"
+  },
+  "sixNimmt.record": {
+    "defaultMessage": "Enregistrer les pénalités"
+  },
+  "sixNimmt.correct": {
+    "defaultMessage": "Corriger la dernière saisie"
+  },
+  "sixNimmt.undo": {
+    "defaultMessage": "Annuler la dernière saisie"
+  },
+  "sixNimmt.nextRound": {
+    "defaultMessage": "Manche suivante"
+  },
+  "sixNimmt.invalid": {
+    "defaultMessage": "Vérifiez les scores entiers, la limite de têtes de bœuf du paquet choisi et que cette manche n’a pas déjà été saisie."
+  },
+  "sixNimmt.confirmHint": {
+    "defaultMessage": "Le journal sera recalculé. Corriger ou annuler une saisie peut rouvrir une partie terminée."
+  },
+  "sixNimmt.rules": {
+    "defaultMessage": "Jouez les cartes sur la table, puis saisissez pour chacun les têtes de bœuf ramassées pendant la manche. Le plus petit cumul gagne. Quand un joueur atteint au moins 66 points, terminez toutes les saisies de cette manche avant de déterminer le gagnant. Les joueurs à égalité au plus petit cumul partagent la victoire. De 2 à 10 joueurs individuels ; les règles des rangées et la distribution sont résolues physiquement."
+  },
+  "timesUp.play": {
+    "defaultMessage": "Jouer à Time’s Up!"
+  },
+  "timesUp.title": {
+    "defaultMessage": "Time’s Up! · Party"
+  },
+  "timesUp.rules": {
+    "defaultMessage": "Préparez 40 cartes physiques, réutilisées dans les trois manches. Chaque tour dure 30 secondes. Manche 1 : parlez librement, sans passer de carte. Manche 2 : un seul mot, vous pouvez passer. Manche 3 : mimez sans parler, vous pouvez passer. Changez de personne qui fait deviner à chaque tour de votre équipe. Le plus grand cumul gagne ; les égalités sont partagées."
+  },
+  "timesUp.setup": {
+    "defaultMessage": "Choisissez de 2 à 6 équipes, avec au moins 2 joueurs par équipe et de 4 à 12 joueurs au total. Utilisez les mêmes 40 cartes pendant les trois manches."
+  },
+  "timesUp.phases.0": {
+    "defaultMessage": "Parler librement"
+  },
+  "timesUp.phases.1": {
+    "defaultMessage": "Un seul mot"
+  },
+  "timesUp.phases.2": {
+    "defaultMessage": "Mimer sans parler"
+  },
+  "timesUp.timer": {
+    "defaultMessage": "Temps restant"
+  },
+  "timesUp.start": {
+    "defaultMessage": "Démarrer le chrono"
+  },
+  "timesUp.pause": {
+    "defaultMessage": "Mettre le chrono en pause"
+  },
+  "timesUp.resume": {
+    "defaultMessage": "Reprendre le chrono"
+  },
+  "timesUp.reset": {
+    "defaultMessage": "Réinitialiser le chrono"
+  },
+  "timesUp.expired": {
+    "defaultMessage": "Temps écoulé !"
+  },
+  "timesUp.hint": {
+    "defaultMessage": "Gardez cet écran ouvert pour le signal sonore. Le temps continue si vous quittez la page ; mettez le chrono en pause pour l’arrêter."
+  },
+  "timesUp.points": {
+    "defaultMessage": "Cartes trouvées pendant ce tour"
+  },
+  "timesUp.record": {
+    "defaultMessage": "Enregistrer le tour"
+  },
+  "timesUp.correct": {
+    "defaultMessage": "Corriger le dernier tour"
+  },
+  "timesUp.undo": {
+    "defaultMessage": "Annuler la dernière action"
+  },
+  "timesUp.confirm": {
+    "defaultMessage": "Cette action sera conservée dans l’historique de la partie."
+  },
+  "timesUp.invalid": {
+    "defaultMessage": "Vérifiez l’équipe, le chrono et le nombre de cartes restantes."
+  },
+  "molkky.title": {
+    "defaultMessage": "Mölkky · 50 points"
+  },
+  "molkky.play": {
+    "defaultMessage": "Jouer au Mölkky"
+  },
+  "molkky.points": {
+    "defaultMessage": "Points du lancer"
+  },
+  "molkky.miss": {
+    "defaultMessage": "0 · lancer nul"
+  },
+  "molkky.record": {
+    "defaultMessage": "Enregistrer le lancer"
+  },
+  "molkky.correct": {
+    "defaultMessage": "Corriger le dernier lancer"
+  },
+  "molkky.undo": {
+    "defaultMessage": "Annuler le dernier lancer"
+  },
+  "molkky.missList": {
+    "defaultMessage": "Lancers nuls et éliminations"
+  },
+  "molkky.overshoot": {
+    "defaultMessage": "Dépassement de 50 : le total redescendra à 25."
+  },
+  "molkky.invalid": {
+    "defaultMessage": "Vérifiez les points (0 à 12) et le joueur dont c’est le tour. Une correction peut rendre les lancers suivants incompatibles."
+  },
+  "molkky.confirmHint": {
+    "defaultMessage": "Le journal sera recalculé. Une correction ou une annulation peut rouvrir une partie terminée."
+  },
+  "molkky.rules": {
+    "defaultMessage": "Une quille tombée seule rapporte son numéro ; plusieurs quilles rapportent leur nombre. Seules les quilles complètement au sol comptent. Atteignez exactement 50 points ; dépasser 50 ramène à 25. Un lancer nul vaut zéro. Trois lancers nuls consécutifs éliminent le joueur ou l’équipe et son total passe à zéro. Un lancer réussi remet son compteur de lancers nuls à zéro. En équipe, le score et le compteur de lancers nuls sont communs. Les joueurs ou équipes éliminés sont sautés ; le dernier en lice gagne. Saisissez les lancers dans l’ordre des joueurs ou équipes sélectionnés."
+  },
+  "four21.title": {
+    "defaultMessage": "421 · Charge 21"
+  },
+  "four21.ruleSummary": {
+    "defaultMessage": "Règles du jeu"
+  },
+  "four21.play": {
+    "defaultMessage": "Jouer au 421"
+  },
+  "four21.rules": {
+    "defaultMessage": "Règles Charge 21 : 421 = 10 jetons, nénette = 2. Charge en un lancer ; décharge en trois lancers maximum, limités par le premier joueur. Le perdant commence le tour suivant. À la fin de la charge, les joueurs sans jetons gagnent ; sinon, le premier à se décharger gagne. Égalités départagées aux dés hors application."
+  },
+  "four21.throws": {
+    "defaultMessage": "Nombre de lancers effectués"
+  },
+  "four21.record": {
+    "defaultMessage": "Valider la combinaison"
+  },
+  "four21.tie": {
+    "defaultMessage": "Égalité : départagez les ex æquo aux dés, puis indiquez les deux résultats distincts. Les joueurs hors égalité restent imposés."
+  },
+  "four21.best": {
+    "defaultMessage": "Meilleure combinaison après départage"
+  },
+  "four21.worst": {
+    "defaultMessage": "Moins bonne combinaison après départage"
+  },
+  "four21.choose": {
+    "defaultMessage": "Choisir"
+  },
+  "four21.undo": {
+    "defaultMessage": "Annuler la dernière saisie"
+  },
+  "four21.confirm": {
+    "defaultMessage": "Confirmer cette action"
+  },
+  "four21.confirmHint": {
+    "defaultMessage": "L’historique conserve la trace de cette action. Après annulation, ressaisissez la combinaison à corriger."
+  },
+  "four21.invalid": {
+    "defaultMessage": "Action invalide : vérifiez le tour, les dés, les lancers et le départage."
+  },
+  "appName": {
+    "defaultMessage": "Scoretrackrr"
+  },
+  "tagline": {
+    "defaultMessage": "Les bons moments se comptent."
+  },
+  "navigation": {
+    "defaultMessage": "Navigation principale"
+  },
+  "skip": {
+    "defaultMessage": "Aller au contenu"
+  },
+  "nav.home": {
+    "defaultMessage": "Accueil"
+  },
+  "nav.games": {
+    "defaultMessage": "Jeux"
+  },
+  "nav.players": {
+    "defaultMessage": "Joueurs"
+  },
+  "nav.teams": {
+    "defaultMessage": "Équipes"
+  },
+  "nav.matches": {
+    "defaultMessage": "Parties"
+  },
+  "nav.settings": {
+    "defaultMessage": "Réglages"
+  },
+  "home.eyebrow": {
+    "defaultMessage": "À vous de jouer"
+  },
+  "home.title": {
+    "defaultMessage": "La prochaine partie commence ici."
+  },
+  "home.intro": {
+    "defaultMessage": "Choisissez un jeu, réunissez les joueurs et lancez la partie."
+  },
+  "home.action": {
+    "defaultMessage": "Lancer une partie"
+  },
+  "home.stamp": {
+    "defaultMessage": "familles de jeux"
+  },
+  "home.libraryEyebrow": {
+    "defaultMessage": "Votre terrain de jeu"
+  },
+  "home.libraryTitle": {
+    "defaultMessage": "À chaque envie, sa partie"
+  },
+  "home.libraryHint": {
+    "defaultMessage": "Tous disponibles hors ligne"
+  },
+  "home.recentEyebrow": {
+    "defaultMessage": "Le fil du jeu"
+  },
+  "home.recentTitle": {
+    "defaultMessage": "Vos dernières parties"
+  },
+  "home.allMatches": {
+    "defaultMessage": "Tout l’historique"
+  },
+  "home.resume": {
+    "defaultMessage": "Reprendre"
+  },
+  "home.review": {
+    "defaultMessage": "Revoir"
+  },
+  "home.emptyTitle": {
+    "defaultMessage": "Une belle série à commencer"
+  },
+  "home.emptyBody": {
+    "defaultMessage": "Choisissez un jeu et retrouvez ici vos parties au prochain passage."
+  },
+  "home.preparePlayers": {
+    "defaultMessage": "Préparer les joueurs"
+  },
+  "home.localNote": {
+    "defaultMessage": "Un téléphone pour tous les joueurs. Aucun compte, aucun réseau nécessaire après installation."
+  },
+  "home.backups": {
+    "defaultMessage": "Mes sauvegardes"
+  },
+  "games.title": {
+    "defaultMessage": "À quoi joue-t-on ?"
+  },
+  "games.intro": {
+    "defaultMessage": "Trouvez un jeu et préparez votre prochaine partie."
+  },
+  "games.searchHint": {
+    "defaultMessage": "Yams, pétanque, fléchettes…"
+  },
+  "games.toolsEyebrow": {
+    "defaultMessage": "Depuis un fichier"
+  },
+  "games.toolsTitle": {
+    "defaultMessage": "Importer un jeu"
+  },
+  "games.toolsHint": {
+    "defaultMessage": "Ajoutez les règles d’un jeu depuis un fichier JSON."
+  },
+  "games.kinds.yams": {
+    "defaultMessage": "Dés & combinaisons"
+  },
+  "games.kinds.421": {
+    "defaultMessage": "Dés & bluff"
+  },
+  "games.kinds.5000-10000": {
+    "defaultMessage": "Dés & prise de risque"
+  },
+  "games.kinds.petanque": {
+    "defaultMessage": "Plein air & précision"
+  },
+  "games.kinds.darts": {
+    "defaultMessage": "Cible & précision"
+  },
+  "games.kinds.skull-king": {
+    "defaultMessage": "Cartes & plis"
+  },
+  "games.kinds.flip-7": {
+    "defaultMessage": "Cartes & prise de risque"
+  },
+  "games.kinds.times-up": {
+    "defaultMessage": "Équipes & devinettes"
+  },
+  "games.kinds.molkky": {
+    "defaultMessage": "Quilles & précision"
+  },
+  "games.kinds.6-qui-prend": {
+    "defaultMessage": "Cartes & pénalités"
+  },
+  "games.comingSoon": {
+    "defaultMessage": "Bientôt disponible"
+  },
+  "games.first": {
+    "defaultMessage": "Premier jeu prévu"
+  },
+  "games.play": {
+    "defaultMessage": "Jouer à la pétanque"
+  },
+  "games.available": {
+    "defaultMessage": "Sur cet appareil"
+  },
+  "games.search": {
+    "defaultMessage": "Rechercher un jeu"
+  },
+  "games.filter": {
+    "defaultMessage": "Disponibilité"
+  },
+  "games.all": {
+    "defaultMessage": "Tous les jeux"
+  },
+  "games.playable": {
+    "defaultMessage": "Jouables"
+  },
+  "games.upcoming": {
+    "defaultMessage": "À venir"
+  },
+  "games.favorites": {
+    "defaultMessage": "Mes favoris"
+  },
+  "games.loading": {
+    "defaultMessage": "Lecture du catalogue…"
+  },
+  "games.empty": {
+    "defaultMessage": "Aucun jeu ne correspond à ces filtres."
+  },
+  "games.error": {
+    "defaultMessage": "Impossible d’accéder au catalogue. Vos données sont conservées."
+  },
+  "games.custom": {
+    "defaultMessage": "Création locale"
+  },
+  "games.customPlay": {
+    "defaultMessage": "Jouer à ce jeu"
+  },
+  "games.playYams": {
+    "defaultMessage": "Jouer au Yams"
+  },
+  "games.descriptions.yams": {
+    "defaultMessage": "Lancez les dés et complétez vos combinaisons."
+  },
+  "games.descriptions.421": {
+    "defaultMessage": "Débarrassez-vous de vos jetons avec trois dés."
+  },
+  "games.descriptions.5000-10000": {
+    "defaultMessage": "Cumulez les points aux dés et validez au bon moment."
+  },
+  "games.descriptions.petanque": {
+    "defaultMessage": "Rapprochez vos boules du but et marquez les points."
+  },
+  "games.descriptions.darts": {
+    "defaultMessage": "Visez la cible en X01 ou au Cricket."
+  },
+  "games.descriptions.skull-king": {
+    "defaultMessage": "Annoncez vos plis et respectez votre pari."
+  },
+  "games.descriptions.flip-7": {
+    "defaultMessage": "Accumulez les cartes et choisissez quand vous arrêter."
+  },
+  "games.descriptions.times-up": {
+    "defaultMessage": "Faites deviner les cartes en trois manches chronométrées."
+  },
+  "games.descriptions.molkky": {
+    "defaultMessage": "Renversez les quilles pour atteindre exactement 50 points."
+  },
+  "games.descriptions.6-qui-prend": {
+    "defaultMessage": "Évitez les têtes de bœuf et gardez le plus petit score."
+  },
+  "players.title": {
+    "defaultMessage": "Vos compagnons de jeu"
+  },
+  "players.intro": {
+    "defaultMessage": "Ajoutez les joueurs pour les retrouver à chaque partie."
+  },
+  "players.empty": {
+    "defaultMessage": "Qui rejoint la partie ?"
+  },
+  "players.detail": {
+    "defaultMessage": "Enregistrez un profil ou ajoutez un invité pour préparer vos prochaines parties."
+  },
+  "players.add": {
+    "defaultMessage": "Ajouter un joueur"
+  },
+  "players.createTitle": {
+    "defaultMessage": "Un nouveau compagnon"
+  },
+  "players.editTitle": {
+    "defaultMessage": "Modifier le profil"
+  },
+  "players.name": {
+    "defaultMessage": "Pseudonyme"
+  },
+  "players.identityTitle": {
+    "defaultMessage": "Identité"
+  },
+  "players.appearanceTitle": {
+    "defaultMessage": "Apparence"
+  },
+  "players.color": {
+    "defaultMessage": "Couleur"
+  },
+  "players.avatar": {
+    "defaultMessage": "Avatar"
+  },
+  "players.avatarLabels.initials": {
+    "defaultMessage": "Initiales"
+  },
+  "players.avatarLabels.sun": {
+    "defaultMessage": "Soleil"
+  },
+  "players.avatarLabels.moon": {
+    "defaultMessage": "Lune"
+  },
+  "players.avatarLabels.star": {
+    "defaultMessage": "Étoile"
+  },
+  "players.avatarLabels.leaf": {
+    "defaultMessage": "Feuille"
+  },
+  "players.avatarLabels.dice": {
+    "defaultMessage": "Dé"
+  },
+  "players.avatarLabels.gravatar": {
+    "defaultMessage": "Gravatar"
+  },
+  "players.guest": {
+    "defaultMessage": "Invité sans compte"
+  },
+  "players.guestHint": {
+    "defaultMessage": "Un invité est enregistré sur cet appareil et peut être réutilisé."
+  },
+  "players.savedProfile": {
+    "defaultMessage": "Profil enregistré"
+  },
+  "players.guestBadge": {
+    "defaultMessage": "Invité"
+  },
+  "players.deletedBadge": {
+    "defaultMessage": "Supprimé"
+  },
+  "players.email": {
+    "defaultMessage": "Adresse e-mail (facultative)"
+  },
+  "players.emailHint": {
+    "defaultMessage": "Renseignez une adresse pour utiliser la photo Gravatar de ce profil."
+  },
+  "players.gravatarHint": {
+    "defaultMessage": "La photo est récupérée à l’enregistrement, puis conservée sur cet appareil. Gravatar reçoit l’empreinte de l’adresse e-mail."
+  },
+  "players.refresh": {
+    "defaultMessage": "Actualiser la photo à l’enregistrement"
+  },
+  "players.gravatarUnavailable": {
+    "defaultMessage": "Profil enregistré. Photo Gravatar indisponible ; les initiales ou la dernière photo restent disponibles."
+  },
+  "players.save": {
+    "defaultMessage": "Enregistrer le profil"
+  },
+  "players.saving": {
+    "defaultMessage": "Enregistrement…"
+  },
+  "players.cancel": {
+    "defaultMessage": "Annuler"
+  },
+  "players.deleteDetail": {
+    "defaultMessage": "Ce joueur sera supprimé de vos profils, sans restauration depuis cette page. Les anciennes parties gardent leur historique. Les équipes concernées devront être complétées avant de rejouer."
+  },
+  "players.confirmDelete": {
+    "defaultMessage": "Supprimer ce joueur"
+  },
+  "players.selectMode": {
+    "defaultMessage": "Sélectionner des joueurs"
+  },
+  "players.selectModeShort": {
+    "defaultMessage": "Sélectionner"
+  },
+  "players.exitSelection": {
+    "defaultMessage": "Terminer la sélection"
+  },
+  "players.exitSelectionShort": {
+    "defaultMessage": "Terminer"
+  },
+  "players.selectionHelp": {
+    "defaultMessage": "Aide à la sélection"
+  },
+  "players.createTeamShort": {
+    "defaultMessage": "Créer une équipe"
+  },
+  "players.distributeTeamsShort": {
+    "defaultMessage": "Répartir"
+  },
+  "players.deleteSelectionShort": {
+    "defaultMessage": "Supprimer"
+  },
+  "players.selectPage": {
+    "defaultMessage": "Sélectionner cette page"
+  },
+  "players.selectionHint": {
+    "defaultMessage": "La sélection est conservée entre les recherches et les pages (256 joueurs maximum)."
+  },
+  "players.clearSelection": {
+    "defaultMessage": "Tout désélectionner"
+  },
+  "players.createTeam": {
+    "defaultMessage": "Créer une équipe avec la sélection"
+  },
+  "players.distributeTeams": {
+    "defaultMessage": "Répartir en plusieurs équipes"
+  },
+  "players.teamSelectionHint": {
+    "defaultMessage": "Une équipe accueille jusqu’à 32 joueurs. Pour plusieurs équipes, choisissez au moins 2 joueurs."
+  },
+  "players.deleteSelection": {
+    "defaultMessage": "Supprimer la sélection"
+  },
+  "players.deleteManyDetail": {
+    "defaultMessage": "Ces joueurs seront supprimés de vos profils. Les anciennes parties gardent leur historique. Les équipes concernées devront être complétées avant de rejouer. Aucune restauration individuelle ne sera proposée."
+  },
+  "players.confirmDeleteMany": {
+    "defaultMessage": "Supprimer ces joueurs"
+  },
+  "players.saved": {
+    "defaultMessage": "Profil enregistré sur cet appareil."
+  },
+  "players.deleted": {
+    "defaultMessage": "Joueur supprimé."
+  },
+  "players.search": {
+    "defaultMessage": "Rechercher un joueur"
+  },
+  "players.searchHint": {
+    "defaultMessage": "Saisissez le début du pseudonyme."
+  },
+  "players.noResults": {
+    "defaultMessage": "Aucun profil ne correspond à cette recherche."
+  },
+  "players.loading": {
+    "defaultMessage": "Lecture des profils…"
+  },
+  "players.previous": {
+    "defaultMessage": "Précédent"
+  },
+  "players.next": {
+    "defaultMessage": "Suivant"
+  },
+  "players.list": {
+    "defaultMessage": "Profils joueurs"
+  },
+  "players.pagination": {
+    "defaultMessage": "Pages des profils"
+  },
+  "players.error": {
+    "defaultMessage": "Impossible d’accéder aux profils. Vérifiez le stockage du navigateur, puis réessayez."
+  },
+  "players.retry": {
+    "defaultMessage": "Réessayer"
+  },
+  "players.conflict": {
+    "defaultMessage": "Ce profil a changé dans un autre onglet. Fermez cette fenêtre puis rouvrez le profil pour reprendre vos modifications."
+  },
+  "players.invalidName": {
+    "defaultMessage": "Saisissez un pseudonyme de 1 à 120 caractères sur une seule ligne."
+  },
+  "players.invalidEmail": {
+    "defaultMessage": "Saisissez une adresse e-mail valide pour un profil enregistré avec Gravatar."
+  },
+  "players.invalidAppearance": {
+    "defaultMessage": "Choisissez une couleur et un avatar valides."
+  },
+  "teams.title": {
+    "defaultMessage": "L’esprit d’équipe"
+  },
+  "teams.intro": {
+    "defaultMessage": "Réunissez vos joueurs en équipes pour vos prochaines parties."
+  },
+  "teams.empty": {
+    "defaultMessage": "Votre prochaine équipe commence ici"
+  },
+  "teams.detail": {
+    "defaultMessage": "Choisissez ses membres ou laissez le hasard composer les équipes."
+  },
+  "teams.add": {
+    "defaultMessage": "Créer une équipe"
+  },
+  "teams.random": {
+    "defaultMessage": "Tirer au sort des équipes"
+  },
+  "teams.createTitle": {
+    "defaultMessage": "Une nouvelle équipe"
+  },
+  "teams.editTitle": {
+    "defaultMessage": "Modifier l’équipe"
+  },
+  "teams.name": {
+    "defaultMessage": "Nom de l’équipe"
+  },
+  "teams.color": {
+    "defaultMessage": "Couleur de l’équipe"
+  },
+  "teams.avatar": {
+    "defaultMessage": "Avatar de l’équipe"
+  },
+  "teams.avatarLabels.initials": {
+    "defaultMessage": "Initiales"
+  },
+  "teams.avatarLabels.flag": {
+    "defaultMessage": "Drapeau"
+  },
+  "teams.avatarLabels.star": {
+    "defaultMessage": "Étoile"
+  },
+  "teams.avatarLabels.leaf": {
+    "defaultMessage": "Feuille"
+  },
+  "teams.avatarLabels.boules": {
+    "defaultMessage": "Boules"
+  },
+  "teams.format": {
+    "defaultMessage": "Composition"
+  },
+  "teams.free": {
+    "defaultMessage": "Libre (1 à 32 membres)"
+  },
+  "teams.doublette": {
+    "defaultMessage": "Doublette (2 membres)"
+  },
+  "teams.formatHint": {
+    "defaultMessage": "Le format doublette impose deux membres. Vous pourrez réutiliser cette équipe dans vos prochaines parties."
+  },
+  "teams.members": {
+    "defaultMessage": "Membres de l’équipe"
+  },
+  "teams.selected": {
+    "defaultMessage": "Joueurs sélectionnés"
+  },
+  "teams.noneSelected": {
+    "defaultMessage": "Aucun joueur sélectionné."
+  },
+  "teams.noPlayers": {
+    "defaultMessage": "Aucun joueur disponible. Ajoutez d’abord des profils dans Joueurs."
+  },
+  "teams.unavailableMember": {
+    "defaultMessage": "Joueur supprimé ou indisponible — complétez la composition."
+  },
+  "teams.unavailableMembers": {
+    "defaultMessage": "Un joueur de cette équipe est supprimé ou indisponible. Complétez la composition avant de rejouer."
+  },
+  "teams.save": {
+    "defaultMessage": "Enregistrer l’équipe"
+  },
+  "teams.saveBatch": {
+    "defaultMessage": "Enregistrer les équipes"
+  },
+  "teams.saving": {
+    "defaultMessage": "Enregistrement…"
+  },
+  "teams.saved": {
+    "defaultMessage": "Équipe enregistrée."
+  },
+  "teams.batchSaved": {
+    "defaultMessage": "Équipes enregistrées."
+  },
+  "teams.deleteDetail": {
+    "defaultMessage": "Cette suppression est définitive. L’équipe ne sera plus proposée pour de nouvelles parties. Les anciennes parties conservent leur nom et leur composition."
+  },
+  "teams.confirmDelete": {
+    "defaultMessage": "Supprimer l’équipe"
+  },
+  "teams.deleted": {
+    "defaultMessage": "Équipe supprimée."
+  },
+  "teams.search": {
+    "defaultMessage": "Rechercher une équipe"
+  },
+  "teams.loading": {
+    "defaultMessage": "Lecture des équipes…"
+  },
+  "teams.noResults": {
+    "defaultMessage": "Aucune équipe ne correspond à cette recherche."
+  },
+  "teams.drawTitle": {
+    "defaultMessage": "À vous de laisser faire le hasard"
+  },
+  "teams.draw": {
+    "defaultMessage": "Répartir les joueurs"
+  },
+  "teams.teamSize": {
+    "defaultMessage": "Joueurs par équipe"
+  },
+  "teams.preview": {
+    "defaultMessage": "Composition proposée"
+  },
+  "teams.invalidName": {
+    "defaultMessage": "Saisissez un nom d’équipe de 1 à 120 caractères sur une seule ligne."
+  },
+  "teams.invalidAppearance": {
+    "defaultMessage": "Choisissez une couleur, un avatar et un format valides."
+  },
+  "teams.invalidMembers": {
+    "defaultMessage": "Choisissez 1 à 32 profils actifs et distincts ; exactement 2 pour une doublette."
+  },
+  "teams.invalidDistribution": {
+    "defaultMessage": "Sélectionnez des joueurs distincts, au moins deux équipes complètes, sans joueur restant (32 équipes et 256 joueurs maximum)."
+  },
+  "teams.error": {
+    "defaultMessage": "Impossible d’accéder aux équipes. Vérifiez le stockage du navigateur, puis réessayez."
+  },
+  "teams.conflict": {
+    "defaultMessage": "Cette équipe a changé. Fermez la fenêtre puis rouvrez-la pour reprendre vos modifications."
+  },
+  "matches.title": {
+    "defaultMessage": "Vos parties"
+  },
+  "matches.create": {
+    "defaultMessage": "Nouvelle partie"
+  },
+  "matches.intro": {
+    "defaultMessage": "Reprenez une partie en cours ou retrouvez vos résultats."
+  },
+  "matches.empty": {
+    "defaultMessage": "L’histoire commence ici"
+  },
+  "matches.detail": {
+    "defaultMessage": "Choisissez un jeu pour votre première partie. Vos parties et leurs résultats resteront sur cet appareil."
+  },
+  "matches.list": {
+    "defaultMessage": "Parties enregistrées"
+  },
+  "matches.loading": {
+    "defaultMessage": "Chargement des parties…"
+  },
+  "matches.open": {
+    "defaultMessage": "Reprendre"
+  },
+  "matches.back": {
+    "defaultMessage": "Toutes les parties"
+  },
+  "matches.scores": {
+    "defaultMessage": "Scores"
+  },
+  "matches.journal": {
+    "defaultMessage": "Historique des actions"
+  },
+  "matches.noActions": {
+    "defaultMessage": "Aucune action enregistrée pour cette partie."
+  },
+  "matches.error": {
+    "defaultMessage": "Impossible de lire les parties. Réessayez sans effacer les données de cet appareil."
+  },
+  "matches.invalid": {
+    "defaultMessage": "Cet historique ne peut pas être relu dans son format actuel. Les données ont été conservées."
+  },
+  "matches.missing": {
+    "defaultMessage": "Cette partie est introuvable sur cet appareil."
+  },
+  "matches.finish": {
+    "defaultMessage": "Clôturer la partie"
+  },
+  "matches.start": {
+    "defaultMessage": "Démarrer la partie"
+  },
+  "matches.pause": {
+    "defaultMessage": "Mettre en pause"
+  },
+  "matches.resume": {
+    "defaultMessage": "Reprendre la partie"
+  },
+  "matches.cancel": {
+    "defaultMessage": "Annuler la partie"
+  },
+  "matches.statuses.draft": {
+    "defaultMessage": "En préparation"
+  },
+  "matches.statuses.in_progress": {
+    "defaultMessage": "En cours"
+  },
+  "matches.statuses.paused": {
+    "defaultMessage": "En pause"
+  },
+  "matches.statuses.finished": {
+    "defaultMessage": "Terminée"
+  },
+  "matches.statuses.cancelled": {
+    "defaultMessage": "Annulée"
+  },
+  "petanque.setup": {
+    "defaultMessage": "Préparer la partie"
+  },
+  "petanque.setupHelp": {
+    "defaultMessage": "Choisissez de 2 à 16 joueurs ou équipes. Les compositions, couleurs et règles seront conservées dans la partie."
+  },
+  "petanque.mode": {
+    "defaultMessage": "Comment joue-t-on ?"
+  },
+  "petanque.individual": {
+    "defaultMessage": "Chacun pour soi"
+  },
+  "petanque.teams": {
+    "defaultMessage": "Par équipes"
+  },
+  "petanque.boules": {
+    "defaultMessage": "Boules par joueur"
+  },
+  "petanque.morePoints": {
+    "defaultMessage": "Autre nombre de points"
+  },
+  "petanque.freePlay": {
+    "defaultMessage": "Jeu libre à plus de deux camps : convenez du décompte entre joueurs avant de commencer."
+  },
+  "petanque.deadUnsupported": {
+    "defaultMessage": "À plus de deux camps, le cochonnet mort n’est pas calculé automatiquement. Convenez du résultat entre joueurs, puis saisissez des points ou une mène nulle."
+  },
+  "petanque.manageTeams": {
+    "defaultMessage": "Créer ou modifier les équipes"
+  },
+  "petanque.search": {
+    "defaultMessage": "Rechercher une équipe"
+  },
+  "petanque.selected": {
+    "defaultMessage": "Équipes retenues"
+  },
+  "petanque.rosterHint": {
+    "defaultMessage": "Choisissez des équipes actives, sans joueur commun (16 équipes et 256 joueurs maximum)."
+  },
+  "petanque.noTeams": {
+    "defaultMessage": "Aucune équipe ne correspond. Préparez vos équipes dans Équipes."
+  },
+  "petanque.target": {
+    "defaultMessage": "Score à atteindre"
+  },
+  "petanque.firstThrow": {
+    "defaultMessage": "Premier lancer du cochonnet"
+  },
+  "petanque.chooseOption": {
+    "defaultMessage": "Choisir…"
+  },
+  "petanque.createDraft": {
+    "defaultMessage": "Créer la partie"
+  },
+  "petanque.saving": {
+    "defaultMessage": "Enregistrement…"
+  },
+  "petanque.invalidSetup": {
+    "defaultMessage": "Choisissez de 2 à 16 joueurs ou équipes sans joueur commun, puis le premier lanceur."
+  },
+  "petanque.invalidEnd": {
+    "defaultMessage": "Choisissez qui marque et un nombre de points compatible avec ses boules, ou renseignez une mène nulle ou un cochonnet mort."
+  },
+  "petanque.conflict": {
+    "defaultMessage": "La partie ou une équipe a changé dans un autre onglet. Vérifiez les valeurs actualisées, puis recommencez cette action."
+  },
+  "petanque.error": {
+    "defaultMessage": "Impossible d’enregistrer cette action. Vos saisies et les données déjà enregistrées sont conservées."
+  },
+  "petanque.invalidCorrection": {
+    "defaultMessage": "Cette correction rendrait une saisie suivante invalide, ou vise une action déjà remplacée. Corrigez d’abord les mènes concernées."
+  },
+  "petanque.limit": {
+    "defaultMessage": "La limite de 1 000 actions est atteinte pour cette partie. L’historique reste consultable."
+  },
+  "petanque.saved": {
+    "defaultMessage": "Mène enregistrée sur cet appareil."
+  },
+  "petanque.updated": {
+    "defaultMessage": "Partie mise à jour sur cet appareil."
+  },
+  "petanque.controls": {
+    "defaultMessage": "Suivre la partie"
+  },
+  "petanque.normal": {
+    "defaultMessage": "Points de la mène"
+  },
+  "petanque.void": {
+    "defaultMessage": "Mène nulle"
+  },
+  "petanque.dead": {
+    "defaultMessage": "Cochonnet mort"
+  },
+  "petanque.endKind": {
+    "defaultMessage": "Résultat de la mène"
+  },
+  "petanque.scoringTeam": {
+    "defaultMessage": "Qui marque ?"
+  },
+  "petanque.record": {
+    "defaultMessage": "Enregistrer la mène"
+  },
+  "petanque.deadHelp": {
+    "defaultMessage": "Cochonnet déclaré nul : si une seule équipe a encore des boules, elle marque leur nombre. Si les deux équipes ou aucune n’en ont, la mène est nulle."
+  },
+  "petanque.voidLabel": {
+    "defaultMessage": "Mène nulle — aucun point"
+  },
+  "petanque.roster": {
+    "defaultMessage": "Joueurs de la partie"
+  },
+  "petanque.ends": {
+    "defaultMessage": "Mènes et corrections"
+  },
+  "petanque.confirmCorrection": {
+    "defaultMessage": "Confirmer la correction"
+  },
+  "petanque.correctionHelp": {
+    "defaultMessage": "La saisie initiale restera dans l’historique. Les scores et la victoire seront recalculés ; une partie terminée pourra reprendre."
+  },
+  "petanque.confirmUndo": {
+    "defaultMessage": "Confirmer l’annulation de la mène"
+  },
+  "petanque.confirmCancel": {
+    "defaultMessage": "Confirmer l’annulation de la partie"
+  },
+  "petanque.cancelHelp": {
+    "defaultMessage": "La partie sera arrêtée. Son historique sera conservé et aucune nouvelle mène ne pourra y être saisie."
+  },
+  "petanque.confirm": {
+    "defaultMessage": "Confirmer"
+  },
+  "petanque.rematch": {
+    "defaultMessage": "Rejouer avec ces équipes"
+  },
+  "petanque.rematchIndividual": {
+    "defaultMessage": "Rejouer avec ces joueurs"
+  },
+  "petanque.rematchHelp": {
+    "defaultMessage": "Une nouvelle partie sera préparée avec ces compositions, couleurs et objectif. Les profils doivent encore être actifs. La partie actuelle sera conservée."
+  },
+  "petanque.paused": {
+    "defaultMessage": "La partie est en pause. Reprenez-la pour saisir une nouvelle mène."
+  },
+  "petanque.scope": {
+    "defaultMessage": "Saisie sur cet appareil. Les mesures, sanctions et litiges restent à décider entre joueurs."
+  },
+  "settings.title": {
+    "defaultMessage": "À votre façon"
+  },
+  "settings.intro": {
+    "defaultMessage": "Personnalisez l’affichage et gérez vos sauvegardes."
+  },
+  "settings.loading": {
+    "defaultMessage": "Lecture des données locales…"
+  },
+  "settings.error": {
+    "defaultMessage": "Le stockage local est indisponible. Vérifiez les autorisations du navigateur, l’espace libre, puis réessayez."
+  },
+  "settings.quota": {
+    "defaultMessage": "Le stockage de cet appareil est plein. Libérez de l’espace, puis réessayez. Vos données existantes sont conservées."
+  },
+  "settings.installTitle": {
+    "defaultMessage": "Emportez Scoretrackrr"
+  },
+  "settings.install": {
+    "defaultMessage": "Sur iPhone, ouvrez le site dans Safari, puis Partager → Sur l’écran d’accueil. Sur Android, utilisez Installer l’application dans le menu de votre navigateur."
+  },
+  "settings.installDetail": {
+    "defaultMessage": "Le premier chargement nécessite Internet et une adresse HTTPS. Attendez que la navigation soit disponible hors ligne avant de couper le réseau."
+  },
+  "settings.updates": {
+    "defaultMessage": "Une nouvelle version prête à être installée est signalée dans l’application. Retrouvez la vérification et l’installation dans Mises à jour de l’application."
+  },
+  "theme.title": {
+    "defaultMessage": "Apparence"
+  },
+  "theme.help": {
+    "defaultMessage": "Par défaut, le thème suit l’apparence de l’appareil. Vous pouvez aussi choisir un thème clair ou sombre."
+  },
+  "theme.label": {
+    "defaultMessage": "Thème"
+  },
+  "theme.system": {
+    "defaultMessage": "Suivre l’appareil"
+  },
+  "theme.light": {
+    "defaultMessage": "Clair"
+  },
+  "theme.dark": {
+    "defaultMessage": "Sombre"
+  },
+  "theme.saved": {
+    "defaultMessage": "Thème enregistré sur cet appareil."
+  },
+  "generic.setup": {
+    "defaultMessage": "Préparer une partie personnalisée"
+  },
+  "generic.playerSetupHelp": {
+    "defaultMessage": "Choisissez les joueurs de la partie."
+  },
+  "generic.unavailableMode": {
+    "defaultMessage": "Ces règles ne proposent aucun mode disponible pour une nouvelle partie. La sélection d’équipes est réservée à la pétanque, aux fléchettes et au Mölkky."
+  },
+  "generic.invalidSetup": {
+    "defaultMessage": "Choisissez des profils actifs et des équipes sans joueur commun. Le mode et le nombre de camps doivent être acceptés par les règles du jeu."
+  },
+  "generic.setupHelp": {
+    "defaultMessage": "Choisissez les participants. En mode mixte, un profil ne peut pas aussi appartenir à une équipe sélectionnée."
+  },
+  "generic.cooperativeName": {
+    "defaultMessage": "Tous ensemble"
+  },
+  "generic.teams": {
+    "defaultMessage": "Équipes de la partie"
+  },
+  "generic.modes.individual": {
+    "defaultMessage": "Chacun pour soi"
+  },
+  "generic.modes.teams": {
+    "defaultMessage": "Par équipes"
+  },
+  "generic.modes.cooperative": {
+    "defaultMessage": "Tous ensemble"
+  },
+  "generic.modes.mixed": {
+    "defaultMessage": "Équipes et joueurs individuels"
+  },
+  "generic.entry": {
+    "defaultMessage": "Saisie du score"
+  },
+  "generic.points": {
+    "defaultMessage": "Points"
+  },
+  "generic.record": {
+    "defaultMessage": "Enregistrer le score"
+  },
+  "generic.saved": {
+    "defaultMessage": "Score enregistré sur cet appareil."
+  },
+  "generic.controls": {
+    "defaultMessage": "Saisie et gestion de la partie"
+  },
+  "generic.correct": {
+    "defaultMessage": "Corriger cette saisie"
+  },
+  "generic.undo": {
+    "defaultMessage": "Annuler cette saisie"
+  },
+  "generic.confirm": {
+    "defaultMessage": "Confirmer cette action"
+  },
+  "generic.invalid": {
+    "defaultMessage": "Vérifiez le camp, les valeurs et l’état de la partie."
+  },
+  "generic.rules": {
+    "defaultMessage": "Cette partie conserve la version des règles choisie à sa création."
+  },
+  "generic.finishHelp": {
+    "defaultMessage": "La partie sera clôturée avec le classement actuel. Les meilleurs scores ex æquo partageront la victoire. Une annulation de cette clôture restera dans l’historique."
+  },
+  "yams.title": {
+    "defaultMessage": "Grille de Yams"
+  },
+  "yams.setup": {
+    "defaultMessage": "Préparer une partie de Yams"
+  },
+  "yams.scroll": {
+    "defaultMessage": "Grille de Yams à défilement horizontal"
+  },
+  "yams.variant": {
+    "defaultMessage": "Grille de 13 catégories"
+  },
+  "yams.withBonus": {
+    "defaultMessage": "13 cases · prime supérieure 63 / 35"
+  },
+  "yams.withoutBonus": {
+    "defaultMessage": "13 cases · sans prime supérieure"
+  },
+  "yams.help": {
+    "defaultMessage": "Une case par camp à chaque tour. Saisissez le résultat ou les cinq dés de votre lancer. Le zéro permet de rayer une case."
+  },
+  "yams.categories.0": {
+    "defaultMessage": "Les 1"
+  },
+  "yams.categories.1": {
+    "defaultMessage": "Les 2"
+  },
+  "yams.categories.2": {
+    "defaultMessage": "Les 3"
+  },
+  "yams.categories.3": {
+    "defaultMessage": "Les 4"
+  },
+  "yams.categories.4": {
+    "defaultMessage": "Les 5"
+  },
+  "yams.categories.5": {
+    "defaultMessage": "Les 6"
+  },
+  "yams.categories.6": {
+    "defaultMessage": "Brelan"
+  },
+  "yams.categories.7": {
+    "defaultMessage": "Carré"
+  },
+  "yams.categories.8": {
+    "defaultMessage": "Full"
+  },
+  "yams.categories.9": {
+    "defaultMessage": "Petite suite"
+  },
+  "yams.categories.10": {
+    "defaultMessage": "Grande suite"
+  },
+  "yams.categories.11": {
+    "defaultMessage": "Yams"
+  },
+  "yams.categories.12": {
+    "defaultMessage": "Chance"
+  },
+  "yams.category": {
+    "defaultMessage": "Catégorie"
+  },
+  "yams.upper": {
+    "defaultMessage": "Total supérieur"
+  },
+  "yams.bonus": {
+    "defaultMessage": "Prime supérieure"
+  },
+  "yams.lower": {
+    "defaultMessage": "Total inférieur"
+  },
+  "yams.total": {
+    "defaultMessage": "Total général"
+  },
+  "yams.edit": {
+    "defaultMessage": "Saisir ou corriger une case"
+  },
+  "yams.assisted": {
+    "defaultMessage": "Calculer depuis les dés"
+  },
+  "yams.points": {
+    "defaultMessage": "Score de la case"
+  },
+  "yams.undo": {
+    "defaultMessage": "Annuler cette case"
+  },
+  "yams.saved": {
+    "defaultMessage": "Grille enregistrée sur cet appareil."
+  },
+  "yams.invalid": {
+    "defaultMessage": "Cette case ou ce score n’est pas valide. Vérifiez la catégorie et les dés."
+  },
+  "backup.restored": {
+    "defaultMessage": "Import terminé : {added} enregistrement(s) ajouté(s), {duplicates} déjà présent(s)."
+  },
+  "sharing.boundIdentity": {
+    "defaultMessage": "Profil associé par l’organisateur : {name}"
+  },
+  "sharing.permissionApplied": {
+    "defaultMessage": "Droits appliqués : {role}"
+  },
+  "sharing.yourPermission": {
+    "defaultMessage": "Vos droits : {role}"
+  },
+  "sharing.proposedBy": {
+    "defaultMessage": "Proposé par {name}, validé par l’organisateur"
+  },
+  "sharing.currentOrganizer": {
+    "defaultMessage": "Organisateur actuel : {name}"
+  },
+  "sharing.transferEntry": {
+    "defaultMessage": "Autorité transférée à {name}"
+  },
+  "sharing.journalVerified": {
+    "defaultMessage": "Journal vérifié : version {version}, {count} action(s)."
+  },
+  "sharing.peer": {
+    "defaultMessage": "Lecteur {id}"
+  },
+  "sharing.ack": {
+    "defaultMessage": "Version confirmée : {version}"
+  },
+  "history.rules": {
+    "defaultMessage": "Règles conservées : {version}"
+  },
+  "builder.turn": {
+    "defaultMessage": "Manche {round}/{rounds}{hasCategory, select, yes { · {category}} other {}} · Au tour de {owner}"
+  },
+  "flip.round": {
+    "defaultMessage": "Manche {round}"
+  },
+  "flip.card": {
+    "defaultMessage": "Carte {value}"
+  },
+  "flip.modifier": {
+    "defaultMessage": "Bonus +{value}"
+  },
+  "flip.points": {
+    "defaultMessage": "{points} points pour cette manche"
+  },
+  "flip.entry": {
+    "defaultMessage": "Manche {round} · {name} : {points} points"
+  },
+  "skull.round": {
+    "defaultMessage": "Manche {round} · {cards} carte(s) par joueur"
+  },
+  "skull.preview": {
+    "defaultMessage": "Score de la manche : {score}"
+  },
+  "skull.entry": {
+    "defaultMessage": "Manche {round} · {name} : {kind, select, 0 {annonce} other {plis remportés}} {value}"
+  },
+  "skull.nextEntry": {
+    "defaultMessage": "Démarrage de la manche {nextRound}"
+  },
+  "dartsMatch.format": {
+    "defaultMessage": "Premier à {target} legs · Leg {leg}"
+  },
+  "dartsMatch.score": {
+    "defaultMessage": "{name} : {wins} leg(s) gagné(s)"
+  },
+  "dartsMatch.legWinner": {
+    "defaultMessage": "Leg remporté par {name}"
+  },
+  "dartsMatch.nextStarter": {
+    "defaultMessage": "Prochain leg : {name} commence"
+  },
+  "dartsMatch.nextLeg": {
+    "defaultMessage": "Démarrer le leg {leg}"
+  },
+  "dartsMatch.nextEntry": {
+    "defaultMessage": "Nouveau leg : {name} commence"
+  },
+  "cricket.visit": {
+    "defaultMessage": "Fléchette {dart} sur 3"
+  },
+  "cricket.cell": {
+    "defaultMessage": "{name} · {target, select, 25 {bull} other {{target}}} : {marks} marque(s) sur 3{marks, select, 3 { · fermé} other {}}"
+  },
+  "darts.visitTotal": {
+    "defaultMessage": "Total des {darts} fléchette(s) restante(s)"
+  },
+  "darts.visitEntry": {
+    "defaultMessage": "{name} : volée {total} points{hasCheckout, select, yes { · sortie double confirmée} other {}}"
+  },
+  "darts.checkouts": {
+    "defaultMessage": "Sorties possibles · {darts} fléchette(s) restante(s)"
+  },
+  "darts.checkoutCount": {
+    "defaultMessage": "Page {page} sur {pages} · {total} parcours possibles"
+  },
+  "darts.preview": {
+    "defaultMessage": "Impact : {points} points"
+  },
+  "darts.visit": {
+    "defaultMessage": "Fléchette {dart} sur 3 · début de volée : {start}"
+  },
+  "darts.entry": {
+    "defaultMessage": "{name} : {sector, select, 0 {raté} other {{sector} × {multiplier}}} ({points} points)"
+  },
+  "farkle.running": {
+    "defaultMessage": "Tour : {points} points · {remaining} dé(s) à lancer"
+  },
+  "farkle.lastTurns": {
+    "defaultMessage": "Dernier tour : {turns} camp(s) restant(s)"
+  },
+  "farkle.keep": {
+    "defaultMessage": "Garder le dé {die}"
+  },
+  "farkle.preview": {
+    "defaultMessage": "Sélection : {points} points"
+  },
+  "farkle.entry": {
+    "defaultMessage": "{kind, select, 1 {{name} encaisse les points du tour} other {{name} lance {dice}}}"
+  },
+  "sixNimmt.round": {
+    "defaultMessage": "Manche {round}"
+  },
+  "sixNimmt.progress": {
+    "defaultMessage": "{entered}/{total} scores saisis"
+  },
+  "sixNimmt.forPlayer": {
+    "defaultMessage": "Pénalités de {name}"
+  },
+  "sixNimmt.entry": {
+    "defaultMessage": "{name} · manche {round} : {points} têtes de bœuf"
+  },
+  "sixNimmt.nextEntry": {
+    "defaultMessage": "Début de la manche {round}"
+  },
+  "timesUp.activePlayer": {
+    "defaultMessage": "Fait deviner : {name}"
+  },
+  "timesUp.round": {
+    "defaultMessage": "Manche {n} sur 3"
+  },
+  "timesUp.cards": {
+    "defaultMessage": "{n} {n, plural, =1 {carte restante} other {cartes restantes}}"
+  },
+  "timesUp.turn": {
+    "defaultMessage": "Au tour de {name}"
+  },
+  "timesUp.entry": {
+    "defaultMessage": "{kind, select, 2 {{name} : {points} cartes trouvées} 0 {{name} · démarrage du chrono} 1 {{name} · pause du chrono} 3 {{name} · réinitialisation du chrono} other {{name} · chrono}}"
+  },
+  "molkky.score": {
+    "defaultMessage": "{points} {points, plural, one {point} other {points}}"
+  },
+  "molkky.turn": {
+    "defaultMessage": "Au tour de {name}"
+  },
+  "molkky.misses": {
+    "defaultMessage": "{name} : {count}/3 lancers nuls consécutifs"
+  },
+  "molkky.eliminated": {
+    "defaultMessage": "{name} : éliminé après 3 lancers nuls"
+  },
+  "molkky.entry": {
+    "defaultMessage": "{name} : {points} {points, plural, one {point} other {points}}"
+  },
+  "four21.entry": {
+    "defaultMessage": "{name} : dés {dice} · {throws} lancer(s)"
+  },
+  "four21.tiebreak": {
+    "defaultMessage": "Départage : {best} gagne, {worst} reçoit les jetons"
+  },
+  "four21.phase": {
+    "defaultMessage": "{phase, select, charge {Charge · Pot : {pot} jetons} other {Décharge · Pot vide}}"
+  },
+  "four21.turn": {
+    "defaultMessage": "Au tour de {name}"
+  },
+  "four21.combination": {
+    "defaultMessage": "Valeur de la combinaison : {tokens} jeton(s)"
+  },
+  "games.favorite": {
+    "defaultMessage": "Favori : {name}"
+  },
+  "games.publishedVariant": {
+    "defaultMessage": "{name} · version {index}"
+  },
+  "games.versionLabel": {
+    "defaultMessage": "Version publiée : {name}"
+  },
+  "players.edit": {
+    "defaultMessage": "Modifier {name}"
+  },
+  "players.remove": {
+    "defaultMessage": "Supprimer {name}"
+  },
+  "players.deleteTitle": {
+    "defaultMessage": "Supprimer {name} ?"
+  },
+  "players.visibleCount": {
+    "defaultMessage": "{count} affiché{count, plural, one {} other {s}}"
+  },
+  "players.select": {
+    "defaultMessage": "Sélectionner {name}"
+  },
+  "players.selectedCount": {
+    "defaultMessage": "{count} joueur{count, plural, one {} other {s}} sélectionné{count, plural, one {} other {s}}"
+  },
+  "players.deleteManyTitle": {
+    "defaultMessage": "Supprimer {count} joueurs ?"
+  },
+  "players.deletedMany": {
+    "defaultMessage": "{count} joueurs supprimés."
+  },
+  "players.page": {
+    "defaultMessage": "Page {number}"
+  },
+  "teams.selectPlayer": {
+    "defaultMessage": "Sélectionner {name}"
+  },
+  "teams.removePlayer": {
+    "defaultMessage": "Retirer {name}"
+  },
+  "teams.edit": {
+    "defaultMessage": "Modifier l’équipe {name}"
+  },
+  "teams.delete": {
+    "defaultMessage": "Supprimer l’équipe {name}"
+  },
+  "teams.deleteTitle": {
+    "defaultMessage": "Supprimer l’équipe {name} ?"
+  },
+  "teams.generatedName": {
+    "defaultMessage": "Équipe {number}"
+  },
+  "teams.generatedLabel": {
+    "defaultMessage": "Nom de l’équipe {number}"
+  },
+  "matches.winner": {
+    "defaultMessage": "Victoire : {names}"
+  },
+  "matches.actionNumber": {
+    "defaultMessage": "Action n°{sequence}"
+  },
+  "matches.record": {
+    "defaultMessage": "Saisie pour {name} : {values}"
+  },
+  "matches.correct": {
+    "defaultMessage": "Corriger l’action n°{sequence} — {score}"
+  },
+  "matches.undo": {
+    "defaultMessage": "Annuler l’action n°{sequence}"
+  },
+  "matches.superseded": {
+    "defaultMessage": "Remplacée par l’action n°{sequence}"
+  },
+  "matches.metadata": {
+    "defaultMessage": "Par {author} · Appareil {device}"
+  },
+  "petanque.choose": {
+    "defaultMessage": "Choisir {name}"
+  },
+  "petanque.remove": {
+    "defaultMessage": "Retirer {name}"
+  },
+  "petanque.targetPoints": {
+    "defaultMessage": "{value} points"
+  },
+  "petanque.selectTeam": {
+    "defaultMessage": "Points pour {name}"
+  },
+  "petanque.points": {
+    "defaultMessage": "{value} {value, plural, =1 {point} other {points}}"
+  },
+  "petanque.remaining": {
+    "defaultMessage": "Boules restantes pour {name}"
+  },
+  "petanque.scoreLabel": {
+    "defaultMessage": "{name} : +{points}"
+  },
+  "petanque.deadLabel": {
+    "defaultMessage": "Cochonnet mort — {result} (boules restantes : {first} / {second})"
+  },
+  "petanque.roundCount": {
+    "defaultMessage": "{count} {count, plural, =1 {mène comptée} other {mènes comptées}}"
+  },
+  "petanque.nextThrow": {
+    "defaultMessage": "Prochain lancer du cochonnet : {name}"
+  },
+  "petanque.end": {
+    "defaultMessage": "Mène n°{count}"
+  },
+  "petanque.correct": {
+    "defaultMessage": "Corriger la mène n°{count}"
+  },
+  "petanque.undo": {
+    "defaultMessage": "Annuler la mène n°{count}"
+  },
+  "generic.activeTeamPlayer": {
+    "defaultMessage": "À toi de jouer : {name}"
+  },
+  "generic.increase": {
+    "defaultMessage": "Augmenter {field}"
+  },
+  "generic.decrease": {
+    "defaultMessage": "Diminuer {field}"
+  },
+  "yams.cell": {
+    "defaultMessage": "{owner} — {category} : {hasScore, select, yes {{score}} other {à remplir}}"
+  },
+  "yams.die": {
+    "defaultMessage": "Dé {n}"
+  },
+  "yams.computed": {
+    "defaultMessage": "Score calculé : {score}"
+  },
+  "yams.entry": {
+    "defaultMessage": "{owner} — {category} : {points}"
+  },
+  "yams.progress": {
+    "defaultMessage": "{count} / 13 cases remplies"
+  },
+  "language.title": {
+    "defaultMessage": "Langue"
+  },
+  "language.help": {
+    "defaultMessage": "Par défaut, la langue suit l’appareil. Si elle n’est pas disponible, l’anglais est utilisé. Vous pouvez aussi choisir une langue."
+  },
+  "language.label": {
+    "defaultMessage": "Langue de l’application"
+  },
+  "language.saved": {
+    "defaultMessage": "Langue enregistrée sur cet appareil."
+  },
+  "gameNames.6-qui-prend": {
+    "defaultMessage": "6 qui prend !"
+  },
+  "versions.four21": {
+    "defaultMessage": "Charge 21 · 421 = 10 · départage aux dés"
+  },
+  "versions.skull": {
+    "defaultMessage": "{scoring, select, rascal {Rascal} other {Classique}} · {expansion, select, yes {extension 2025} other {cartes de base}}"
+  },
+  "versions.flip": {
+    "defaultMessage": "Édition 3.1 · 200 points"
+  },
+  "versions.sixNimmt": {
+    "defaultMessage": "{expansion, select, surprises {6 qui surprend ! · 2 manches} jokers {Jokers · fin à 66} other {Classique · fin à 66 têtes de bœuf}}"
+  },
+  "versions.timesUp": {
+    "defaultMessage": "Party · 3 manches · {seconds} secondes"
+  },
+  "versions.molkky": {
+    "defaultMessage": "Classique · 50 points{teams, select, yes { · joueurs ou équipes} other {}}"
+  },
+  "versions.farkle": {
+    "defaultMessage": "{target} · entrée {entry}"
+  },
+  "versions.cricket": {
+    "defaultMessage": "Cricket · {points, select, yes {points classiques} other {sans points}}"
+  },
+  "versions.darts": {
+    "defaultMessage": "{start} · sortie {doubleOut, select, yes {double} other {simple}}"
+  },
+  "matchOptions.mode": {
+    "defaultMessage": "{mode, select, individual {Chacun pour soi} teams {Par équipes} cooperative {Coopératif} other {Équipes et joueurs}}"
+  },
+  "matchOptions.participants": {
+    "defaultMessage": "{players, plural, one {# joueur} other {# joueurs}}{teams, plural, =0 {} one { · # équipe} other { · # équipes}}"
+  },
+  "matchOptions.target": {
+    "defaultMessage": "Objectif · {value, number} points"
+  },
+  "matchOptions.boules": {
+    "defaultMessage": "{value, plural, one {# boule par joueur} other {# boules par joueur}}"
+  },
+  "matchOptions.categories": {
+    "defaultMessage": "{count, plural, one {# case} other {# cases}}"
+  },
+  "matchOptions.upperBonus": {
+    "defaultMessage": "{enabled, select, yes {Prime supérieure · +35} other {Sans prime supérieure}}"
+  },
+  "matchOptions.entry": {
+    "defaultMessage": "{value, select, 0 {Sans seuil d’entrée} other {Seuil d’entrée · {value, number} points}}"
+  },
+  "matchOptions.x01": {
+    "defaultMessage": "X01 · {value, number}"
+  },
+  "matchOptions.doubleOut": {
+    "defaultMessage": "{enabled, select, yes {Sortie double} other {Sortie simple}}"
+  },
+  "matchOptions.cricket": {
+    "defaultMessage": "Cricket"
+  },
+  "matchOptions.cricketPoints": {
+    "defaultMessage": "{enabled, select, yes {Points classiques} other {Sans points}}"
+  },
+  "matchOptions.legs": {
+    "defaultMessage": "Premier à {count, number} legs"
+  },
+  "matchOptions.startingRule": {
+    "defaultMessage": "{rule, select, alternate {Départs alternés} other {Le perdant commence}}"
+  },
+  "matchOptions.freePlay": {
+    "defaultMessage": "Jeu libre"
+  },
+  "matchOptions.tokens": {
+    "defaultMessage": "{count, plural, one {# jeton} other {# jetons}}"
+  },
+  "matchOptions.skullRounds": {
+    "defaultMessage": "{count, number} manches + départage"
+  },
+  "matchOptions.rounds": {
+    "defaultMessage": "{count, plural, one {# manche} other {# manches}}"
+  },
+  "matchOptions.bullheads": {
+    "defaultMessage": "Fin à {count, number} têtes de bœuf"
+  },
+  "matchOptions.duration": {
+    "defaultMessage": "{seconds, number} s par tour"
+  },
+  "matchOptions.cards": {
+    "defaultMessage": "{count, plural, one {# carte} other {# cartes}}"
+  },
+  "sixNimmt.roundHint": {
+    "defaultMessage": "Renseignez les pénalités de chaque joueur, puis validez la manche. Saisissez 0 pour un joueur sans tête de bœuf."
+  },
+  "sixNimmt.roundTotal": {
+    "defaultMessage": "Total de la manche · {total, number} / {limit, number} têtes de bœuf"
+  },
+  "flip.recordBust": {
+    "defaultMessage": "Bust · 0 point"
+  },
+  "skull.recordBids": {
+    "defaultMessage": "Enregistrer les paris"
+  },
+  "skull.bidFor": {
+    "defaultMessage": "Pari de {name}"
+  },
+  "skull.bonusesFor": {
+    "defaultMessage": "Bonus et captures · {name}"
+  },
+  "skull.closeBonuses": {
+    "defaultMessage": "Fermer les bonus"
+  },
+  "skull.saved": {
+    "defaultMessage": "Enregistré"
+  },
+  "skull.decrease": {
+    "defaultMessage": "Diminuer : {name}"
+  },
+  "skull.increase": {
+    "defaultMessage": "Augmenter : {name}"
+  },
+  "farkle.currentPlayer": {
+    "defaultMessage": "Joueur actif"
+  },
+  "farkle.target": {
+    "defaultMessage": "Objectif : {points}"
+  },
+  "farkle.banked": {
+    "defaultMessage": "Points gardés"
+  },
+  "farkle.atRisk": {
+    "defaultMessage": "Points du tour"
+  },
+  "farkle.diceLeft": {
+    "defaultMessage": "Dés à lancer"
+  },
+  "farkle.rollTitle": {
+    "defaultMessage": "Votre lancer"
+  },
+  "farkle.selectedCount": {
+    "defaultMessage": "{count} / {total} dés gardés"
+  },
+  "farkle.kept": {
+    "defaultMessage": "Gardé"
+  },
+  "farkle.choose": {
+    "defaultMessage": "Garder"
+  },
+  "farkle.chooseHint": {
+    "defaultMessage": "Sélectionnez les dés marquants à garder."
+  },
+  "farkle.afterRoll": {
+    "defaultMessage": "Après validation : {points} points dans le tour"
+  },
+  "farkle.bankHint": {
+    "defaultMessage": "Terminez votre tour et ajoutez les points validés à votre score."
+  },
+  "farkle.entryNeeded": {
+    "defaultMessage": "Encore {points} points dans ce tour pour atteindre le seuil d’entrée."
+  },
+  "matches.actions": {
+    "defaultMessage": "Actions de la partie"
+  },
+  "matches.byAuthor": {
+    "defaultMessage": "Par {author}"
+  },
+  "flip.selectionCount": {
+    "defaultMessage": "Cartes numériques : {count} / 7"
+  },
+  "flip.sevenBonus": {
+    "defaultMessage": "Flip 7 ! Bonus de +15 points"
+  },
+  "matches.scoreEntry": {
+    "defaultMessage": "Saisie des scores"
+  },
+  "matches.delete": {
+    "defaultMessage": "Supprimer"
+  },
+  "matches.deleteTitle": {
+    "defaultMessage": "Supprimer définitivement cette partie ?"
+  },
+  "matches.deleteHelp": {
+    "defaultMessage": "La partie et tous ses scores seront supprimés définitivement. Les joueurs et les équipes seront conservés."
+  },
+  "matches.cancelHelp": {
+    "defaultMessage": "La partie sera arrêtée. Ses scores et son historique seront conservés."
+  },
+  "matches.actionConflict": {
+    "defaultMessage": "Cette partie a changé ou a été supprimée. Fermez cette fenêtre et réessayez depuis la liste à jour."
+  },
+  "matches.actionDenied": {
+    "defaultMessage": "Cette partie ne peut pas être modifiée sur cet appareil."
+  },
+  "matches.activeGame": {
+    "defaultMessage": "Partie en cours : {game}"
+  },
+  "matches.view": {
+    "defaultMessage": "Consulter"
+  },
+  "history.search": {
+    "defaultMessage": "Rechercher une partie"
+  },
+  "history.searchPlaceholder": {
+    "defaultMessage": "Jeu, joueur ou équipe"
+  },
+  "matches.rematch": {
+    "defaultMessage": "Revanche"
+  },
+  "matches.rematchUnavailable": {
+    "defaultMessage": "Certains participants ou paramètres enregistrés ne sont plus disponibles. Vérifiez les profils avant de lancer la revanche."
+  },
+  "yams.scoringSettings": {
+    "defaultMessage": "Barème du Yams"
+  },
+  "yams.fixedFourKind": {
+    "defaultMessage": "Carré à 40 points"
+  },
+  "yams.fourKindHint": {
+    "defaultMessage": "Désactivé : somme des cinq dés. Activé : 40 points."
+  },
+  "yams.straights": {
+    "defaultMessage": "Valeur des suites"
+  },
+  "yams.customStraights": {
+    "defaultMessage": "Valeurs personnalisées"
+  },
+  "yams.smallStraightValue": {
+    "defaultMessage": "Points de la petite suite"
+  },
+  "yams.largeStraightValue": {
+    "defaultMessage": "Points de la grande suite"
+  },
+  "yams.extraYamsBonus": {
+    "defaultMessage": "Bonus Yams supplémentaires"
+  },
+  "yams.extraYamsHint": {
+    "defaultMessage": "100 points par nouveau Yams après un premier Yams à 50."
+  },
+  "yams.joker": {
+    "defaultMessage": "Joker"
+  },
+  "yams.jokerHint": {
+    "defaultMessage": "Un nouveau Yams remplit la case supérieure correspondante, puis une case inférieure si elle est déjà prise."
+  },
+  "yams.correctGrid": {
+    "defaultMessage": "Corriger la grille"
+  },
+  "yams.backToPlay": {
+    "defaultMessage": "Revenir au jeu"
+  },
+  "yams.correctionHint": {
+    "defaultMessage": "Choisissez une case déjà remplie. Les nouvelles saisies sont verrouillées pendant la correction."
+  },
+  "yams.lockHint": {
+    "defaultMessage": "Seule la colonne du joueur actif est ouverte. Validez une case pour passer au suivant."
+  },
+  "yams.repeatRoll": {
+    "defaultMessage": "Nouveau Yams (cinq dés identiques)"
+  },
+  "yams.repeatFace": {
+    "defaultMessage": "Valeur des cinq dés"
+  },
+  "yams.extraYamsTotal": {
+    "defaultMessage": "Bonus Yams"
+  },
+  "yams.jokerRequired": {
+    "defaultMessage": "Le joker doit remplir la case supérieure correspondante si elle est vide, sinon une case inférieure libre. Si le bas est complet, rayez une case du haut."
+  },
+  "yams.turn": {
+    "defaultMessage": "À {name} de jouer"
+  },
+  "yams.extraAward": {
+    "defaultMessage": "Yams supplémentaire : +{points} points"
+  },
+  "matchOptions.yamsTurnOrder": {
+    "defaultMessage": "Chacun son tour"
+  },
+  "matchOptions.yamsFourKind": {
+    "defaultMessage": "{mode, select, fixed40 {Carré · 40 points} other {Carré · somme des dés}}"
+  },
+  "matchOptions.yamsStraights": {
+    "defaultMessage": "Suites · {small} / {large}"
+  },
+  "matchOptions.yamsExtraBonus": {
+    "defaultMessage": "{enabled, select, yes {Bonus Yams · +100} other {Sans bonus Yams}}"
+  },
+  "matchOptions.yamsJoker": {
+    "defaultMessage": "{enabled, select, yes {Joker activé} other {Sans joker}}"
+  },
+  "ruleGuide.headings.goal": {
+    "defaultMessage": "But du jeu"
+  },
+  "ruleGuide.headings.play": {
+    "defaultMessage": "Déroulement"
+  },
+  "ruleGuide.headings.scoring": {
+    "defaultMessage": "Barème appliqué"
+  },
+  "ruleGuide.headings.settings": {
+    "defaultMessage": "Dans cette partie"
+  },
+  "ruleGuide.headings.ending": {
+    "defaultMessage": "Fin de partie"
+  },
+  "ruleGuide.headings.sources": {
+    "defaultMessage": "Sources officielles"
+  },
+  "ruleGuide.table.situation": {
+    "defaultMessage": "Situation"
+  },
+  "ruleGuide.table.result": {
+    "defaultMessage": "Résultat"
+  },
+  "ruleGuide.external": {
+    "defaultMessage": "nouvel onglet"
+  },
+  "ruleGuide.reviewed": {
+    "defaultMessage": "Sources vérifiées le {date}."
+  },
+  "ruleGuide.offline": {
+    "defaultMessage": "Le résumé reste disponible hors ligne. Une connexion est nécessaire pour ouvrir les documents externes."
+  },
+  "ruleGuide.customSource": {
+    "defaultMessage": "Ces règles sont personnalisées : aucune source officielle n’est associée à cette partie."
+  },
+  "ruleGuide.sources.fipjp": {
+    "defaultMessage": "FIPJP — règlement officiel 2021, articles 1, 5, 14 et 29 (PDF, français)"
+  },
+  "ruleGuide.sources.hasbro": {
+    "defaultMessage": "Hasbro — Yahtzee Classic C2406 (PDF, anglais)"
+  },
+  "ruleGuide.sources.hasbroJoker": {
+    "defaultMessage": "Hasbro — bonus Yams et joker (anglais)"
+  },
+  "ruleGuide.sources.playmonster": {
+    "defaultMessage": "PlayMonster — Farkle, barème 2016 (PDF, anglais)"
+  },
+  "ruleGuide.sources.abi": {
+    "defaultMessage": "ABI Games — 421, livret dans les téléchargements (français)"
+  },
+  "ruleGuide.sources.dra": {
+    "defaultMessage": "Darts Regulation Authority — règlement 2026, sections 6.2 à 6.4 (anglais)"
+  },
+  "ruleGuide.sources.nda": {
+    "defaultMessage": "National Dart Association — règles du Cricket (anglais)"
+  },
+  "ruleGuide.sources.grandpa": {
+    "defaultMessage": "Grandpa Beck’s Games — Skull King, livrets et aides de jeu"
+  },
+  "ruleGuide.sources.flip31": {
+    "defaultMessage": "The Op / Asmodee — Flip 7, édition 3.1 (PDF, anglais)"
+  },
+  "ruleGuide.sources.flipFaq": {
+    "defaultMessage": "The Op — FAQ Flip 7, dont les égalités (anglais)"
+  },
+  "ruleGuide.sources.molkky": {
+    "defaultMessage": "Mölkky — règles du fabricant (anglais)"
+  },
+  "ruleGuide.sources.ffm": {
+    "defaultMessage": "Fédération française de Mölkky — règles (français)"
+  },
+  "ruleGuide.sources.amigo": {
+    "defaultMessage": "AMIGO — 6 nimmt!, règles de base (PDF, anglais)"
+  },
+  "ruleGuide.sources.repos": {
+    "defaultMessage": "Repos Production — Time’s Up! Party"
+  },
+  "ruleGuide.sources.party": {
+    "defaultMessage": "Repos Production — livret Party (PDF, anglais)"
+  },
+  "ruleGuide.petanque.goal": {
+    "defaultMessage": "Être le premier camp à atteindre {target} points."
+  },
+  "ruleGuide.petanque.start": {
+    "defaultMessage": "En formule classique, deux camps s’opposent. Le premier lanceur du cochonnet est désigné avant le départ."
+  },
+  "ruleGuide.petanque.turn": {
+    "defaultMessage": "Après la première boule, le camp qui n’a pas le point joue jusqu’à le reprendre ou épuiser ses boules."
+  },
+  "ruleGuide.petanque.measure": {
+    "defaultMessage": "Quand toutes les boules sont jouées, comparez les distances au cochonnet avant de saisir le résultat de la mène."
+  },
+  "ruleGuide.petanque.point.label": {
+    "defaultMessage": "Mène gagnée"
+  },
+  "ruleGuide.petanque.point.value": {
+    "defaultMessage": "1 point par boule mieux placée que la meilleure boule adverse."
+  },
+  "ruleGuide.petanque.deadOne.label": {
+    "defaultMessage": "Cochonnet mort : un seul camp a encore des boules"
+  },
+  "ruleGuide.petanque.deadOne.value": {
+    "defaultMessage": "Ce camp marque autant de points que de boules restant à jouer."
+  },
+  "ruleGuide.petanque.deadBoth.label": {
+    "defaultMessage": "Cochonnet mort : boules restantes dans les deux camps, ou dans aucun"
+  },
+  "ruleGuide.petanque.deadBoth.value": {
+    "defaultMessage": "Mène nulle : aucun point."
+  },
+  "ruleGuide.petanque.settings": {
+    "defaultMessage": "Paramètres enregistrés : objectif {target}, {boules} boules par joueur."
+  },
+  "ruleGuide.petanque.format": {
+    "defaultMessage": "La formule fédérale oppose deux camps : tête-à-tête ou doublette à 3 boules par joueur, triplette à 2. Toute autre composition est une formule de table."
+  },
+  "ruleGuide.petanque.freePlay": {
+    "defaultMessage": "Avec plus de deux camps, vous jouez une formule libre. Convenez ensemble des cas particuliers ; le calcul automatique du cochonnet mort est réservé à deux camps."
+  },
+  "ruleGuide.petanque.finish": {
+    "defaultMessage": "La partie s’arrête dès qu’un camp atteint ou dépasse {target} points."
+  },
+  "ruleGuide.petanque.next": {
+    "defaultMessage": "Le camp qui marque lance le cochonnet suivant. Une mène nulle conserve le lanceur précédent dans l’application."
+  },
+  "ruleGuide.yams.goal": {
+    "defaultMessage": "Obtenir le meilleur total après avoir rempli les 13 catégories."
+  },
+  "ruleGuide.yams.roll": {
+    "defaultMessage": "À chaque tour, lancez cinq dés jusqu’à trois fois. Entre les lancers, gardez ou relancez les dés de votre choix."
+  },
+  "ruleGuide.yams.choose": {
+    "defaultMessage": "Remplissez une seule case libre. Si aucune combinaison ne convient, rayez une case en inscrivant 0. Une case ne sert qu’une fois."
+  },
+  "ruleGuide.yams.turns": {
+    "defaultMessage": "Valider une case passe la main au joueur suivant. Les autres colonnes restent verrouillées ; le mode correction sert à modifier une saisie passée."
+  },
+  "ruleGuide.yams.legacy": {
+    "defaultMessage": "Cette partie conserve l’ancienne grille à saisie libre, sans alternance imposée."
+  },
+  "ruleGuide.yams.upper.label": {
+    "defaultMessage": "Les 1 à 6"
+  },
+  "ruleGuide.yams.upper.value": {
+    "defaultMessage": "Somme des dés de la valeur choisie."
+  },
+  "ruleGuide.yams.three.label": {
+    "defaultMessage": "Brelan : au moins 3 dés identiques"
+  },
+  "ruleGuide.yams.three.value": {
+    "defaultMessage": "Somme des cinq dés."
+  },
+  "ruleGuide.yams.fourSum.label": {
+    "defaultMessage": "Carré : au moins 4 dés identiques"
+  },
+  "ruleGuide.yams.fourSum.value": {
+    "defaultMessage": "Somme des cinq dés."
+  },
+  "ruleGuide.yams.fourFixed.label": {
+    "defaultMessage": "Carré : au moins 4 dés identiques"
+  },
+  "ruleGuide.yams.fourFixed.value": {
+    "defaultMessage": "40 points, selon le paramètre choisi."
+  },
+  "ruleGuide.yams.full.label": {
+    "defaultMessage": "Full : 3 dés identiques et une paire"
+  },
+  "ruleGuide.yams.full.value": {
+    "defaultMessage": "25 points. Cinq dés identiques ne sont pas un full, sauf joker applicable."
+  },
+  "ruleGuide.yams.small.label": {
+    "defaultMessage": "Petite suite : 4 valeurs consécutives"
+  },
+  "ruleGuide.yams.small.value": {
+    "defaultMessage": "{points} points."
+  },
+  "ruleGuide.yams.large.label": {
+    "defaultMessage": "Grande suite : 5 valeurs consécutives"
+  },
+  "ruleGuide.yams.large.value": {
+    "defaultMessage": "{points} points."
+  },
+  "ruleGuide.yams.five.label": {
+    "defaultMessage": "Yams : 5 dés identiques"
+  },
+  "ruleGuide.yams.five.value": {
+    "defaultMessage": "50 points."
+  },
+  "ruleGuide.yams.chance.label": {
+    "defaultMessage": "Chance"
+  },
+  "ruleGuide.yams.chance.value": {
+    "defaultMessage": "Somme des cinq dés, sans condition."
+  },
+  "ruleGuide.yams.upperOn": {
+    "defaultMessage": "Prime supérieure activée : +35 si les six premières catégories totalisent au moins 63."
+  },
+  "ruleGuide.yams.upperOff": {
+    "defaultMessage": "Prime supérieure désactivée."
+  },
+  "ruleGuide.yams.extraOn": {
+    "defaultMessage": "Chaque nouveau Yams rapporte +100 après un premier Yams à 50. Un Yams rayé à 0 ne donne aucun bonus. Indiquez les cinq dés identiques ou cochez Nouveau Yams."
+  },
+  "ruleGuide.yams.extraOff": {
+    "defaultMessage": "Bonus des Yams supplémentaires désactivé."
+  },
+  "ruleGuide.yams.jokerOn": {
+    "defaultMessage": "Joker activé : après une case Yams remplie, un nouveau Yams doit remplir la case supérieure correspondante si elle est libre. Sinon, choisissez une case inférieure libre ; full et suites valent leur forfait. Si le bas est plein, rayez une case du haut."
+  },
+  "ruleGuide.yams.jokerOff": {
+    "defaultMessage": "Joker désactivé : un nouveau Yams ne remplace pas un full ou une suite."
+  },
+  "ruleGuide.yams.settings": {
+    "defaultMessage": "Le carré fixe, les suites personnalisées et la désactivation des bonus sont des choix de table. Le tableau ci-dessus suit les paramètres de cette partie."
+  },
+  "ruleGuide.yams.finish": {
+    "defaultMessage": "Après 13 cases par joueur, le plus grand total gagne. L’application partage la victoire en cas d’égalité."
+  },
+  "ruleGuide.farkle.goal": {
+    "defaultMessage": "Accumuler le meilleur total en visant {target} points, sans perdre les points du tour."
+  },
+  "ruleGuide.farkle.roll": {
+    "defaultMessage": "Commencez avec six dés. Après chaque lancer, gardez au moins un groupe de dés qui marque. Les combinaisons doivent provenir du même lancer."
+  },
+  "ruleGuide.farkle.keep": {
+    "defaultMessage": "Relancez les dés restants ou encaissez les points du tour. Si les six dés ont marqué, vous pouvez les relancer tous."
+  },
+  "ruleGuide.farkle.risk": {
+    "defaultMessage": "Un lancer sans aucun dé marquant fait perdre tous les points non encaissés du tour et passe la main. Les points déjà encaissés restent acquis."
+  },
+  "ruleGuide.farkle.one.label": {
+    "defaultMessage": "Un 1 isolé"
+  },
+  "ruleGuide.farkle.one.value": {
+    "defaultMessage": "100"
+  },
+  "ruleGuide.farkle.five.label": {
+    "defaultMessage": "Un 5 isolé"
+  },
+  "ruleGuide.farkle.five.value": {
+    "defaultMessage": "50"
+  },
+  "ruleGuide.farkle.triples.label": {
+    "defaultMessage": "3 dés identiques"
+  },
+  "ruleGuide.farkle.triples.value": {
+    "defaultMessage": "Trois 1 : 300. Autres faces : 100 × la valeur."
+  },
+  "ruleGuide.farkle.four.label": {
+    "defaultMessage": "4 dés identiques"
+  },
+  "ruleGuide.farkle.four.value": {
+    "defaultMessage": "1 000"
+  },
+  "ruleGuide.farkle.fiveKind.label": {
+    "defaultMessage": "5 dés identiques"
+  },
+  "ruleGuide.farkle.fiveKind.value": {
+    "defaultMessage": "2 000"
+  },
+  "ruleGuide.farkle.sixKind.label": {
+    "defaultMessage": "6 dés identiques"
+  },
+  "ruleGuide.farkle.sixKind.value": {
+    "defaultMessage": "3 000"
+  },
+  "ruleGuide.farkle.special.label": {
+    "defaultMessage": "Suite 1–6, trois paires ou carré + paire"
+  },
+  "ruleGuide.farkle.special.value": {
+    "defaultMessage": "1 500"
+  },
+  "ruleGuide.farkle.twoTriples.label": {
+    "defaultMessage": "Deux brelans"
+  },
+  "ruleGuide.farkle.twoTriples.value": {
+    "defaultMessage": "2 500"
+  },
+  "ruleGuide.farkle.entry": {
+    "defaultMessage": "Premier encaissement : au moins {entry} points dans un seul tour. Un seuil de 0 signifie aucune condition d’entrée."
+  },
+  "ruleGuide.farkle.settings": {
+    "defaultMessage": "La référence PlayMonster vise 10 000 points avec une entrée à 500. L’objectif {target} et le seuil ci-dessus sont ceux retenus pour cette partie. L’application partage les égalités."
+  },
+  "ruleGuide.farkle.finish": {
+    "defaultMessage": "Atteindre {target} points déclenche un dernier tour pour chaque autre joueur. Le plus grand total final gagne ; une égalité partage la victoire."
+  },
+  "ruleGuide.four21.goal": {
+    "defaultMessage": "Se débarrasser de ses jetons après la distribution du pot de 21."
+  },
+  "ruleGuide.four21.charge": {
+    "defaultMessage": "Charge : chacun lance trois dés une seule fois. Le plus faible prend au pot la valeur de la meilleure combinaison, dans la limite du pot restant."
+  },
+  "ruleGuide.four21.discharge": {
+    "defaultMessage": "Décharge : le premier joueur choisit de lancer une à trois fois. Les suivants ne dépassent pas ce nombre. Le meilleur donne des jetons au plus faible, sans donner plus qu’il ne possède."
+  },
+  "ruleGuide.four21.starter": {
+    "defaultMessage": "Le plus faible commence le tour suivant."
+  },
+  "ruleGuide.four21.421.label": {
+    "defaultMessage": "4–2–1"
+  },
+  "ruleGuide.four21.421.value": {
+    "defaultMessage": "10 jetons"
+  },
+  "ruleGuide.four21.ones.label": {
+    "defaultMessage": "1–1–1"
+  },
+  "ruleGuide.four21.ones.value": {
+    "defaultMessage": "7 jetons"
+  },
+  "ruleGuide.four21.pairs.label": {
+    "defaultMessage": "1–1–n, de n = 6 à 2"
+  },
+  "ruleGuide.four21.pairs.value": {
+    "defaultMessage": "n jetons"
+  },
+  "ruleGuide.four21.triples.label": {
+    "defaultMessage": "n–n–n, de n = 6 à 2"
+  },
+  "ruleGuide.four21.triples.value": {
+    "defaultMessage": "n jetons"
+  },
+  "ruleGuide.four21.straight.label": {
+    "defaultMessage": "Trois valeurs consécutives"
+  },
+  "ruleGuide.four21.straight.value": {
+    "defaultMessage": "2 jetons"
+  },
+  "ruleGuide.four21.ordinary.label": {
+    "defaultMessage": "Combinaison ordinaire"
+  },
+  "ruleGuide.four21.ordinary.value": {
+    "defaultMessage": "1 jeton"
+  },
+  "ruleGuide.four21.nenette.label": {
+    "defaultMessage": "Nénette : 2–2–1"
+  },
+  "ruleGuide.four21.nenette.value": {
+    "defaultMessage": "La plus faible ; si elle perd, 2 jetons sont transférés, dans la limite disponible."
+  },
+  "ruleGuide.four21.ranking": {
+    "defaultMessage": "Classement : 421, 111, puis 116 > 666 > 115 > 555 > 114 > 444 > 113 > 333 > 112 > 222, puis suites, combinaisons ordinaires, nénette. À famille identique, la valeur la plus haute prime."
+  },
+  "ruleGuide.four21.house": {
+    "defaultMessage": "Vous jouez Charge 21 : ce tableau est le barème local de l’application. Le 421 est traditionnel ; la notice d’un éditeur décrit son édition et ne rend pas ce barème universel."
+  },
+  "ruleGuide.four21.tie": {
+    "defaultMessage": "Départagez aux dés les ex æquo concernés, puis indiquez le meilleur et le plus faible parmi les joueurs proposés."
+  },
+  "ruleGuide.four21.finish": {
+    "defaultMessage": "Quand le pot se vide, les joueurs sans jetons gagnent ensemble. S’il n’y en a pas, le premier à vider ses jetons pendant la décharge gagne."
+  },
+  "ruleGuide.x01.goal": {
+    "defaultMessage": "Passer de {start} à exactement 0 point."
+  },
+  "ruleGuide.x01.turn": {
+    "defaultMessage": "À tour de rôle, lancez au plus trois fléchettes. Une fléchette manquée consomme un lancer."
+  },
+  "ruleGuide.x01.subtract": {
+    "defaultMessage": "Soustrayez les points marqués du reste à atteindre. Le leg s’arrête dès qu’une sortie valable atteint 0."
+  },
+  "ruleGuide.x01.single.label": {
+    "defaultMessage": "Simple 1–20"
+  },
+  "ruleGuide.x01.single.value": {
+    "defaultMessage": "Valeur du secteur"
+  },
+  "ruleGuide.x01.double.label": {
+    "defaultMessage": "Double 1–20"
+  },
+  "ruleGuide.x01.double.value": {
+    "defaultMessage": "2 × la valeur"
+  },
+  "ruleGuide.x01.triple.label": {
+    "defaultMessage": "Triple 1–20"
+  },
+  "ruleGuide.x01.triple.value": {
+    "defaultMessage": "3 × la valeur"
+  },
+  "ruleGuide.x01.bull.label": {
+    "defaultMessage": "Centre extérieur / intérieur"
+  },
+  "ruleGuide.x01.bull.value": {
+    "defaultMessage": "25 / 50 ; le centre intérieur vaut double 25."
+  },
+  "ruleGuide.x01.miss.label": {
+    "defaultMessage": "Manqué ou fléchette non restée plantée"
+  },
+  "ruleGuide.x01.miss.value": {
+    "defaultMessage": "0"
+  },
+  "ruleGuide.x01.doubleOut": {
+    "defaultMessage": "Sortie en double activée : la dernière fléchette doit être un double. Dépasser 0, laisser 1 ou atteindre 0 sans double annule toute la volée et passe la main."
+  },
+  "ruleGuide.x01.straightOut": {
+    "defaultMessage": "Sortie libre activée : atteindre exactement 0 suffit. Seul un dépassement annule toute la volée. Cette option est un format de table."
+  },
+  "ruleGuide.x01.entry": {
+    "defaultMessage": "Départ libre : aucun double n’est nécessaire pour commencer à marquer. Le départ à 301 et les formats à plus de deux camps sont des options de table."
+  },
+  "ruleGuide.x01.finish": {
+    "defaultMessage": "Le premier à réussir une sortie valable gagne le leg."
+  },
+  "ruleGuide.cricket.goal": {
+    "defaultMessage": "Fermer les cibles 20, 19, 18, 17, 16, 15 et le centre."
+  },
+  "ruleGuide.cricket.targets": {
+    "defaultMessage": "Les cibles peuvent être jouées dans n’importe quel ordre. Une cible est fermée à trois marques."
+  },
+  "ruleGuide.cricket.turn": {
+    "defaultMessage": "Chaque volée comprend au plus trois fléchettes, puis la main passe au camp suivant."
+  },
+  "ruleGuide.cricket.close": {
+    "defaultMessage": "Une cible reste ouverte aux points tant qu’au moins un adversaire ne l’a pas fermée. Quand tous l’ont fermée, elle ne rapporte plus rien."
+  },
+  "ruleGuide.cricket.marks.label": {
+    "defaultMessage": "Secteurs 15 à 20"
+  },
+  "ruleGuide.cricket.marks.value": {
+    "defaultMessage": "Simple : 1 marque ; double : 2 ; triple : 3."
+  },
+  "ruleGuide.cricket.bull.label": {
+    "defaultMessage": "Centre extérieur / intérieur"
+  },
+  "ruleGuide.cricket.bull.value": {
+    "defaultMessage": "1 / 2 marques ; chaque marque excédentaire vaut 25 points."
+  },
+  "ruleGuide.cricket.other.label": {
+    "defaultMessage": "Autres secteurs ou manqué"
+  },
+  "ruleGuide.cricket.other.value": {
+    "defaultMessage": "Aucune marque ; le lancer est consommé."
+  },
+  "ruleGuide.cricket.pointsOn": {
+    "defaultMessage": "Points activés : une marque au-delà de la troisième rapporte la valeur de la cible, seulement si un adversaire l’a encore ouverte."
+  },
+  "ruleGuide.cricket.pointsOff": {
+    "defaultMessage": "Sans points : les marques excédentaires sont ignorées. C’est une option de table, distincte du Cricket à points de la référence."
+  },
+  "ruleGuide.cricket.finishPoints": {
+    "defaultMessage": "Pour gagner, fermez toutes les cibles et ayez au moins autant de points que chaque adversaire. À égalité de points, la première fermeture complète suffit."
+  },
+  "ruleGuide.cricket.finishNoPoints": {
+    "defaultMessage": "Le premier camp à fermer toutes les cibles gagne."
+  },
+  "ruleGuide.dartsSeries.win": {
+    "defaultMessage": "Mode match : il faut gagner {count} legs pour remporter la partie."
+  },
+  "ruleGuide.dartsSeries.alternate": {
+    "defaultMessage": "Le départ des legs alterne entre les deux camps, à partir du premier lanceur enregistré."
+  },
+  "ruleGuide.dartsSeries.loser": {
+    "defaultMessage": "Le perdant du leg commence le suivant. Le premier leg utilise le premier lanceur enregistré."
+  },
+  "ruleGuide.dartsSeries.freePlay": {
+    "defaultMessage": "Plus de deux camps : formule libre, avec les mêmes conditions de score et de victoire étendues à tous les adversaires."
+  },
+  "ruleGuide.skull.goal": {
+    "defaultMessage": "Prévoir exactement ses plis et obtenir le meilleur total après dix manches."
+  },
+  "ruleGuide.skull.deal": {
+    "defaultMessage": "Distribuez une carte par joueur à la manche 1, puis une de plus par manche, dans la limite de {maxCards} cartes avec ce paquet et ces joueurs."
+  },
+  "ruleGuide.skull.bid": {
+    "defaultMessage": "Chacun annonce son nombre de plis avant de jouer. Validez tous les paris, puis jouez la manche avec les cartes physiques."
+  },
+  "ruleGuide.skull.tricks": {
+    "defaultMessage": "Suivez la couleur demandée si possible ; une carte spéciale reste jouable. Le noir est atout. Les pirates battent les numéros et les sirènes ; le Skull King bat les pirates, mais une sirène bat le Skull King."
+  },
+  "ruleGuide.skull.record": {
+    "defaultMessage": "Saisissez les plis réalisés et les captures donnant des bonus. Un pli contient une carte de chaque joueur ; le gagnant entame le suivant."
+  },
+  "ruleGuide.skull.exact.label": {
+    "defaultMessage": "Pari positif réussi"
+  },
+  "ruleGuide.skull.exact.value": {
+    "defaultMessage": "+20 × le nombre de plis annoncés"
+  },
+  "ruleGuide.skull.miss.label": {
+    "defaultMessage": "Pari positif manqué"
+  },
+  "ruleGuide.skull.miss.value": {
+    "defaultMessage": "−10 × l’écart entre plis annoncés et réalisés"
+  },
+  "ruleGuide.skull.zero.label": {
+    "defaultMessage": "Pari 0 réussi"
+  },
+  "ruleGuide.skull.zero.value": {
+    "defaultMessage": "+10 × les cartes distribuées à ce joueur"
+  },
+  "ruleGuide.skull.zeroMiss.label": {
+    "defaultMessage": "Pari 0 manqué"
+  },
+  "ruleGuide.skull.zeroMiss.value": {
+    "defaultMessage": "−10 × les cartes distribuées à ce joueur"
+  },
+  "ruleGuide.skull.fourteen.label": {
+    "defaultMessage": "14 capturés"
+  },
+  "ruleGuide.skull.fourteen.value": {
+    "defaultMessage": "+10 par 14 de couleur ; +20 pour le 14 noir"
+  },
+  "ruleGuide.skull.mermaid.label": {
+    "defaultMessage": "Sirène capturée par un pirate"
+  },
+  "ruleGuide.skull.mermaid.value": {
+    "defaultMessage": "+20 par sirène"
+  },
+  "ruleGuide.skull.pirate.label": {
+    "defaultMessage": "Pirate capturé par le Skull King"
+  },
+  "ruleGuide.skull.pirate.value": {
+    "defaultMessage": "+30 par pirate"
+  },
+  "ruleGuide.skull.king.label": {
+    "defaultMessage": "Skull King capturé par une sirène"
+  },
+  "ruleGuide.skull.king.value": {
+    "defaultMessage": "+40"
+  },
+  "ruleGuide.skull.bonuses": {
+    "defaultMessage": "Les bonus ne comptent que si le pari est exactement réussi."
+  },
+  "ruleGuide.skull.edition": {
+    "defaultMessage": "Barème classique 2021, sans pouvoirs de pirates, cartes avancées ni Rascal. La Tigresse se joue en pirate ou échappée. Si tous jouent une échappée, la première gagne. Si sirène, pirate et Skull King sont dans le même pli, la sirène gagne."
+  },
+  "ruleGuide.skull.finish": {
+    "defaultMessage": "Après dix manches, le meilleur total gagne. En cas d’égalité en tête, tous rejouent une manche avec le dernier nombre de cartes jusqu’à départage."
+  },
+  "ruleGuide.flip.goal": {
+    "defaultMessage": "Obtenir le meilleur total à la fin d’une manche où quelqu’un atteint 200 points."
+  },
+  "ruleGuide.flip.deal": {
+    "defaultMessage": "Le donneur distribue une carte visible à chacun. À votre tour, choisissez de recevoir une carte ou de vous arrêter pour garder vos points."
+  },
+  "ruleGuide.flip.choice": {
+    "defaultMessage": "Les cartes Numéro vont de 0 à 12. Les modificateurs et les cartes Action ne comptent pas parmi les sept numéros."
+  },
+  "ruleGuide.flip.duplicate": {
+    "defaultMessage": "Un numéro reçu en double fait sauter : 0 point pour la manche, sauf si une Seconde chance permet d’écarter le doublon et cette protection."
+  },
+  "ruleGuide.flip.seven": {
+    "defaultMessage": "Sept numéros distincts déclenchent Flip 7 : +15 et fin immédiate de la manche pour tous. Le 0 compte comme un numéro distinct."
+  },
+  "ruleGuide.flip.numbers.label": {
+    "defaultMessage": "Cartes Numéro"
+  },
+  "ruleGuide.flip.numbers.value": {
+    "defaultMessage": "Somme des valeurs"
+  },
+  "ruleGuide.flip.double.label": {
+    "defaultMessage": "Modificateur ×2"
+  },
+  "ruleGuide.flip.double.value": {
+    "defaultMessage": "Double uniquement la somme des numéros."
+  },
+  "ruleGuide.flip.modifiers.label": {
+    "defaultMessage": "Modificateurs +2, +4, +6, +8, +10"
+  },
+  "ruleGuide.flip.modifiers.value": {
+    "defaultMessage": "À ajouter après le ×2."
+  },
+  "ruleGuide.flip.bonus.label": {
+    "defaultMessage": "Flip 7"
+  },
+  "ruleGuide.flip.bonus.value": {
+    "defaultMessage": "+15 après les autres calculs."
+  },
+  "ruleGuide.flip.bust.label": {
+    "defaultMessage": "Joueur ayant sauté"
+  },
+  "ruleGuide.flip.bust.value": {
+    "defaultMessage": "0, sans saisie de cartes nécessaire."
+  },
+  "ruleGuide.flip.actions": {
+    "defaultMessage": "Résolvez les actions avec les cartes : Freeze fige le joueur et ses points ; Flip Three impose trois cartes, avec arrêt sur un bust ou un Flip 7 ; Seconde chance protège d’un seul doublon."
+  },
+  "ruleGuide.flip.finish": {
+    "defaultMessage": "La manche finit quand tous se sont arrêtés ou ont sauté, ou sur un Flip 7. À 200 ou plus, le meilleur total gagne ; si les premiers sont à égalité, tous continuent une manche."
+  },
+  "ruleGuide.molkky.goal": {
+    "defaultMessage": "Atteindre exactement 50 points."
+  },
+  "ruleGuide.molkky.setup": {
+    "defaultMessage": "Placez les douze quilles numérotées en groupe, selon le plan de la notice. Fixez l’ordre des joueurs avant le départ."
+  },
+  "ruleGuide.molkky.throw": {
+    "defaultMessage": "Lancez le bâton par-dessous pour faire tomber les quilles. Seules les quilles complètement couchées comptent."
+  },
+  "ruleGuide.molkky.raise": {
+    "defaultMessage": "Relevez les quilles à l’endroit où elles sont tombées, puis passez au joueur suivant."
+  },
+  "ruleGuide.molkky.single.label": {
+    "defaultMessage": "Une seule quille tombée"
+  },
+  "ruleGuide.molkky.single.value": {
+    "defaultMessage": "Le numéro de la quille"
+  },
+  "ruleGuide.molkky.several.label": {
+    "defaultMessage": "Plusieurs quilles tombées"
+  },
+  "ruleGuide.molkky.several.value": {
+    "defaultMessage": "Le nombre de quilles, pas la somme des numéros"
+  },
+  "ruleGuide.molkky.miss.label": {
+    "defaultMessage": "Aucune quille complètement couchée"
+  },
+  "ruleGuide.molkky.miss.value": {
+    "defaultMessage": "0 et un lancer nul"
+  },
+  "ruleGuide.molkky.over": {
+    "defaultMessage": "Dépasser 50 ramène immédiatement le score à 25. Il faut atteindre 50 exactement pour gagner."
+  },
+  "ruleGuide.molkky.elimination": {
+    "defaultMessage": "Trois lancers nuls consécutifs éliminent le joueur ou le camp. Un lancer qui marque remet le compteur de nuls à zéro."
+  },
+  "ruleGuide.molkky.team": {
+    "defaultMessage": "En équipe, les membres alternent leurs lancers et partagent score et nuls. L’application affiche 0 pour un camp éliminé."
+  },
+  "ruleGuide.molkky.finish": {
+    "defaultMessage": "Le premier camp à 50 gagne. Dans cette application, le dernier camp non éliminé gagne aussi si tous les autres sont éliminés."
+  },
+  "ruleGuide.six.goal": {
+    "defaultMessage": "Cumuler le moins de têtes de bœuf possible."
+  },
+  "ruleGuide.six.deal": {
+    "defaultMessage": "Distribuez dix cartes par joueur. Posez quatre cartes visibles : elles commencent quatre rangées de cinq cartes au maximum."
+  },
+  "ruleGuide.six.choose": {
+    "defaultMessage": "Tous choisissent une carte face cachée, puis la révèlent ensemble. Placez-les de la plus petite à la plus grande."
+  },
+  "ruleGuide.six.place": {
+    "defaultMessage": "Une carte va après une valeur inférieure à la sienne, dans la rangée dont la dernière carte est la plus proche."
+  },
+  "ruleGuide.six.small": {
+    "defaultMessage": "Si votre carte est plus petite que toutes les fins de rangée, prenez la rangée de votre choix et remplacez-la par votre carte."
+  },
+  "ruleGuide.six.sixth": {
+    "defaultMessage": "Si votre carte serait la sixième d’une rangée, prenez ses cinq cartes. Votre carte commence la nouvelle rangée."
+  },
+  "ruleGuide.six.ordinary.label": {
+    "defaultMessage": "Carte ordinaire"
+  },
+  "ruleGuide.six.ordinary.value": {
+    "defaultMessage": "1 tête"
+  },
+  "ruleGuide.six.five.label": {
+    "defaultMessage": "Multiple de 5, hors multiples de 10 et 55"
+  },
+  "ruleGuide.six.five.value": {
+    "defaultMessage": "2 têtes"
+  },
+  "ruleGuide.six.ten.label": {
+    "defaultMessage": "Multiple de 10"
+  },
+  "ruleGuide.six.ten.value": {
+    "defaultMessage": "3 têtes"
+  },
+  "ruleGuide.six.eleven.label": {
+    "defaultMessage": "Multiple de 11, hors 55"
+  },
+  "ruleGuide.six.eleven.value": {
+    "defaultMessage": "5 têtes"
+  },
+  "ruleGuide.six.55.label": {
+    "defaultMessage": "Carte 55"
+  },
+  "ruleGuide.six.55.value": {
+    "defaultMessage": "7 têtes"
+  },
+  "ruleGuide.six.record": {
+    "defaultMessage": "Après les {cards} cartes, comptez les têtes de bœuf de la pile de chaque joueur. Saisissez tous les résultats, y compris un 0 explicite en l’absence de pénalités."
+  },
+  "ruleGuide.six.finish": {
+    "defaultMessage": "Si un cumul atteint au moins 66, terminez le décompte de cette manche, puis le plus petit total gagne. Sinon, redistribuez dix cartes. L’application partage les égalités en tête."
+  },
+  "ruleGuide.timesUp.goal": {
+    "defaultMessage": "Faire deviner le plus de cartes à son équipe sur trois manches."
+  },
+  "ruleGuide.timesUp.setup": {
+    "defaultMessage": "Formez 2 à 6 équipes, de 4 à 12 joueurs au total et au moins 2 par équipe. Préparez {cards} cartes physiques ; les mêmes servent aux trois manches."
+  },
+  "ruleGuide.timesUp.timer": {
+    "defaultMessage": "Le donneur d’indices dispose de {seconds} secondes. Chaque carte correctement devinée est mise de côté ; les autres restent à faire deviner."
+  },
+  "ruleGuide.timesUp.rotate": {
+    "defaultMessage": "Les membres d’une équipe alternent le rôle de donneur d’indices. Quand les 40 cartes sont trouvées, mélangez-les pour la manche suivante."
+  },
+  "ruleGuide.timesUp.free.label": {
+    "defaultMessage": "Manche 1 : description"
+  },
+  "ruleGuide.timesUp.free.value": {
+    "defaultMessage": "Parole libre, plusieurs réponses possibles. Interdit de passer une carte."
+  },
+  "ruleGuide.timesUp.word.label": {
+    "defaultMessage": "Manche 2 : un mot"
+  },
+  "ruleGuide.timesUp.word.value": {
+    "defaultMessage": "Un seul mot par carte et une seule réponse de l’équipe. Passer est autorisé."
+  },
+  "ruleGuide.timesUp.mime.label": {
+    "defaultMessage": "Manche 3 : mime"
+  },
+  "ruleGuide.timesUp.mime.value": {
+    "defaultMessage": "Pas de mots. Gestes, bruitages et fredonnements autorisés ; une réponse par carte, passage autorisé."
+  },
+  "ruleGuide.timesUp.point.label": {
+    "defaultMessage": "Carte trouvée"
+  },
+  "ruleGuide.timesUp.point.value": {
+    "defaultMessage": "1 point pour l’équipe"
+  },
+  "ruleGuide.timesUp.forbidden": {
+    "defaultMessage": "En description, n’utilisez ni le mot ni un dérivé, ni traduction, épellation ou indice de rime. Gestes et bruitages sont réservés au mime."
+  },
+  "ruleGuide.timesUp.answers": {
+    "defaultMessage": "En manches 2 et 3, seule la première réponse compte. Une carte passée ou manquée ne revient pas pendant ce même tour."
+  },
+  "ruleGuide.timesUp.timerChoice": {
+    "defaultMessage": "L’application donne 30 secondes neuves à chaque tour, y compris au changement de manche. À l’expiration, validez le nombre de cartes trouvées pour passer la main."
+  },
+  "ruleGuide.timesUp.finish": {
+    "defaultMessage": "Après la troisième manche, additionnez les cartes trouvées. Le plus grand total gagne ; l’application partage une éventuelle égalité."
+  },
+  "ruleGuide.custom.goal": {
+    "defaultMessage": "Jouer selon les règles personnalisées enregistrées avec cette partie."
+  },
+  "ruleGuide.custom.entry": {
+    "defaultMessage": "Choisissez le participant et saisissez les valeurs demandées dans les limites du tableau."
+  },
+  "ruleGuide.custom.saved": {
+    "defaultMessage": "Le calcul de score suit la règle enregistrée avec cette partie. Convenez ensemble du déroulement physique du jeu."
+  },
+  "ruleGuide.custom.field": {
+    "defaultMessage": "{name}"
+  },
+  "ruleGuide.custom.range": {
+    "defaultMessage": "De {minimum} à {maximum}"
+  },
+  "ruleGuide.custom.highest": {
+    "defaultMessage": "Objectif : obtenir le plus grand total."
+  },
+  "ruleGuide.custom.lowest": {
+    "defaultMessage": "Objectif : obtenir le plus petit total."
+  },
+  "ruleGuide.custom.target": {
+    "defaultMessage": "Seuil enregistré : {target}."
+  },
+  "ruleGuide.custom.rounds": {
+    "defaultMessage": "Nombre de manches : {count}."
+  },
+  "ruleGuide.custom.shared": {
+    "defaultMessage": "La fin suit le seuil ou les manches enregistrés, ou une clôture manuelle si la règle le permet. Une égalité partage la victoire."
+  },
+  "ruleGuide.custom.continue": {
+    "defaultMessage": "La fin suit le seuil ou les manches enregistrés, ou une clôture manuelle si la règle le permet. En cas d’égalité, continuez jusqu’à départage."
+  },
+  "language.system": {
+    "defaultMessage": "Suivre l’appareil",
+    "description": "Use the device’s current language, falling back to English when unavailable."
+  },
+  "about.title": {
+    "defaultMessage": "À propos"
+  },
+  "about.intro": {
+    "defaultMessage": "Scoretrackrr vous accompagne pour compter les points de vos jeux, sur une application installable et utilisable hors ligne."
+  },
+  "about.version": {
+    "defaultMessage": "Version {version}"
+  },
+  "about.github": {
+    "defaultMessage": "Code source sur GitHub"
+  },
+  "about.technologies": {
+    "defaultMessage": "Technologies"
+  },
+  "about.releases": {
+    "defaultMessage": "Versions GitHub"
+  },
+  "about.checkHint": {
+    "defaultMessage": "Consulte la dernière release stable du dépôt GitHub, uniquement à votre demande. Une connexion est nécessaire."
+  },
+  "about.check": {
+    "defaultMessage": "Vérifier les mises à jour"
+  },
+  "about.checking": {
+    "defaultMessage": "Vérification…"
+  },
+  "about.noRelease": {
+    "defaultMessage": "Aucune release stable n’est encore publiée sur GitHub."
+  },
+  "about.viewRelease": {
+    "defaultMessage": "Voir la release"
+  },
+  "about.published": {
+    "defaultMessage": "Publiée le {date}"
+  },
+  "about.checked": {
+    "defaultMessage": "Dernière vérification : {date}"
+  },
+  "about.results.available": {
+    "defaultMessage": "Nouvelle version disponible : {version}."
+  },
+  "about.results.current": {
+    "defaultMessage": "Vous utilisez la dernière version stable publiée ({version})."
+  },
+  "about.results.ahead": {
+    "defaultMessage": "Votre version est plus récente que la dernière release publiée ({version})."
+  },
+  "about.results.unknown": {
+    "defaultMessage": "Dernière publication : {version}. Consultez la release pour vérifier sa version."
+  },
+  "about.errors.offline": {
+    "defaultMessage": "La vérification nécessite une connexion. Réessayez lorsque vous êtes en ligne."
+  },
+  "about.errors.rateLimited": {
+    "defaultMessage": "La limite de requêtes GitHub est atteinte. Réessayez plus tard."
+  },
+  "about.errors.unavailable": {
+    "defaultMessage": "Impossible de vérifier les releases GitHub pour le moment. Vérifiez votre connexion et réessayez."
+  },
+  "about.errors.invalidResponse": {
+    "defaultMessage": "La réponse de GitHub ne permet pas de vérifier la version. Consultez le dépôt ou réessayez plus tard."
+  },
+  "about.errors.timeout": {
+    "defaultMessage": "GitHub met trop de temps à répondre. Réessayez dans un instant."
+  },
+  "about.errors.cancelled": {
+    "defaultMessage": "Vérification annulée."
+  },
+  "about.stack.svelte": {
+    "defaultMessage": "Svelte"
+  },
+  "about.stack.sveltekit": {
+    "defaultMessage": "SvelteKit"
+  },
+  "about.stack.typescript": {
+    "defaultMessage": "TypeScript"
+  },
+  "about.stack.tailwind": {
+    "defaultMessage": "Tailwind CSS"
+  },
+  "about.stack.dexie": {
+    "defaultMessage": "Dexie · IndexedDB"
+  },
+  "about.stack.vite": {
+    "defaultMessage": "Vite"
+  },
+  "about.stack.icu": {
+    "defaultMessage": "IntlMessageFormat · ICU"
+  },
+  "about.stack.pwa": {
+    "defaultMessage": "PWA · Service Worker"
+  },
+  "dartsCork.enable": {
+    "defaultMessage": "Cork pour commencer"
+  },
+  "dartsCork.hint": {
+    "defaultMessage": "Le plus proche du centre commence la partie ou le premier leg."
+  },
+  "dartsCork.winner": {
+    "defaultMessage": "Gagnant du cork"
+  },
+  "dartsCork.instructions": {
+    "defaultMessage": "Un joueur par camp lance une fléchette vers le centre. Retirez tout bull (50) ou demi-bull (25) avant le lancer suivant. Désignez le camp le plus proche du centre : ce lancer ne rapporte aucun point."
+  },
+  "dartsCork.tie": {
+    "defaultMessage": "Égalité, deux bulls ou deux demi-bulls : les camps à égalité pour la première place relancent dans l’ordre inverse, jusqu’à être départagés."
+  },
+  "dartsCork.chooseSides": {
+    "defaultMessage": "Sélectionnez les joueurs ou les équipes pour désigner le gagnant du cork."
+  },
+  "dartsCork.required": {
+    "defaultMessage": "Désignez le gagnant du cork parmi les participants sélectionnés."
+  },
+  "matchOptions.dartsCork": {
+    "defaultMessage": "Cork : {name}"
+  },
+  "ruleGuide.dartsCork.play": {
+    "defaultMessage": "Le gagnant du cork, désigné au plus près du centre avant la partie, commence. Un joueur par camp lance une fléchette ; tout bull ou demi-bull est retiré avant le lancer suivant. Le cork ne compte pas dans les scores."
+  },
+  "ruleGuide.dartsCork.tie": {
+    "defaultMessage": "En cas d’égalité, de deux bulls ou de deux demi-bulls, les camps à égalité pour le départ relancent dans l’ordre inverse. Le cork ne détermine que le départ initial ; les legs suivants suivent le réglage affiché. À plus de deux camps ou au Cricket, il s’agit du mode de départ convenu pour cette partie."
+  },
+  "ruleGuide.sources.ndfc": {
+    "defaultMessage": "NDFC — règle officielle du lancer au bull"
+  },
+  "pwaUpdate.title": {
+    "defaultMessage": "Mises à jour de l’application"
+  },
+  "pwaUpdate.help": {
+    "defaultMessage": "La PWA vérifie les nouvelles versions sur son site d’hébergement. L’installation recharge l’application et conserve vos données enregistrées."
+  },
+  "pwaUpdate.available": {
+    "defaultMessage": "Une mise à jour est prête"
+  },
+  "pwaUpdate.notice": {
+    "defaultMessage": "Enregistrez votre saisie avant d’ouvrir les réglages pour l’installer. Aucun rechargement automatique."
+  },
+  "pwaUpdate.open": {
+    "defaultMessage": "Mettre à jour"
+  },
+  "pwaUpdate.later": {
+    "defaultMessage": "Plus tard"
+  },
+  "pwaUpdate.check": {
+    "defaultMessage": "Vérifier la PWA"
+  },
+  "pwaUpdate.checking": {
+    "defaultMessage": "Recherche…"
+  },
+  "pwaUpdate.apply": {
+    "defaultMessage": "Installer et recharger"
+  },
+  "pwaUpdate.applying": {
+    "defaultMessage": "Installation et rechargement…"
+  },
+  "pwaUpdate.ready": {
+    "defaultMessage": "La nouvelle version est téléchargée et prête à être installée."
+  },
+  "pwaUpdate.current": {
+    "defaultMessage": "Votre application est à jour sur ce site."
+  },
+  "pwaUpdate.beforeApply": {
+    "defaultMessage": "Mettez les parties en pause ou terminez-les, puis fermez les autres onglets et fenêtres de Scoretrackrr. Une saisie non enregistrée doit être validée avant de quitter sa page."
+  },
+  "pwaUpdate.unsupported": {
+    "defaultMessage": "Les mises à jour sont disponibles dans la version de production, sur un navigateur compatible avec les PWA."
+  },
+  "pwaUpdate.errors.offline": {
+    "defaultMessage": "Reconnectez-vous pour rechercher une mise à jour. Une version déjà téléchargée peut être installée hors ligne."
+  },
+  "pwaUpdate.errors.checkFailed": {
+    "defaultMessage": "Impossible de télécharger ou de vérifier la mise à jour. Votre version reste disponible ; réessayez plus tard."
+  },
+  "pwaUpdate.errors.otherTabs": {
+    "defaultMessage": "Fermez les autres onglets et fenêtres de Scoretrackrr, puis réessayez."
+  },
+  "pwaUpdate.errors.activationFailed": {
+    "defaultMessage": "La mise à jour n’a pas pu être appliquée. Réessayez ou fermez toutes les fenêtres de l’application avant de la rouvrir."
+  },
+  "pwaUpdate.errors.gameRunning": {
+    "defaultMessage": "Une partie est en cours. Mettez-la en pause ou terminez-la avant d’installer la mise à jour."
+  },
+  "pwaUpdate.errors.storage": {
+    "defaultMessage": "Le stockage local n’est pas accessible. La mise à jour est suspendue pour protéger vos parties."
+  },
+  "matches.controlsError": {
+    "defaultMessage": "Impossible de charger les commandes du jeu. Vos scores enregistrés sont conservés. Réessayez."
+  },
+  "parameters.labels.target5000": {
+    "defaultMessage": "Objectif de 5 000 points"
+  },
+  "parameters.labels.x01": {
+    "defaultMessage": "Jouer au X01"
+  },
+  "parameters.x01Start": {
+    "defaultMessage": "Score de départ"
+  },
+  "parameters.x01StartHint": {
+    "defaultMessage": "Choisissez le score de départ, de 101 à 701 points."
+  },
+  "play.order": {
+    "defaultMessage": "Ordre de jeu"
+  },
+  "play.orderHint": {
+    "defaultMessage": "Cet ordre définit les tours. Le cork et les règles de départ restent prioritaires."
+  },
+  "play.moveUp": {
+    "defaultMessage": "Monter {name}"
+  },
+  "play.moveDown": {
+    "defaultMessage": "Descendre {name}"
+  },
+  "play.shuffle": {
+    "defaultMessage": "Tirer l’ordre au sort"
+  },
+  "play.presets": {
+    "defaultMessage": "Configurations favorites"
+  },
+  "play.presetHint": {
+    "defaultMessage": "Enregistrez les paramètres et participants sur cet appareil. Une configuration reste modifiable avant création. Le cork sera à rejouer."
+  },
+  "play.presetChoose": {
+    "defaultMessage": "Configuration enregistrée"
+  },
+  "play.presetName": {
+    "defaultMessage": "Nom de la configuration"
+  },
+  "play.savePreset": {
+    "defaultMessage": "Enregistrer la configuration"
+  },
+  "play.apply": {
+    "defaultMessage": "Appliquer"
+  },
+  "play.presetSaved": {
+    "defaultMessage": "Configuration enregistrée."
+  },
+  "play.presetApplied": {
+    "defaultMessage": "Configuration appliquée. Vérifiez les participants et le départ."
+  },
+  "play.presetUnavailable": {
+    "defaultMessage": "Configuration indisponible : un joueur, une équipe ou des paramètres ont changé."
+  },
+  "play.presetLimit": {
+    "defaultMessage": "Choisissez un nom (40 configurations maximum)."
+  },
+  "play.storageError": {
+    "defaultMessage": "Enregistrement local impossible. Votre partie reste disponible."
+  },
+  "play.draftRecovered": {
+    "defaultMessage": "Saisie récupérée · vérifiez-la avant de valider. Aucun point ajouté."
+  },
+  "play.preview": {
+    "defaultMessage": "Avant validation"
+  },
+  "play.previewIncomplete": {
+    "defaultMessage": "Complétez une saisie valide pour voir le résultat."
+  },
+  "play.bust": {
+    "defaultMessage": "Bust · la volée ne compte pas"
+  },
+  "play.pendingPoints": {
+    "defaultMessage": "{points} points en cours, non encaissés"
+  },
+  "play.winningInput": {
+    "defaultMessage": "Cette saisie termine la partie."
+  },
+  "play.display": {
+    "defaultMessage": "Affichage de la partie"
+  },
+  "play.tableMode": {
+    "defaultMessage": "Mode table"
+  },
+  "play.keepAwake": {
+    "defaultMessage": "Garder l’écran allumé"
+  },
+  "play.wakeUnsupported": {
+    "defaultMessage": "Maintien de l’écran indisponible."
+  },
+  "play.wakeRefused": {
+    "defaultMessage": "Le système a refusé le maintien de l’écran."
+  },
+  "play.wakeActive": {
+    "defaultMessage": "Écran maintenu allumé."
+  },
+  "play.wakeReleased": {
+    "defaultMessage": "Maintien de l’écran interrompu par le système."
+  },
+  "play.situation": {
+    "defaultMessage": "Situation de la partie"
+  },
+  "play.entryStates.draft": {
+    "defaultMessage": "Prêt à démarrer"
+  },
+  "play.entryStates.in_progress": {
+    "defaultMessage": "À jouer"
+  },
+  "play.entryStates.paused": {
+    "defaultMessage": "Saisie en pause"
+  },
+  "play.entryStates.finished": {
+    "defaultMessage": "Résultat final"
+  },
+  "play.entryStates.cancelled": {
+    "defaultMessage": "Lecture seule"
+  },
+  "play.entryClosed": {
+    "defaultMessage": "La saisie est fermée. Les scores restent consultables au-dessus."
+  },
+  "skull.needTrick": {
+    "defaultMessage": "Gagnez au moins un pli pour ajouter des captures."
+  },
+  "skull.inventoryHint": {
+    "defaultMessage": "Les limites tiennent compte des captures et plis déjà attribués, y compris les saisies non validées."
+  },
+  "timesUp.cardCount": {
+    "defaultMessage": "Nombre de cartes"
+  },
+  "timesUp.durationSeconds": {
+    "defaultMessage": "Durée du chrono (secondes)"
+  },
+  "sixNimmt.jokers": {
+    "defaultMessage": "Vachement bien ! · Jokers"
+  },
+  "sixNimmt.surprises": {
+    "defaultMessage": "6 qui surprend ! · Cartes spéciales"
+  },
+  "sixNimmt.surprisesSetup": {
+    "defaultMessage": "2 à 8 joueurs · 12 cartes Numéro · 3 cartes spéciales · 2 manches"
+  },
+  "sixNimmt.passCards": {
+    "defaultMessage": "Faites passer !"
+  },
+  "sixNimmt.variableRows": {
+    "defaultMessage": "Rangées de longueur variable"
+  },
+  "sixNimmt.surprisesHint": {
+    "defaultMessage": "Saisissez les têtes de bœuf restantes dans la pile de chaque joueur après les cartes spéciales, dont Négatif = Positif. Le score d’une manche reste positif ou nul. La partie se termine après la manche 2."
+  },
+  "skull.advancedCards": {
+    "defaultMessage": "Cartes avancées du jeu de base"
+  },
+  "skull.advancedHint": {
+    "defaultMessage": "Kraken et Baleine blanche"
+  },
+  "skull.expansion": {
+    "defaultMessage": "Extension 2025"
+  },
+  "skull.expansionHint": {
+    "defaultMessage": "19 cartes, dont le Premier officier, le Coffre de Davy Jones et la Raie tachetée"
+  },
+  "skull.loot": {
+    "defaultMessage": "Cartes Butin"
+  },
+  "skull.lootHint": {
+    "defaultMessage": "Comptez seulement les alliances Butin réussies : les deux joueurs doivent réaliser exactement leur pari. Chacun reçoit 20 points par alliance, y compris avec le calcul Rascal."
+  },
+  "skull.rascal": {
+    "defaultMessage": "Calcul des points Rascal"
+  },
+  "skull.rascalHint": {
+    "defaultMessage": "10 points par carte distribuée pour un pari exact ; la moitié avec un écart d’un pli ; zéro au-delà. Les bonus de capture suivent le même multiplicateur."
+  },
+  "skull.discardedHint": {
+    "defaultMessage": "{count} plis non attribués. Avec les créatures marines, les plis défaussés n’ont pas de gagnant : laissez-les non attribués."
+  },
+  "skull.bonusFields.sevens": {
+    "defaultMessage": "7 capturés (−5)"
+  },
+  "skull.bonusFields.eights": {
+    "defaultMessage": "8 capturés (+5)"
+  },
+  "skull.bonusFields.mate": {
+    "defaultMessage": "Premier officier capturé (+30)"
+  },
+  "skull.bonusFields.monsters": {
+    "defaultMessage": "Créatures capturées par Davy (+20)"
+  },
+  "skull.bonusFields.loot": {
+    "defaultMessage": "Alliances Butin réussies (+20)"
+  },
+  "ruleGuide.six.surprisesDeal": {
+    "defaultMessage": "Distribuez 12 cartes Numéro et 3 cartes spéciales à chacun des 2 à 8 joueurs. Formez quatre rangées. Les cartes spéciales se jouent sur la table."
+  },
+  "ruleGuide.six.jokers": {
+    "defaultMessage": "Distribuez un Joker par joueur en plus des 10 cartes habituelles. Un Joker vaut une tête de bœuf ; rangez les Jokers inutilisés. Il peut rejoindre toute rangée, sauf directement après un autre Joker."
+  },
+  "ruleGuide.six.passCards": {
+    "defaultMessage": "Avant de révéler les cartes, chacun passe une carte face cachée à son voisin de gauche. Pas d’échange au dernier tour."
+  },
+  "ruleGuide.six.variableRows": {
+    "defaultMessage": "La première carte portant plusieurs têtes fixe la longueur de la rangée : 2, 3, 5 ou 7 têtes autorisent encore 1, 2, 4 ou 6 cartes avant que le joueur suivant ramasse."
+  },
+  "ruleGuide.six.surprisesRecord": {
+    "defaultMessage": "Notez la pile de pénalités restante après les effets des cartes spéciales. Négatif = Positif annule des pénalités de la manche en cours ; l’excédent est perdu. La manche suivante commence avec une nouvelle pile."
+  },
+  "ruleGuide.six.surprisesFinish": {
+    "defaultMessage": "Jouez exactement deux manches. Additionnez les pénalités ; le plus petit total gagne, avec victoire partagée en cas d’égalité."
+  },
+  "ruleGuide.skull.rascal": {
+    "defaultMessage": "Rascal : un pari exact rapporte 10 × cartes distribuées ; un écart d’un pli rapporte la moitié ; au-delà, zéro. Appliquez ce multiplicateur aux bonus de capture. Le Butin exige toujours des paris exacts."
+  },
+  "ruleGuide.skull.advanced": {
+    "defaultMessage": "Le Kraken défausse le pli. La Baleine blanche élimine les cartes spéciales : le plus grand nombre gagne. Sans carte gagnante, le pli est défaussé. Ne comptez que les plis réellement remportés."
+  },
+  "ruleGuide.skull.expansion": {
+    "defaultMessage": "Captures de l’extension : chaque 7 vaut −5 ; chaque 8 vaut +5 ; le Premier officier vaut +30 s’il est capturé par le Roi ou une Sirène. Davy rapporte +20 par créature marine capturée, même sans remporter le pli. Les cartes 0/14 n’ont pas de bonus de capture."
+  },
+  "ruleGuide.skull.loot": {
+    "defaultMessage": "Chacune des deux cartes Butin peut rapporter 20 points à chaque partenaire, uniquement si les deux réalisent exactement leur pari. Saisissez les alliances réussies pour chaque partenaire."
+  },
+  "ruleGuide.sources.skullExpansion": {
+    "defaultMessage": "Grandpa Beck’s — Règles de l’extension"
+  },
+  "ruleGuide.sources.rascal": {
+    "defaultMessage": "Grandpa Beck’s — Calcul Rascal"
+  },
+  "ruleGuide.sources.sixJokers": {
+    "defaultMessage": "Gigamic — Règles Vachement bien !"
+  },
+  "ruleGuide.sources.sixSurprises": {
+    "defaultMessage": "Gigamic — Règles 6 qui surprend !"
+  },
+  "matchOptions.sixExpansion": {
+    "defaultMessage": "{kind, select, none {Classique} jokers {Vachement bien ! · Jokers} other {6 qui surprend !}}"
+  },
+  "matchOptions.passCards": {
+    "defaultMessage": "Faites passer !"
+  },
+  "matchOptions.variableRows": {
+    "defaultMessage": "Rangées variables"
+  },
+  "matchOptions.skullAdvanced": {
+    "defaultMessage": "Kraken · Baleine blanche"
+  },
+  "matchOptions.skullExpansion": {
+    "defaultMessage": "Extension 2025"
+  },
+  "matchOptions.skullLoot": {
+    "defaultMessage": "Butin : {enabled, select, yes {activé} other {désactivé}}"
+  },
+  "matchOptions.skullScoring": {
+    "defaultMessage": "Calcul {kind, select, rascal {Rascal} other {classique}}"
+  },
+  "skull.noTrickHint": {
+    "defaultMessage": "Seuls les bonus autorisés sans remporter de pli restent disponibles."
+  },
+  "scoreSheet.entry": {
+    "defaultMessage": "Scores à saisir"
+  },
+  "scoreSheet.round": {
+    "defaultMessage": "Manche {round}"
+  },
+  "scoreSheet.turn": {
+    "defaultMessage": "Tour {round}"
+  },
+  "scoreSheet.final": {
+    "defaultMessage": "Décompte final"
+  },
+  "scoreSheet.last": {
+    "defaultMessage": "Terminer la partie avec cette saisie"
+  },
+  "scoreSheet.choose": {
+    "defaultMessage": "Choisir un joueur"
+  },
+  "scoreSheet.closer": {
+    "defaultMessage": "Joueur qui a fermé la manche"
+  },
+  "scoreSheet.taker": {
+    "defaultMessage": "Preneur"
+  },
+  "scoreSheet.partner": {
+    "defaultMessage": "Partenaire appelé"
+  },
+  "scoreSheet.none": {
+    "defaultMessage": "Aucun"
+  },
+  "scoreSheet.bouts": {
+    "defaultMessage": "Bouts"
+  },
+  "scoreSheet.contract": {
+    "defaultMessage": "Contrat"
+  },
+  "scoreSheet.contract1": {
+    "defaultMessage": "Petite"
+  },
+  "scoreSheet.contract2": {
+    "defaultMessage": "Garde"
+  },
+  "scoreSheet.contract4": {
+    "defaultMessage": "Garde sans"
+  },
+  "scoreSheet.contract6": {
+    "defaultMessage": "Garde contre"
+  },
+  "scoreSheet.cardPoints": {
+    "defaultMessage": "Points des cartes de l’attaque"
+  },
+  "scoreSheet.bonuses": {
+    "defaultMessage": "Primes nettes pour l’attaque"
+  },
+  "scoreSheet.blocked": {
+    "defaultMessage": "Partie bloquée, aucun joueur n’a vidé son chevalet"
+  },
+  "scoreSheet.player": {
+    "defaultMessage": "Joueur"
+  },
+  "scoreSheet.winner": {
+    "defaultMessage": "Gagnant de la manche"
+  },
+  "scoreSheet.remaining": {
+    "defaultMessage": "Points restants"
+  },
+  "scoreSheet.points": {
+    "defaultMessage": "Points"
+  },
+  "scoreSheet.save": {
+    "defaultMessage": "Enregistrer les scores"
+  },
+  "scoreSheet.saveFinal": {
+    "defaultMessage": "Enregistrer et terminer"
+  },
+  "scoreSheet.numbers": {
+    "defaultMessage": "Somme des cartes numérotées"
+  },
+  "scoreSheet.actions": {
+    "defaultMessage": "Nombre de cartes à 20 points"
+  },
+  "scoreSheet.wilds": {
+    "defaultMessage": "Nombre de cartes à 50 points"
+  },
+  "scoreSheet.drawColor": {
+    "defaultMessage": "Nombre de cartes + couleur (60 points)"
+  },
+  "scoreSheet.wonders": {
+    "defaultMessage": "Étapes de merveille"
+  },
+  "scoreSheet.military": {
+    "defaultMessage": "Points militaires"
+  },
+  "scoreSheet.civilian": {
+    "defaultMessage": "Points civils"
+  },
+  "scoreSheet.commerce": {
+    "defaultMessage": "Points commerciaux"
+  },
+  "scoreSheet.guilds": {
+    "defaultMessage": "Points de guildes"
+  },
+  "scoreSheet.red": {
+    "defaultMessage": "Rouge"
+  },
+  "scoreSheet.yellow": {
+    "defaultMessage": "Jaune"
+  },
+  "scoreSheet.green": {
+    "defaultMessage": "Vert"
+  },
+  "scoreSheet.blue": {
+    "defaultMessage": "Bleu"
+  },
+  "scoreSheet.orange": {
+    "defaultMessage": "Orange"
+  },
+  "scoreSheet.purple": {
+    "defaultMessage": "Violet"
+  },
+  "scoreSheet.penalties": {
+    "defaultMessage": "Coups manqués"
+  },
+  "scoreSheet.foxes": {
+    "defaultMessage": "Renards"
+  },
+  "scoreSheet.lowest": {
+    "defaultMessage": "Le plus petit total gagne."
+  },
+  "scoreSheet.highest": {
+    "defaultMessage": "Le plus grand total gagne."
+  },
+  "scoreSheet.threshold": {
+    "defaultMessage": "Jouez jusqu’à ce qu’un joueur atteigne {target} points."
+  },
+  "scoreSheet.manualEnd": {
+    "defaultMessage": "Cochez la fin de partie lors de la dernière saisie selon les règles convenues à table."
+  },
+  "scoreSheet.finalEnd": {
+    "defaultMessage": "Enregistrez la fiche de décompte complète pour obtenir le classement."
+  },
+  "scoreSheet.history": {
+    "defaultMessage": "Saisie {round} · {scores}"
+  },
+  "scoreSheet.roster": {
+    "defaultMessage": "{min, number} à {max, number} joueurs"
+  },
+  "scoreSheet.beloteRoster": {
+    "defaultMessage": "Choisissez deux équipes de deux joueurs."
+  },
+  "games.kinds.skyjo": {
+    "defaultMessage": "Cartes"
+  },
+  "games.descriptions.skyjo": {
+    "defaultMessage": "Saisissez la valeur de chaque grille restante et indiquez qui a fermé."
+  },
+  "scoreSheet.skyjo.hint": {
+    "defaultMessage": "Saisissez la valeur de chaque grille restante et indiquez qui a fermé. Son score positif double s’il n’est pas strictement inférieur à celui de tous les autres."
+  },
+  "games.kinds.belote": {
+    "defaultMessage": "Cartes"
+  },
+  "games.descriptions.belote": {
+    "defaultMessage": "Saisissez les points attribués à chaque équipe après application des contrats, primes et arrondis de votre Belote ou Coinche.."
+  },
+  "scoreSheet.belote.hint": {
+    "defaultMessage": "Saisissez les points attribués à chaque équipe après application des contrats, primes et arrondis de votre Belote ou Coinche."
+  },
+  "games.kinds.tarot": {
+    "defaultMessage": "Cartes"
+  },
+  "games.descriptions.tarot": {
+    "defaultMessage": "Saisissez le contrat, les bouts et les points des cartes de l’attaque."
+  },
+  "scoreSheet.tarot.hint": {
+    "defaultMessage": "Saisissez le contrat, les bouts et les points des cartes de l’attaque. Indiquez ses primes nettes, dont le petit au bout signé et les primes de poignée ou chelem éventuelles."
+  },
+  "games.kinds.rummy": {
+    "defaultMessage": "Cartes"
+  },
+  "games.descriptions.rummy": {
+    "defaultMessage": "Choisissez le joueur qui a posé toutes ses cartes, puis saisissez la valeur des mains adverses."
+  },
+  "scoreSheet.rummy.hint": {
+    "defaultMessage": "Choisissez le joueur qui a posé toutes ses cartes, puis saisissez la valeur des mains adverses. Ces points reviennent au gagnant."
+  },
+  "games.kinds.uno": {
+    "defaultMessage": "Cartes"
+  },
+  "games.descriptions.uno": {
+    "defaultMessage": "Choisissez qui a vidé sa main."
+  },
+  "scoreSheet.uno.hint": {
+    "defaultMessage": "Choisissez qui a vidé sa main. Comptez les cartes restantes chez les adversaires en utilisant la face en jeu pour UNO Flip. Les cartes numérotées gardent leur valeur."
+  },
+  "games.kinds.scrabble": {
+    "defaultMessage": "Plateau"
+  },
+  "games.descriptions.scrabble": {
+    "defaultMessage": "Saisissez le score de chaque tour après application des cases bonus."
+  },
+  "scoreSheet.scrabble.hint": {
+    "defaultMessage": "Saisissez le score de chaque tour après application des cases bonus. À la fin, saisissez la valeur des lettres restantes pour les déduire et créditer le joueur qui a terminé, le cas échéant."
+  },
+  "games.kinds.seven-wonders": {
+    "defaultMessage": "Plateau"
+  },
+  "games.descriptions.seven-wonders": {
+    "defaultMessage": "Saisissez les points de chaque joueur dans les sept catégories."
+  },
+  "scoreSheet.seven-wonders.hint": {
+    "defaultMessage": "Saisissez les points par catégorie. Les pièces et les symboles scientifiques sont convertis automatiquement."
+  },
+  "games.kinds.qwixx": {
+    "defaultMessage": "Dés"
+  },
+  "games.descriptions.qwixx": {
+    "defaultMessage": "Saisissez le nombre de cases cochées par couleur, cadenas compris, et les coups manqués de chaque joueur."
+  },
+  "scoreSheet.qwixx.hint": {
+    "defaultMessage": "Saisissez le nombre de cases cochées par couleur, cadenas compris, et les coups manqués de chaque joueur. Chaque coup manqué coûte cinq points."
+  },
+  "games.kinds.clever": {
+    "defaultMessage": "Dés"
+  },
+  "games.descriptions.clever": {
+    "defaultMessage": "Saisissez les scores des cinq zones et le nombre de renards."
+  },
+  "scoreSheet.clever.hint": {
+    "defaultMessage": "Saisissez les scores des cinq zones et le nombre de renards. Chaque renard vaut le score de la zone la plus basse."
+  },
+  "games.kinds.dominoes": {
+    "defaultMessage": "Tuiles"
+  },
+  "games.descriptions.dominoes": {
+    "defaultMessage": "Pour le jeu avec pioche ou bloqué, choisissez le gagnant et saisissez les points restants chez chaque adversaire."
+  },
+  "scoreSheet.dominoes.hint": {
+    "defaultMessage": "Pour le jeu avec pioche ou bloqué, choisissez le gagnant et saisissez les points restants chez chaque adversaire. Le gagnant marque leur somme."
+  },
+  "ruleGuide.sources.sheet-skyjo": {
+    "defaultMessage": "Magilano"
+  },
+  "ruleGuide.sources.sheet-belote": {
+    "defaultMessage": "Fédération Française de Belote"
+  },
+  "ruleGuide.sources.sheet-coinche": {
+    "defaultMessage": "Fédération Française de Belote · Coinche"
+  },
+  "ruleGuide.sources.sheet-tarot": {
+    "defaultMessage": "Fédération Française de Tarot"
+  },
+  "ruleGuide.sources.sheet-rummy": {
+    "defaultMessage": "Bicycle Cards"
+  },
+  "ruleGuide.sources.sheet-uno": {
+    "defaultMessage": "Mattel · UNO"
+  },
+  "ruleGuide.sources.sheet-unoFlip": {
+    "defaultMessage": "Mattel · UNO Flip"
+  },
+  "ruleGuide.sources.sheet-scrabble": {
+    "defaultMessage": "FFSc / FISF"
+  },
+  "ruleGuide.sources.sheet-seven-wonders": {
+    "defaultMessage": "Repos Production"
+  },
+  "ruleGuide.sources.sheet-qwixx": {
+    "defaultMessage": "Gigamic"
+  },
+  "ruleGuide.sources.sheet-clever": {
+    "defaultMessage": "Schmidt Spiele"
+  },
+  "ruleGuide.sources.sheet-dominoes": {
+    "defaultMessage": "ZiMAD · Domino"
+  },
+  "scoreSheet.coins": {
+    "defaultMessage": "Pièces restantes"
+  },
+  "scoreSheet.tablet": {
+    "defaultMessage": "Tablettes"
+  },
+  "scoreSheet.compass": {
+    "defaultMessage": "Compas"
+  },
+  "scoreSheet.gear": {
+    "defaultMessage": "Rouages"
+  },
+  "scoreSheet.play": {
+    "defaultMessage": "Jouer à {name}"
+  },
+  "scoreSheet.skyjo.scoring": {
+    "defaultMessage": "Un score de 12 passe à 24 si le joueur qui ferme est à égalité avec un autre à 12. Les scores nuls ou négatifs restent inchangés."
+  },
+  "scoreSheet.belote.scoring": {
+    "defaultMessage": "L’app cumule les points saisis par équipe. Appliquez le dix de der, les annonces, le contrat et les éventuels reports avant de saisir."
+  },
+  "scoreSheet.tarot.scoring": {
+    "defaultMessage": "Le multiplicateur du contrat s’applique à 25 plus l’écart absolu. Le total prend le signe de la réussite ou de la chute, puis les primes signées s’ajoutent."
+  },
+  "scoreSheet.rummy.scoring": {
+    "defaultMessage": "Au rami simple, les figures valent 10, les as valent 1 et les cartes numérotées gardent leur valeur."
+  },
+  "scoreSheet.uno.scoring": {
+    "defaultMessage": "Comptez 20 pour les actions ordinaires et 50 pour les jokers. Dans UNO Flip, le joker + couleur vaut 60."
+  },
+  "scoreSheet.scrabble.scoring": {
+    "defaultMessage": "En cas de blocage, chacun perd la valeur de ses lettres restantes. Si un joueur termine, ajoutez les déductions adverses à son score."
+  },
+  "scoreSheet.seven-wonders.scoring": {
+    "defaultMessage": "Chaque série de trois symboles scientifiques différents rapporte 7 points. Chaque type de symbole rapporte aussi le carré de son nombre. Trois pièces rapportent 1 point."
+  },
+  "scoreSheet.qwixx.scoring": {
+    "defaultMessage": "Par exemple, quatre croix sur une ligne rapportent 10 points. Deux coups manqués coûtent 10 points."
+  },
+  "scoreSheet.clever.scoring": {
+    "defaultMessage": "Une zone à zéro point ramène la valeur de tous les renards à zéro."
+  },
+  "scoreSheet.dominoes.scoring": {
+    "defaultMessage": "Cette fiche utilise la somme des points restants chez les adversaires. Convenez de cette règle de marque avant de commencer."
+  },
+  "pwaInstall.action": {
+    "defaultMessage": "Installer l’app"
+  },
+  "pwaInstall.fallback": {
+    "defaultMessage": "Pour installer Scoretrackrr, utilisez le menu du navigateur."
+  }
+}

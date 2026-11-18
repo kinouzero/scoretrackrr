@@ -1,0 +1,3939 @@
+{
+  "backup.title": {
+    "defaultMessage": "JSON backup"
+  },
+  "backup.help": {
+    "defaultMessage": "Export your players, teams and matches to a JSON file. Importing adds data without replacing your current matches."
+  },
+  "backup.privacy": {
+    "defaultMessage": "The file may contain email addresses and profile photos."
+  },
+  "backup.export": {
+    "defaultMessage": "Export JSON"
+  },
+  "backup.import": {
+    "defaultMessage": "Import JSON"
+  },
+  "backup.file": {
+    "defaultMessage": "JSON file to import"
+  },
+  "backup.exported": {
+    "defaultMessage": "JSON download started."
+  },
+  "backup.exportError": {
+    "defaultMessage": "Unable to export your data. Try again."
+  },
+  "backup.working": {
+    "defaultMessage": "Processing…"
+  },
+  "backup.conflict": {
+    "defaultMessage": "Import failed: some records differ from existing data. Your current data has been kept."
+  },
+  "backup.invalid": {
+    "defaultMessage": "This JSON file is invalid, incompatible or larger than 20 MB. Your current data has been kept."
+  },
+  "sharing.handoffTitle": {
+    "defaultMessage": "Organizer transfer"
+  },
+  "sharing.handoffPrepare": {
+    "defaultMessage": "Prepare transfer to this manager"
+  },
+  "sharing.handoffCommit": {
+    "defaultMessage": "Confirm permanent transfer"
+  },
+  "sharing.handoffCancel": {
+    "defaultMessage": "Cancel transfer preparation"
+  },
+  "sharing.handoffAccept": {
+    "defaultMessage": "Accept and save a copy"
+  },
+  "sharing.handoffDecline": {
+    "defaultMessage": "Decline transfer"
+  },
+  "sharing.handoffActivate": {
+    "defaultMessage": "Resume transfer activation"
+  },
+  "sharing.handoffWaiting": {
+    "defaultMessage": "Waiting for the recipient to accept and verify their saved copy."
+  },
+  "sharing.handoffReady": {
+    "defaultMessage": "The recipient accepted and saved a copy. You can confirm the transfer."
+  },
+  "sharing.handoffAccepted": {
+    "defaultMessage": "Copy saved on this device. The organizer must now confirm."
+  },
+  "sharing.handoffAcceptHelp": {
+    "defaultMessage": "Accept to save the rules, participants and events without emails or photos. Once the organizer confirms, only this device can continue. Other participants must pair again."
+  },
+  "sharing.handoffError": {
+    "defaultMessage": "Transfer unavailable or version changed. Check both devices. Preparation can be canceled until the transfer is confirmed."
+  },
+  "sharing.handoffRecovery": {
+    "defaultMessage": "Activation incomplete. The previous device remains read-only. Keep its data, retrieve its journal and resume activation on this device."
+  },
+  "sharing.boundPlayer": {
+    "defaultMessage": "Player associated with this viewer"
+  },
+  "sharing.role": {
+    "defaultMessage": "Viewer permissions"
+  },
+  "sharing.roles.viewer": {
+    "defaultMessage": "Read only"
+  },
+  "sharing.roles.scorer": {
+    "defaultMessage": "Enter own score"
+  },
+  "sharing.roles.manager": {
+    "defaultMessage": "Manage all scores"
+  },
+  "sharing.applyPermission": {
+    "defaultMessage": "Apply permissions"
+  },
+  "sharing.permissionError": {
+    "defaultMessage": "Unable to change permissions. Check pairing and try again."
+  },
+  "sharing.proposalHelp": {
+    "defaultMessage": "Each entry is a proposal that only the organizer can approve. Permissions apply to this pairing. Disconnected changes are never merged. Personal scoring is limited to your side; corrections and round decisions require a manager. Transferring organizer authority requires separate acceptance and confirmation."
+  },
+  "sharing.proposalUnknown": {
+    "defaultMessage": "Connection lost or response missing: check the organizer’s journal before entering again. No isolated proposal is applied on this device."
+  },
+  "sharing.proposalRejected": {
+    "defaultMessage": "Proposal rejected: permissions revoked, outdated score or invalid entry. The journal has been updated; check it before trying again."
+  },
+  "sharing.proposalWorking": {
+    "defaultMessage": "Waiting for the organizer to approve…"
+  },
+  "sharing.authorityTransferred": {
+    "defaultMessage": "Another device has authority. This copy remains read-only."
+  },
+  "sharing.authorityPrepared": {
+    "defaultMessage": "Transfer being prepared: entries are suspended until confirmation or cancellation."
+  },
+  "sharing.journalRequest": {
+    "defaultMessage": "Retrieve and verify journal"
+  },
+  "sharing.journalWorking": {
+    "defaultMessage": "Retrieving journal…"
+  },
+  "sharing.journalTitle": {
+    "defaultMessage": "Journal replayed on this device"
+  },
+  "sharing.journalStale": {
+    "defaultMessage": "The score has changed since this check. Retrieve the journal again to update details."
+  },
+  "sharing.journalError": {
+    "defaultMessage": "Journal unavailable, incomplete or too large. Retrieve it or pair again; the organizer’s match is preserved."
+  },
+  "sharing.superseded": {
+    "defaultMessage": "replaced or undone"
+  },
+  "sharing.actions.authority_transfer": {
+    "defaultMessage": "Organizer transfer"
+  },
+  "sharing.actions.start": {
+    "defaultMessage": "Start"
+  },
+  "sharing.actions.pause": {
+    "defaultMessage": "Pause"
+  },
+  "sharing.actions.resume": {
+    "defaultMessage": "Resume"
+  },
+  "sharing.actions.cancel": {
+    "defaultMessage": "Match canceled"
+  },
+  "sharing.actions.record": {
+    "defaultMessage": "Score recorded"
+  },
+  "sharing.actions.finish": {
+    "defaultMessage": "Finish"
+  },
+  "sharing.actions.correct": {
+    "defaultMessage": "Correction"
+  },
+  "sharing.actions.undo": {
+    "defaultMessage": "Entry undone"
+  },
+  "sharing.host": {
+    "defaultMessage": "Share match over local Wi-Fi"
+  },
+  "sharing.join": {
+    "defaultMessage": "Join match over local Wi-Fi"
+  },
+  "sharing.scope": {
+    "defaultMessage": "Experimental: compatible local Wi-Fi required. Up to two viewers. No server, STUN/TURN, camera or microphone. The organizer approves entries and can allow participants to propose or manage scores. Role transfer requires explicit agreement on both devices."
+  },
+  "sharing.steps": {
+    "defaultMessage": "The organizer creates an offer. The viewer pastes it here and sends their answer back. Paste the answer, then connect. These texts are used only for pairing; scores then travel over WebRTC. If connection fails, continue on the organizer’s phone."
+  },
+  "sharing.add": {
+    "defaultMessage": "Create viewer offer"
+  },
+  "sharing.offer": {
+    "defaultMessage": "Pairing offer"
+  },
+  "sharing.answer": {
+    "defaultMessage": "Pairing answer"
+  },
+  "sharing.respond": {
+    "defaultMessage": "Create my answer"
+  },
+  "sharing.connect": {
+    "defaultMessage": "Connect viewer"
+  },
+  "sharing.stop": {
+    "defaultMessage": "Close sharing"
+  },
+  "sharing.scores": {
+    "defaultMessage": "Scores received from organizer"
+  },
+  "sharing.saveRules": {
+    "defaultMessage": "Keep rules on this device"
+  },
+  "sharing.unnamedRules": {
+    "defaultMessage": "Shared game"
+  },
+  "sharing.rulesHelp": {
+    "defaultMessage": "Received rules are validated before display. Save a local copy without importing participants or the match; built-in games must match a known version."
+  },
+  "sharing.error": {
+    "defaultMessage": "Local connection unavailable or incompatible data. Check Wi-Fi and pair again; local play remains available."
+  },
+  "sharing.states.new": {
+    "defaultMessage": "Waiting for pairing"
+  },
+  "sharing.states.connecting": {
+    "defaultMessage": "Connecting"
+  },
+  "sharing.states.connected": {
+    "defaultMessage": "Viewer connected"
+  },
+  "sharing.states.disconnected": {
+    "defaultMessage": "Connection lost: pair again"
+  },
+  "sharing.states.failed": {
+    "defaultMessage": "Unable to connect on this network"
+  },
+  "sharing.states.closed": {
+    "defaultMessage": "Sharing closed"
+  },
+  "history.filters": {
+    "defaultMessage": "Filter history"
+  },
+  "history.game": {
+    "defaultMessage": "Game name"
+  },
+  "history.player": {
+    "defaultMessage": "Player name at time of play"
+  },
+  "history.team": {
+    "defaultMessage": "Team name at time of play"
+  },
+  "history.status": {
+    "defaultMessage": "Match status"
+  },
+  "history.all": {
+    "defaultMessage": "All statuses"
+  },
+  "history.from": {
+    "defaultMessage": "From"
+  },
+  "history.until": {
+    "defaultMessage": "Until"
+  },
+  "history.scanHint": {
+    "defaultMessage": "Each page checks up to 120 matches and shows up to 24 results. An empty page may be followed by more pages."
+  },
+  "history.replayRules": {
+    "defaultMessage": "Play again with these rules"
+  },
+  "history.export": {
+    "defaultMessage": "Export match and journal"
+  },
+  "history.download": {
+    "defaultMessage": "Download match JSON archive"
+  },
+  "history.exported": {
+    "defaultMessage": "Archive ready."
+  },
+  "history.exportError": {
+    "defaultMessage": "Unable to prepare archive."
+  },
+  "transfer.import": {
+    "defaultMessage": "Import game JSON"
+  },
+  "transfer.hint": {
+    "defaultMessage": "Custom games are imported as new copies. Built-in games must exactly match a supported version. Matches and profiles are not included."
+  },
+  "transfer.imported": {
+    "defaultMessage": "Rules imported on this device."
+  },
+  "transfer.invalid": {
+    "defaultMessage": "Import failed: invalid file, file too large or incompatible version."
+  },
+  "transfer.file": {
+    "defaultMessage": "Rules JSON file"
+  },
+  "flip.title": {
+    "defaultMessage": "Flip 7"
+  },
+  "flip.play": {
+    "defaultMessage": "Play Flip 7"
+  },
+  "flip.rules": {
+    "defaultMessage": "Edition 3.1 and publisher FAQ: sum number cards, apply ×2 if present, then +2 to +10 modifiers, then +15 for seven distinct numbers. A bust scores zero. Check victory after all round results: highest score of at least 200. If the leaders tie, everyone continues. Resolve card actions physically; this is a score sheet, not a dealing simulator. For 3 to 16 players on this device."
+  },
+  "flip.cards": {
+    "defaultMessage": "Kept Number cards"
+  },
+  "flip.modifiers": {
+    "defaultMessage": "Kept modifiers"
+  },
+  "flip.double": {
+    "defaultMessage": "×2 multiplier"
+  },
+  "flip.bust": {
+    "defaultMessage": "Bust: unprotected duplicate"
+  },
+  "flip.bustHint": {
+    "defaultMessage": "A bust scores 0: no cards or bonuses need to be entered."
+  },
+  "flip.handHint": {
+    "defaultMessage": "Enter the final card row after physical actions, including cards held by a frozen player or a player who stopped."
+  },
+  "flip.record": {
+    "defaultMessage": "Record hand"
+  },
+  "flip.pending": {
+    "defaultMessage": "awaiting entry"
+  },
+  "flip.complete": {
+    "defaultMessage": "Round complete. Continue if the threshold or a tie prevents a winner from being declared."
+  },
+  "flip.invalid": {
+    "defaultMessage": "Invalid hand: check the cards and modifiers already used."
+  },
+  "skull.title": {
+    "defaultMessage": "Skull King"
+  },
+  "skull.play": {
+    "defaultMessage": "Play Skull King"
+  },
+  "skull.rules": {
+    "defaultMessage": "Classic 2021, 3 to 8 players, without advanced cards or pirate powers. Bids before results; one trick per card dealt. Exact bid: 20 points per trick plus bonuses. Incorrect bid: −10 per trick off. Zero bid: +10 per card if successful, otherwise −10 per card. Ten rounds; ties trigger additional ten-card rounds (eight cards with eight players) until one winner remains. No two-player Graybeard mode."
+  },
+  "skull.grid": {
+    "defaultMessage": "Round bids and results"
+  },
+  "skull.player": {
+    "defaultMessage": "Player"
+  },
+  "skull.bid": {
+    "defaultMessage": "Tricks bid"
+  },
+  "skull.won": {
+    "defaultMessage": "Tricks won"
+  },
+  "skull.bidPhase": {
+    "defaultMessage": "Record all bids before entering results."
+  },
+  "skull.resultPhase": {
+    "defaultMessage": "Enter each player’s tricks won and captures."
+  },
+  "skull.recordBid": {
+    "defaultMessage": "Record bid"
+  },
+  "skull.recordResult": {
+    "defaultMessage": "Record result"
+  },
+  "skull.bonuses": {
+    "defaultMessage": "Captures and bonuses"
+  },
+  "skull.bonusHint": {
+    "defaultMessage": "Enter physical captures. Bonuses apply only when the bid is exact."
+  },
+  "skull.bonusFields.c14": {
+    "defaultMessage": "Colored 14s captured"
+  },
+  "skull.bonusFields.b14": {
+    "defaultMessage": "Black 14 captured"
+  },
+  "skull.bonusFields.mermaids": {
+    "defaultMessage": "Mermaids captured by a pirate"
+  },
+  "skull.bonusFields.pirates": {
+    "defaultMessage": "Pirates captured by the Skull King"
+  },
+  "skull.bonusFields.king": {
+    "defaultMessage": "Skull King captured by a mermaid"
+  },
+  "skull.complete": {
+    "defaultMessage": "All results recorded."
+  },
+  "skull.overtime": {
+    "defaultMessage": "Tie after ten rounds: play an extra round to break the tie."
+  },
+  "skull.next": {
+    "defaultMessage": "Next round"
+  },
+  "skull.invalid": {
+    "defaultMessage": "Invalid entry: check the bid, captures and total tricks in the round."
+  },
+  "dartsMatch.enable": {
+    "defaultMessage": "Multiple-leg match"
+  },
+  "dartsMatch.twoCamps": {
+    "defaultMessage": "Select exactly two players or two teams for match mode."
+  },
+  "dartsMatch.legsToWin": {
+    "defaultMessage": "Legs to win"
+  },
+  "dartsMatch.setupHint": {
+    "defaultMessage": "Two players or two teams. First to the selected number of legs wins; choose 2 to 15 legs. The starting side is fixed for each leg."
+  },
+  "dartsMatch.startRule": {
+    "defaultMessage": "Starting side in the next leg"
+  },
+  "dartsMatch.alternate": {
+    "defaultMessage": "Alternate starts"
+  },
+  "dartsMatch.loser": {
+    "defaultMessage": "Previous leg’s loser starts"
+  },
+  "dartsMatch.firstStarter": {
+    "defaultMessage": "Starting side in the first leg"
+  },
+  "dartsMatch.title": {
+    "defaultMessage": "Match score"
+  },
+  "cricket.title": {
+    "defaultMessage": "Darts Cricket"
+  },
+  "cricket.grid": {
+    "defaultMessage": "Cricket scoreboard"
+  },
+  "cricket.target": {
+    "defaultMessage": "Target"
+  },
+  "cricket.marks.0": {
+    "defaultMessage": "—"
+  },
+  "cricket.marks.1": {
+    "defaultMessage": "/"
+  },
+  "cricket.marks.2": {
+    "defaultMessage": "×"
+  },
+  "cricket.marks.3": {
+    "defaultMessage": "⊗"
+  },
+  "cricket.rules": {
+    "defaultMessage": "Three marks close each target from 20 to 15 and bull. Single = one mark, double = two, triple = three (bull: single or double). In standard scoring, extra marks score the target’s value while at least one opponent has not closed it. Closing all targets with a score at least as high as every opponent wins immediately. Without points, the first to close everything wins. Three darts per turn; other sectors and misses score nothing. Order fixed at setup; more than two sides is free play."
+  },
+  "darts.title": {
+    "defaultMessage": "Darts X01"
+  },
+  "darts.entryMode": {
+    "defaultMessage": "Score entry mode"
+  },
+  "darts.perDart": {
+    "defaultMessage": "Each dart"
+  },
+  "darts.perVisit": {
+    "defaultMessage": "Visit total"
+  },
+  "darts.visitHelp": {
+    "defaultMessage": "Enter points scored in this visit, not the remaining score. Saving ends the visit. If you switch modes after a dart, enter only points from the remaining darts."
+  },
+  "darts.doubleFinish": {
+    "defaultMessage": "Final dart on a double or 50 bull"
+  },
+  "darts.doubleFinishHint": {
+    "defaultMessage": "With double-out, check this if the final dart hit a double. Otherwise, reaching zero is a bust."
+  },
+  "darts.recordVisit": {
+    "defaultMessage": "Record visit total"
+  },
+  "darts.checkoutHint": {
+    "defaultMessage": "S = single, D = double, T = triple. Shortest routes appear first. Misses are omitted."
+  },
+  "darts.noCheckout": {
+    "defaultMessage": "No checkout available with the darts remaining in this visit."
+  },
+  "darts.previousCheckouts": {
+    "defaultMessage": "Previous checkouts"
+  },
+  "darts.nextCheckouts": {
+    "defaultMessage": "Next checkouts"
+  },
+  "darts.shortMultipliers.0": {
+    "defaultMessage": "S"
+  },
+  "darts.shortMultipliers.1": {
+    "defaultMessage": "D"
+  },
+  "darts.shortMultipliers.2": {
+    "defaultMessage": "T"
+  },
+  "darts.innerBull": {
+    "defaultMessage": "Bull (50)"
+  },
+  "darts.outerBull": {
+    "defaultMessage": "Outer bull (25)"
+  },
+  "darts.play": {
+    "defaultMessage": "Play darts"
+  },
+  "darts.rules": {
+    "defaultMessage": "One leg, straight-in from 301 or 501 according to settings. Up to three darts per turn, then the next side. Reach exactly zero. With double-out, finish on a double (50 bull allowed). Going below zero, leaving one point or finishing without a double cancels the entire visit with double-out. With straight-out, only going below zero cancels the visit. A miss scores zero and uses a dart. Side order fixed at setup; more than two sides is free play."
+  },
+  "darts.sector": {
+    "defaultMessage": "Sector hit"
+  },
+  "darts.multiplier": {
+    "defaultMessage": "Multiplier"
+  },
+  "darts.miss": {
+    "defaultMessage": "Miss (0)"
+  },
+  "darts.bull": {
+    "defaultMessage": "Bull (25)"
+  },
+  "darts.multipliers.0": {
+    "defaultMessage": "Single"
+  },
+  "darts.multipliers.1": {
+    "defaultMessage": "Double"
+  },
+  "darts.multipliers.2": {
+    "defaultMessage": "Triple"
+  },
+  "darts.record": {
+    "defaultMessage": "Record dart"
+  },
+  "darts.bust": {
+    "defaultMessage": "Bust: visit canceled, score reset to its starting value and next side plays."
+  },
+  "darts.invalid": {
+    "defaultMessage": "Invalid action: check the side, sector, achievable total and double-out."
+  },
+  "farkle.title": {
+    "defaultMessage": "5000 / 10000 · Farkle"
+  },
+  "farkle.play": {
+    "defaultMessage": "Play 5000 / 10000"
+  },
+  "farkle.rules": {
+    "defaultMessage": "Farkle rules: 1 = 100, 5 = 50; three ones = 300, other triples = face × 100. Four of a kind = 1000, five = 2000, six = 3000; straight, three pairs or four of a kind plus a pair = 1500; two triples = 2500. Combinations must come from the same roll. Keeping all six dice lets you roll all six again. A roll with no scoring dice loses the turn. Entry threshold and target are fixed by settings. At the target, each other side gets one final turn; tied highest scores share victory."
+  },
+  "farkle.rollHint": {
+    "defaultMessage": "Enter the faces of your physical dice, then tap the scoring dice to keep. Confirm the roll before continuing or banking the turn’s points."
+  },
+  "farkle.bust": {
+    "defaultMessage": "No scoring dice: turn points are lost."
+  },
+  "farkle.invalidSelection": {
+    "defaultMessage": "Selection contains non-scoring dice."
+  },
+  "farkle.record": {
+    "defaultMessage": "Confirm and continue"
+  },
+  "farkle.recordBust": {
+    "defaultMessage": "Confirm lost turn"
+  },
+  "farkle.bank": {
+    "defaultMessage": "Bank points"
+  },
+  "farkle.invalid": {
+    "defaultMessage": "Invalid action: check turn, dice, selection and entry threshold."
+  },
+  "parameters.title": {
+    "defaultMessage": "Match settings"
+  },
+  "parameters.teamPlay": {
+    "defaultMessage": "Team play"
+  },
+  "parameters.cooperativePlay": {
+    "defaultMessage": "Shared score (cooperative)"
+  },
+  "parameters.history": {
+    "defaultMessage": "Rules history"
+  },
+  "parameters.savedRules": {
+    "defaultMessage": "Saved rules"
+  },
+  "parameters.petanqueShort": {
+    "defaultMessage": "11-point match"
+  },
+  "parameters.petanqueHint": {
+    "defaultMessage": "Off: target of 13 points."
+  },
+  "parameters.labels.upperBonus": {
+    "defaultMessage": "Upper-section bonus"
+  },
+  "parameters.labels.target10000": {
+    "defaultMessage": "10,000-point target"
+  },
+  "parameters.labels.entry500": {
+    "defaultMessage": "500-point entry threshold"
+  },
+  "parameters.labels.cricket": {
+    "defaultMessage": "Play Cricket"
+  },
+  "parameters.labels.start501": {
+    "defaultMessage": "Start at 501 points"
+  },
+  "parameters.labels.doubleOut": {
+    "defaultMessage": "Double-out"
+  },
+  "parameters.labels.cricketPoints": {
+    "defaultMessage": "Count points"
+  },
+  "parameters.hints.upperBonus": {
+    "defaultMessage": "63 points in the upper section earn a 35-point bonus."
+  },
+  "parameters.hints.target10000": {
+    "defaultMessage": "Off: target of 5,000 points."
+  },
+  "parameters.hints.entry500": {
+    "defaultMessage": "Off: no threshold to start banking."
+  },
+  "parameters.hints.cricket": {
+    "defaultMessage": "Off: play X01 (301 or 501)."
+  },
+  "parameters.hints.start501": {
+    "defaultMessage": "Off: start at 301 points."
+  },
+  "parameters.hints.doubleOut": {
+    "defaultMessage": "Finish on a double or 50 bull."
+  },
+  "parameters.hints.cricketPoints": {
+    "defaultMessage": "Off: close targets without counting extra points."
+  },
+  "sixNimmt.setupHint": {
+    "defaultMessage": "2 to 10 players. The game ends after a round in which a cumulative score reaches at least 66 bullheads."
+  },
+  "sixNimmt.title": {
+    "defaultMessage": "6 nimmt!"
+  },
+  "sixNimmt.play": {
+    "defaultMessage": "Play 6 nimmt!"
+  },
+  "sixNimmt.points": {
+    "defaultMessage": "Bullheads this round"
+  },
+  "sixNimmt.record": {
+    "defaultMessage": "Record penalties"
+  },
+  "sixNimmt.correct": {
+    "defaultMessage": "Correct last entry"
+  },
+  "sixNimmt.undo": {
+    "defaultMessage": "Undo last entry"
+  },
+  "sixNimmt.nextRound": {
+    "defaultMessage": "Next round"
+  },
+  "sixNimmt.invalid": {
+    "defaultMessage": "Check whole-number scores, the configured deck’s bullhead limit, and whether this round has already been recorded."
+  },
+  "sixNimmt.confirmHint": {
+    "defaultMessage": "The journal will be recalculated. Correcting or undoing an entry may reopen a finished match."
+  },
+  "sixNimmt.rules": {
+    "defaultMessage": "Play the cards on the table, then enter each player’s bullheads for the round. Lowest total wins. When a player reaches at least 66 points, finish all entries for that round before determining the winner. Players tied for the lowest total share victory. 2 to 10 individual players; resolve rows and dealing physically."
+  },
+  "timesUp.play": {
+    "defaultMessage": "Play Time’s Up!"
+  },
+  "timesUp.title": {
+    "defaultMessage": "Time’s Up! · Party"
+  },
+  "timesUp.rules": {
+    "defaultMessage": "Prepare 40 physical cards, reused across three rounds. Each turn lasts 30 seconds. Round 1: describe freely, no passing. Round 2: one word only, passing allowed. Round 3: act without speaking, passing allowed. Change your team’s clue-giver each turn. Highest total wins; ties share victory."
+  },
+  "timesUp.setup": {
+    "defaultMessage": "Choose 2 to 6 teams, at least 2 players per team and 4 to 12 players in total. Use the same 40 cards across all three rounds."
+  },
+  "timesUp.phases.0": {
+    "defaultMessage": "Describe freely"
+  },
+  "timesUp.phases.1": {
+    "defaultMessage": "One word only"
+  },
+  "timesUp.phases.2": {
+    "defaultMessage": "Act without speaking"
+  },
+  "timesUp.timer": {
+    "defaultMessage": "Time remaining"
+  },
+  "timesUp.start": {
+    "defaultMessage": "Start timer"
+  },
+  "timesUp.pause": {
+    "defaultMessage": "Pause timer"
+  },
+  "timesUp.resume": {
+    "defaultMessage": "Resume timer"
+  },
+  "timesUp.reset": {
+    "defaultMessage": "Reset timer"
+  },
+  "timesUp.expired": {
+    "defaultMessage": "Time’s up!"
+  },
+  "timesUp.hint": {
+    "defaultMessage": "Keep this screen open for the sound alert. Time continues if you leave the page; pause the timer to stop it."
+  },
+  "timesUp.points": {
+    "defaultMessage": "Cards guessed this turn"
+  },
+  "timesUp.record": {
+    "defaultMessage": "Record turn"
+  },
+  "timesUp.correct": {
+    "defaultMessage": "Correct last turn"
+  },
+  "timesUp.undo": {
+    "defaultMessage": "Undo last action"
+  },
+  "timesUp.confirm": {
+    "defaultMessage": "This action will remain in the match history."
+  },
+  "timesUp.invalid": {
+    "defaultMessage": "Check the team, timer and number of remaining cards."
+  },
+  "molkky.title": {
+    "defaultMessage": "Mölkky · 50 points"
+  },
+  "molkky.play": {
+    "defaultMessage": "Play Mölkky"
+  },
+  "molkky.points": {
+    "defaultMessage": "Throw points"
+  },
+  "molkky.miss": {
+    "defaultMessage": "0 · miss"
+  },
+  "molkky.record": {
+    "defaultMessage": "Record throw"
+  },
+  "molkky.correct": {
+    "defaultMessage": "Correct last throw"
+  },
+  "molkky.undo": {
+    "defaultMessage": "Undo last throw"
+  },
+  "molkky.missList": {
+    "defaultMessage": "Misses and eliminations"
+  },
+  "molkky.overshoot": {
+    "defaultMessage": "Over 50: total will drop to 25."
+  },
+  "molkky.invalid": {
+    "defaultMessage": "Check points (0 to 12) and whose turn it is. A correction may make subsequent throws incompatible."
+  },
+  "molkky.confirmHint": {
+    "defaultMessage": "The journal will be recalculated. Correcting or undoing a throw may reopen a finished match."
+  },
+  "molkky.rules": {
+    "defaultMessage": "One fallen pin scores its number; multiple fallen pins score their count. Only pins lying fully on the ground count. Reach exactly 50 points; going over 50 drops the total to 25. A miss scores zero. Three consecutive misses eliminate the player or team and reset their score to zero. A successful throw resets the miss count. Teams share a score and miss count. Skip eliminated players or teams; the last remaining side wins. Enter throws in the selected player or team order."
+  },
+  "four21.title": {
+    "defaultMessage": "421 · Charge 21"
+  },
+  "four21.ruleSummary": {
+    "defaultMessage": "Game rules"
+  },
+  "four21.play": {
+    "defaultMessage": "Play 421"
+  },
+  "four21.rules": {
+    "defaultMessage": "Charge 21 rules: 421 = 10 tokens, nénette = 2. Load in one roll; unload in up to three rolls, limited by the first player. The loser starts the next turn. At the end of loading, players with no tokens win; otherwise, the first to shed all tokens wins. Break ties with physical dice outside the app."
+  },
+  "four21.throws": {
+    "defaultMessage": "Number of rolls made"
+  },
+  "four21.record": {
+    "defaultMessage": "Confirm combination"
+  },
+  "four21.tie": {
+    "defaultMessage": "Tie: roll physical dice to break it, then enter the two distinct results. Players outside the tie remain fixed."
+  },
+  "four21.best": {
+    "defaultMessage": "Best combination after tiebreak"
+  },
+  "four21.worst": {
+    "defaultMessage": "Worst combination after tiebreak"
+  },
+  "four21.choose": {
+    "defaultMessage": "Choose"
+  },
+  "four21.undo": {
+    "defaultMessage": "Undo last entry"
+  },
+  "four21.confirm": {
+    "defaultMessage": "Confirm action"
+  },
+  "four21.confirmHint": {
+    "defaultMessage": "This action remains in history. After undoing, reenter the combination to correct."
+  },
+  "four21.invalid": {
+    "defaultMessage": "Invalid action: check turn, dice, rolls and tiebreak."
+  },
+  "appName": {
+    "defaultMessage": "Scoretrackrr"
+  },
+  "tagline": {
+    "defaultMessage": "Good times count."
+  },
+  "navigation": {
+    "defaultMessage": "Main navigation"
+  },
+  "skip": {
+    "defaultMessage": "Skip to content"
+  },
+  "nav.home": {
+    "defaultMessage": "Home"
+  },
+  "nav.games": {
+    "defaultMessage": "Games"
+  },
+  "nav.players": {
+    "defaultMessage": "Players"
+  },
+  "nav.teams": {
+    "defaultMessage": "Teams"
+  },
+  "nav.matches": {
+    "defaultMessage": "Matches"
+  },
+  "nav.settings": {
+    "defaultMessage": "Settings"
+  },
+  "home.eyebrow": {
+    "defaultMessage": "Your turn"
+  },
+  "home.title": {
+    "defaultMessage": "Your next game starts here."
+  },
+  "home.intro": {
+    "defaultMessage": "Choose a game, gather your players and start playing."
+  },
+  "home.action": {
+    "defaultMessage": "Start a match"
+  },
+  "home.stamp": {
+    "defaultMessage": "game families"
+  },
+  "home.libraryEyebrow": {
+    "defaultMessage": "Your playground"
+  },
+  "home.libraryTitle": {
+    "defaultMessage": "A game for every mood"
+  },
+  "home.libraryHint": {
+    "defaultMessage": "All available offline"
+  },
+  "home.recentEyebrow": {
+    "defaultMessage": "Keep the game going"
+  },
+  "home.recentTitle": {
+    "defaultMessage": "Your latest matches"
+  },
+  "home.allMatches": {
+    "defaultMessage": "Full history"
+  },
+  "home.resume": {
+    "defaultMessage": "Resume"
+  },
+  "home.review": {
+    "defaultMessage": "Review"
+  },
+  "home.emptyTitle": {
+    "defaultMessage": "Start a winning streak"
+  },
+  "home.emptyBody": {
+    "defaultMessage": "Choose a game and find your matches here next time."
+  },
+  "home.preparePlayers": {
+    "defaultMessage": "Prepare players"
+  },
+  "home.localNote": {
+    "defaultMessage": "One phone for everyone. No account or network needed after installation."
+  },
+  "home.backups": {
+    "defaultMessage": "My backups"
+  },
+  "games.title": {
+    "defaultMessage": "What shall we play?"
+  },
+  "games.intro": {
+    "defaultMessage": "Find a game and prepare your next match."
+  },
+  "games.searchHint": {
+    "defaultMessage": "Yams, pétanque, darts…"
+  },
+  "games.toolsEyebrow": {
+    "defaultMessage": "From a file"
+  },
+  "games.toolsTitle": {
+    "defaultMessage": "Import a game"
+  },
+  "games.toolsHint": {
+    "defaultMessage": "Add game rules from a JSON file."
+  },
+  "games.kinds.yams": {
+    "defaultMessage": "Dice & combinations"
+  },
+  "games.kinds.421": {
+    "defaultMessage": "Dice & bluffing"
+  },
+  "games.kinds.5000-10000": {
+    "defaultMessage": "Dice & risk-taking"
+  },
+  "games.kinds.petanque": {
+    "defaultMessage": "Outdoors & precision"
+  },
+  "games.kinds.darts": {
+    "defaultMessage": "Targets & precision"
+  },
+  "games.kinds.skull-king": {
+    "defaultMessage": "Cards & tricks"
+  },
+  "games.kinds.flip-7": {
+    "defaultMessage": "Cards & risk-taking"
+  },
+  "games.kinds.times-up": {
+    "defaultMessage": "Teams & guessing"
+  },
+  "games.kinds.molkky": {
+    "defaultMessage": "Pins & precision"
+  },
+  "games.kinds.6-qui-prend": {
+    "defaultMessage": "Cards & penalties"
+  },
+  "games.comingSoon": {
+    "defaultMessage": "Coming soon"
+  },
+  "games.first": {
+    "defaultMessage": "First planned game"
+  },
+  "games.play": {
+    "defaultMessage": "Play pétanque"
+  },
+  "games.available": {
+    "defaultMessage": "On this device"
+  },
+  "games.search": {
+    "defaultMessage": "Search games"
+  },
+  "games.filter": {
+    "defaultMessage": "Availability"
+  },
+  "games.all": {
+    "defaultMessage": "All games"
+  },
+  "games.playable": {
+    "defaultMessage": "Playable"
+  },
+  "games.upcoming": {
+    "defaultMessage": "Upcoming"
+  },
+  "games.favorites": {
+    "defaultMessage": "My favorites"
+  },
+  "games.loading": {
+    "defaultMessage": "Loading catalog…"
+  },
+  "games.empty": {
+    "defaultMessage": "No games match these filters."
+  },
+  "games.error": {
+    "defaultMessage": "Unable to access the catalog. Your data is preserved."
+  },
+  "games.custom": {
+    "defaultMessage": "Local creation"
+  },
+  "games.customPlay": {
+    "defaultMessage": "Play this game"
+  },
+  "games.playYams": {
+    "defaultMessage": "Play Yams"
+  },
+  "games.descriptions.yams": {
+    "defaultMessage": "Roll the dice and complete your combinations."
+  },
+  "games.descriptions.421": {
+    "defaultMessage": "Shed your tokens with three dice."
+  },
+  "games.descriptions.5000-10000": {
+    "defaultMessage": "Build your dice score and bank at the right time."
+  },
+  "games.descriptions.petanque": {
+    "defaultMessage": "Get your boules close to the jack and score points."
+  },
+  "games.descriptions.darts": {
+    "defaultMessage": "Aim for the board in X01 or Cricket."
+  },
+  "games.descriptions.skull-king": {
+    "defaultMessage": "Bid your tricks and make good on your bet."
+  },
+  "games.descriptions.flip-7": {
+    "defaultMessage": "Collect cards and choose when to stop."
+  },
+  "games.descriptions.times-up": {
+    "defaultMessage": "Guess the cards in three timed rounds."
+  },
+  "games.descriptions.molkky": {
+    "defaultMessage": "Knock down pins to reach exactly 50 points."
+  },
+  "games.descriptions.6-qui-prend": {
+    "defaultMessage": "Avoid bullheads and keep the lowest score."
+  },
+  "players.title": {
+    "defaultMessage": "Your fellow players"
+  },
+  "players.intro": {
+    "defaultMessage": "Add players to find them again for every match."
+  },
+  "players.empty": {
+    "defaultMessage": "Who’s joining the game?"
+  },
+  "players.detail": {
+    "defaultMessage": "Save a profile or add a guest to prepare your next matches."
+  },
+  "players.add": {
+    "defaultMessage": "Add player"
+  },
+  "players.createTitle": {
+    "defaultMessage": "A new player"
+  },
+  "players.editTitle": {
+    "defaultMessage": "Edit profile"
+  },
+  "players.name": {
+    "defaultMessage": "Nickname"
+  },
+  "players.identityTitle": {
+    "defaultMessage": "Identity"
+  },
+  "players.appearanceTitle": {
+    "defaultMessage": "Appearance"
+  },
+  "players.color": {
+    "defaultMessage": "Color"
+  },
+  "players.avatar": {
+    "defaultMessage": "Avatar"
+  },
+  "players.avatarLabels.initials": {
+    "defaultMessage": "Initials"
+  },
+  "players.avatarLabels.sun": {
+    "defaultMessage": "Sun"
+  },
+  "players.avatarLabels.moon": {
+    "defaultMessage": "Moon"
+  },
+  "players.avatarLabels.star": {
+    "defaultMessage": "Star"
+  },
+  "players.avatarLabels.leaf": {
+    "defaultMessage": "Leaf"
+  },
+  "players.avatarLabels.dice": {
+    "defaultMessage": "Die"
+  },
+  "players.avatarLabels.gravatar": {
+    "defaultMessage": "Gravatar"
+  },
+  "players.guest": {
+    "defaultMessage": "Guest without an account"
+  },
+  "players.guestHint": {
+    "defaultMessage": "A guest is saved on this device and can be reused."
+  },
+  "players.savedProfile": {
+    "defaultMessage": "Saved profile"
+  },
+  "players.guestBadge": {
+    "defaultMessage": "Guest"
+  },
+  "players.deletedBadge": {
+    "defaultMessage": "Deleted"
+  },
+  "players.email": {
+    "defaultMessage": "Email address (optional)"
+  },
+  "players.emailHint": {
+    "defaultMessage": "Enter an address to use this profile’s Gravatar photo."
+  },
+  "players.gravatarHint": {
+    "defaultMessage": "The photo is retrieved on save and stored on this device. Gravatar receives a hash of the email address."
+  },
+  "players.refresh": {
+    "defaultMessage": "Refresh photo when saving"
+  },
+  "players.gravatarUnavailable": {
+    "defaultMessage": "Profile saved. Gravatar photo unavailable; initials or the previous photo remain available."
+  },
+  "players.save": {
+    "defaultMessage": "Save profile"
+  },
+  "players.saving": {
+    "defaultMessage": "Saving…"
+  },
+  "players.cancel": {
+    "defaultMessage": "Cancel"
+  },
+  "players.deleteDetail": {
+    "defaultMessage": "This player will be removed from your profiles, with no restore option on this page. Previous matches retain their history. Affected teams must be completed before playing again."
+  },
+  "players.confirmDelete": {
+    "defaultMessage": "Delete player"
+  },
+  "players.selectMode": {
+    "defaultMessage": "Select players"
+  },
+  "players.selectModeShort": {
+    "defaultMessage": "Select"
+  },
+  "players.exitSelection": {
+    "defaultMessage": "Finish selection"
+  },
+  "players.exitSelectionShort": {
+    "defaultMessage": "Done"
+  },
+  "players.selectionHelp": {
+    "defaultMessage": "Selection help"
+  },
+  "players.createTeamShort": {
+    "defaultMessage": "Create team"
+  },
+  "players.distributeTeamsShort": {
+    "defaultMessage": "Distribute"
+  },
+  "players.deleteSelectionShort": {
+    "defaultMessage": "Delete"
+  },
+  "players.selectPage": {
+    "defaultMessage": "Select this page"
+  },
+  "players.selectionHint": {
+    "defaultMessage": "Selection is kept across searches and pages (up to 256 players)."
+  },
+  "players.clearSelection": {
+    "defaultMessage": "Deselect all"
+  },
+  "players.createTeam": {
+    "defaultMessage": "Create team from selection"
+  },
+  "players.distributeTeams": {
+    "defaultMessage": "Distribute into teams"
+  },
+  "players.teamSelectionHint": {
+    "defaultMessage": "A team holds up to 32 players. Choose at least 2 players to create multiple teams."
+  },
+  "players.deleteSelection": {
+    "defaultMessage": "Delete selection"
+  },
+  "players.deleteManyDetail": {
+    "defaultMessage": "These players will be removed from your profiles. Previous matches retain their history. Affected teams must be completed before playing again. Individual restoration will not be available."
+  },
+  "players.confirmDeleteMany": {
+    "defaultMessage": "Delete players"
+  },
+  "players.saved": {
+    "defaultMessage": "Profile saved on this device."
+  },
+  "players.deleted": {
+    "defaultMessage": "Player deleted."
+  },
+  "players.search": {
+    "defaultMessage": "Search players"
+  },
+  "players.searchHint": {
+    "defaultMessage": "Enter the start of a nickname."
+  },
+  "players.noResults": {
+    "defaultMessage": "No profiles match this search."
+  },
+  "players.loading": {
+    "defaultMessage": "Loading profiles…"
+  },
+  "players.previous": {
+    "defaultMessage": "Previous"
+  },
+  "players.next": {
+    "defaultMessage": "Next"
+  },
+  "players.list": {
+    "defaultMessage": "Player profiles"
+  },
+  "players.pagination": {
+    "defaultMessage": "Profile pages"
+  },
+  "players.error": {
+    "defaultMessage": "Unable to access profiles. Check browser storage, then try again."
+  },
+  "players.retry": {
+    "defaultMessage": "Try again"
+  },
+  "players.conflict": {
+    "defaultMessage": "This profile changed in another tab. Close this dialog, then reopen the profile to resume editing."
+  },
+  "players.invalidName": {
+    "defaultMessage": "Enter a nickname of 1 to 120 characters on a single line."
+  },
+  "players.invalidEmail": {
+    "defaultMessage": "Enter a valid email address for a saved profile with Gravatar."
+  },
+  "players.invalidAppearance": {
+    "defaultMessage": "Choose a valid color and avatar."
+  },
+  "teams.title": {
+    "defaultMessage": "Team spirit"
+  },
+  "teams.intro": {
+    "defaultMessage": "Bring your players together for your next matches."
+  },
+  "teams.empty": {
+    "defaultMessage": "Your next team starts here"
+  },
+  "teams.detail": {
+    "defaultMessage": "Choose its members or let chance build your teams."
+  },
+  "teams.add": {
+    "defaultMessage": "Create team"
+  },
+  "teams.random": {
+    "defaultMessage": "Draw random teams"
+  },
+  "teams.createTitle": {
+    "defaultMessage": "A new team"
+  },
+  "teams.editTitle": {
+    "defaultMessage": "Edit team"
+  },
+  "teams.name": {
+    "defaultMessage": "Team name"
+  },
+  "teams.color": {
+    "defaultMessage": "Team color"
+  },
+  "teams.avatar": {
+    "defaultMessage": "Team avatar"
+  },
+  "teams.avatarLabels.initials": {
+    "defaultMessage": "Initials"
+  },
+  "teams.avatarLabels.flag": {
+    "defaultMessage": "Flag"
+  },
+  "teams.avatarLabels.star": {
+    "defaultMessage": "Star"
+  },
+  "teams.avatarLabels.leaf": {
+    "defaultMessage": "Leaf"
+  },
+  "teams.avatarLabels.boules": {
+    "defaultMessage": "Boules"
+  },
+  "teams.format": {
+    "defaultMessage": "Composition"
+  },
+  "teams.free": {
+    "defaultMessage": "Free (1 to 32 members)"
+  },
+  "teams.doublette": {
+    "defaultMessage": "Doubles (2 members)"
+  },
+  "teams.formatHint": {
+    "defaultMessage": "Doubles requires two members. You can reuse this team in future matches."
+  },
+  "teams.members": {
+    "defaultMessage": "Team members"
+  },
+  "teams.selected": {
+    "defaultMessage": "Selected players"
+  },
+  "teams.noneSelected": {
+    "defaultMessage": "No players selected."
+  },
+  "teams.noPlayers": {
+    "defaultMessage": "No players available. Add profiles in Players first."
+  },
+  "teams.unavailableMember": {
+    "defaultMessage": "Player deleted or unavailable — complete the roster."
+  },
+  "teams.unavailableMembers": {
+    "defaultMessage": "A player on this team is deleted or unavailable. Complete the roster before playing again."
+  },
+  "teams.save": {
+    "defaultMessage": "Save team"
+  },
+  "teams.saveBatch": {
+    "defaultMessage": "Save teams"
+  },
+  "teams.saving": {
+    "defaultMessage": "Saving…"
+  },
+  "teams.saved": {
+    "defaultMessage": "Team saved."
+  },
+  "teams.batchSaved": {
+    "defaultMessage": "Teams saved."
+  },
+  "teams.deleteDetail": {
+    "defaultMessage": "This deletion is permanent. The team will no longer be offered for new matches. Previous matches retain its name and roster."
+  },
+  "teams.confirmDelete": {
+    "defaultMessage": "Delete team"
+  },
+  "teams.deleted": {
+    "defaultMessage": "Team deleted."
+  },
+  "teams.search": {
+    "defaultMessage": "Search teams"
+  },
+  "teams.loading": {
+    "defaultMessage": "Loading teams…"
+  },
+  "teams.noResults": {
+    "defaultMessage": "No teams match this search."
+  },
+  "teams.drawTitle": {
+    "defaultMessage": "Let chance take a turn"
+  },
+  "teams.draw": {
+    "defaultMessage": "Distribute players"
+  },
+  "teams.teamSize": {
+    "defaultMessage": "Players per team"
+  },
+  "teams.preview": {
+    "defaultMessage": "Proposed roster"
+  },
+  "teams.invalidName": {
+    "defaultMessage": "Enter a team name of 1 to 120 characters on a single line."
+  },
+  "teams.invalidAppearance": {
+    "defaultMessage": "Choose a valid color, avatar and format."
+  },
+  "teams.invalidMembers": {
+    "defaultMessage": "Choose 1 to 32 distinct active profiles; exactly 2 for doubles."
+  },
+  "teams.invalidDistribution": {
+    "defaultMessage": "Select distinct players and at least two complete teams, with no players left over (up to 32 teams and 256 players)."
+  },
+  "teams.error": {
+    "defaultMessage": "Unable to access teams. Check browser storage, then try again."
+  },
+  "teams.conflict": {
+    "defaultMessage": "This team changed. Close this dialog, then reopen it to resume editing."
+  },
+  "matches.title": {
+    "defaultMessage": "Your matches"
+  },
+  "matches.create": {
+    "defaultMessage": "New match"
+  },
+  "matches.intro": {
+    "defaultMessage": "Resume a match or look back at your results."
+  },
+  "matches.empty": {
+    "defaultMessage": "Your story starts here"
+  },
+  "matches.detail": {
+    "defaultMessage": "Choose a game for your first match. Matches and results will stay on this device."
+  },
+  "matches.list": {
+    "defaultMessage": "Saved matches"
+  },
+  "matches.loading": {
+    "defaultMessage": "Loading matches…"
+  },
+  "matches.open": {
+    "defaultMessage": "Resume"
+  },
+  "matches.back": {
+    "defaultMessage": "All matches"
+  },
+  "matches.scores": {
+    "defaultMessage": "Scores"
+  },
+  "matches.journal": {
+    "defaultMessage": "Action history"
+  },
+  "matches.noActions": {
+    "defaultMessage": "No actions recorded for this match."
+  },
+  "matches.error": {
+    "defaultMessage": "Unable to read matches. Try again without clearing this device’s data."
+  },
+  "matches.invalid": {
+    "defaultMessage": "This history cannot be replayed in its current format. Data has been kept."
+  },
+  "matches.missing": {
+    "defaultMessage": "This match was not found on this device."
+  },
+  "matches.finish": {
+    "defaultMessage": "Finish match"
+  },
+  "matches.start": {
+    "defaultMessage": "Start match"
+  },
+  "matches.pause": {
+    "defaultMessage": "Pause"
+  },
+  "matches.resume": {
+    "defaultMessage": "Resume match"
+  },
+  "matches.cancel": {
+    "defaultMessage": "Cancel match"
+  },
+  "matches.statuses.draft": {
+    "defaultMessage": "Preparing"
+  },
+  "matches.statuses.in_progress": {
+    "defaultMessage": "In progress"
+  },
+  "matches.statuses.paused": {
+    "defaultMessage": "Paused"
+  },
+  "matches.statuses.finished": {
+    "defaultMessage": "Finished"
+  },
+  "matches.statuses.cancelled": {
+    "defaultMessage": "Canceled"
+  },
+  "petanque.setup": {
+    "defaultMessage": "Prepare match"
+  },
+  "petanque.setupHelp": {
+    "defaultMessage": "Choose 2 to 16 players or teams. Rosters, colors and rules will be saved in the match."
+  },
+  "petanque.mode": {
+    "defaultMessage": "How are we playing?"
+  },
+  "petanque.individual": {
+    "defaultMessage": "Individual"
+  },
+  "petanque.teams": {
+    "defaultMessage": "Teams"
+  },
+  "petanque.boules": {
+    "defaultMessage": "Boules per player"
+  },
+  "petanque.morePoints": {
+    "defaultMessage": "Other point target"
+  },
+  "petanque.freePlay": {
+    "defaultMessage": "Free play with more than two sides: agree on scoring before starting."
+  },
+  "petanque.deadUnsupported": {
+    "defaultMessage": "With more than two sides, a dead jack is not calculated automatically. Agree on the result, then enter points or a void end."
+  },
+  "petanque.manageTeams": {
+    "defaultMessage": "Create or edit teams"
+  },
+  "petanque.search": {
+    "defaultMessage": "Search teams"
+  },
+  "petanque.selected": {
+    "defaultMessage": "Selected teams"
+  },
+  "petanque.rosterHint": {
+    "defaultMessage": "Choose active teams without shared players (up to 16 teams and 256 players)."
+  },
+  "petanque.noTeams": {
+    "defaultMessage": "No matching teams. Prepare your teams in Teams."
+  },
+  "petanque.target": {
+    "defaultMessage": "Target score"
+  },
+  "petanque.firstThrow": {
+    "defaultMessage": "First jack throw"
+  },
+  "petanque.chooseOption": {
+    "defaultMessage": "Choose…"
+  },
+  "petanque.createDraft": {
+    "defaultMessage": "Create match"
+  },
+  "petanque.saving": {
+    "defaultMessage": "Saving…"
+  },
+  "petanque.invalidSetup": {
+    "defaultMessage": "Choose 2 to 16 players or teams without shared players, then the first throwing side."
+  },
+  "petanque.invalidEnd": {
+    "defaultMessage": "Choose the scoring side and points compatible with its boules, or enter a void end or dead jack."
+  },
+  "petanque.conflict": {
+    "defaultMessage": "The match or a team changed in another tab. Check the updated values, then try this action again."
+  },
+  "petanque.error": {
+    "defaultMessage": "Unable to save this action. Your entries and previously saved data have been kept."
+  },
+  "petanque.invalidCorrection": {
+    "defaultMessage": "This correction would invalidate a later entry, or targets an already replaced action. Correct the affected ends first."
+  },
+  "petanque.limit": {
+    "defaultMessage": "This match has reached the 1,000-action limit. History remains available."
+  },
+  "petanque.saved": {
+    "defaultMessage": "End saved on this device."
+  },
+  "petanque.updated": {
+    "defaultMessage": "Match updated on this device."
+  },
+  "petanque.controls": {
+    "defaultMessage": "Track the match"
+  },
+  "petanque.normal": {
+    "defaultMessage": "End points"
+  },
+  "petanque.void": {
+    "defaultMessage": "Void end"
+  },
+  "petanque.dead": {
+    "defaultMessage": "Dead jack"
+  },
+  "petanque.endKind": {
+    "defaultMessage": "End result"
+  },
+  "petanque.scoringTeam": {
+    "defaultMessage": "Who scores?"
+  },
+  "petanque.record": {
+    "defaultMessage": "Record end"
+  },
+  "petanque.deadHelp": {
+    "defaultMessage": "Dead jack: if only one team has boules left, it scores that number. If both teams or neither have boules left, the end is void."
+  },
+  "petanque.voidLabel": {
+    "defaultMessage": "Void end — no points"
+  },
+  "petanque.roster": {
+    "defaultMessage": "Match players"
+  },
+  "petanque.ends": {
+    "defaultMessage": "Ends and corrections"
+  },
+  "petanque.confirmCorrection": {
+    "defaultMessage": "Confirm correction"
+  },
+  "petanque.correctionHelp": {
+    "defaultMessage": "The original entry remains in history. Scores and victory are recalculated; a finished match may resume."
+  },
+  "petanque.confirmUndo": {
+    "defaultMessage": "Confirm undoing the end"
+  },
+  "petanque.confirmCancel": {
+    "defaultMessage": "Confirm canceling the match"
+  },
+  "petanque.cancelHelp": {
+    "defaultMessage": "The match will stop. Its history is kept and no further ends can be entered."
+  },
+  "petanque.confirm": {
+    "defaultMessage": "Confirm"
+  },
+  "petanque.rematch": {
+    "defaultMessage": "Play again with these teams"
+  },
+  "petanque.rematchIndividual": {
+    "defaultMessage": "Play again with these players"
+  },
+  "petanque.rematchHelp": {
+    "defaultMessage": "A new match will use these rosters, colors and target. Profiles must still be active. The current match will be kept."
+  },
+  "petanque.paused": {
+    "defaultMessage": "The match is paused. Resume it to enter another end."
+  },
+  "petanque.scope": {
+    "defaultMessage": "Enter scores on this device. Players decide measurements, penalties and disputes."
+  },
+  "settings.title": {
+    "defaultMessage": "Make it yours"
+  },
+  "settings.intro": {
+    "defaultMessage": "Customize your display and manage backups."
+  },
+  "settings.loading": {
+    "defaultMessage": "Loading local data…"
+  },
+  "settings.error": {
+    "defaultMessage": "Local storage unavailable. Check browser permissions and free space, then try again."
+  },
+  "settings.quota": {
+    "defaultMessage": "This device’s storage is full. Free some space, then try again. Your existing data is preserved."
+  },
+  "settings.installTitle": {
+    "defaultMessage": "Take Scoretrackrr with you"
+  },
+  "settings.install": {
+    "defaultMessage": "On iPhone, open the site in Safari, then Share → Add to Home Screen. On Android, use Install app in your browser’s menu."
+  },
+  "settings.installDetail": {
+    "defaultMessage": "The first load requires Internet and an HTTPS address. Wait until navigation is available offline before disconnecting."
+  },
+  "settings.updates": {
+    "defaultMessage": "The app notifies you when a new version is ready. Check and install it in App updates."
+  },
+  "theme.title": {
+    "defaultMessage": "Appearance"
+  },
+  "theme.help": {
+    "defaultMessage": "By default, the theme follows your device’s appearance. You can also choose light or dark."
+  },
+  "theme.label": {
+    "defaultMessage": "Theme"
+  },
+  "theme.system": {
+    "defaultMessage": "Follow device"
+  },
+  "theme.light": {
+    "defaultMessage": "Light"
+  },
+  "theme.dark": {
+    "defaultMessage": "Dark"
+  },
+  "theme.saved": {
+    "defaultMessage": "Theme saved on this device."
+  },
+  "generic.setup": {
+    "defaultMessage": "Prepare a custom match"
+  },
+  "generic.playerSetupHelp": {
+    "defaultMessage": "Choose match players."
+  },
+  "generic.unavailableMode": {
+    "defaultMessage": "These rules offer no available mode for a new match. Team selection is available for pétanque, darts and Mölkky."
+  },
+  "generic.invalidSetup": {
+    "defaultMessage": "Choose active profiles and teams without shared players. Rules must support the mode and number of sides."
+  },
+  "generic.setupHelp": {
+    "defaultMessage": "Choose participants. In mixed mode, a profile cannot also belong to a selected team."
+  },
+  "generic.cooperativeName": {
+    "defaultMessage": "All together"
+  },
+  "generic.teams": {
+    "defaultMessage": "Match teams"
+  },
+  "generic.modes.individual": {
+    "defaultMessage": "Individual"
+  },
+  "generic.modes.teams": {
+    "defaultMessage": "Teams"
+  },
+  "generic.modes.cooperative": {
+    "defaultMessage": "All together"
+  },
+  "generic.modes.mixed": {
+    "defaultMessage": "Teams and individual players"
+  },
+  "generic.entry": {
+    "defaultMessage": "Score entry"
+  },
+  "generic.points": {
+    "defaultMessage": "Points"
+  },
+  "generic.record": {
+    "defaultMessage": "Record score"
+  },
+  "generic.saved": {
+    "defaultMessage": "Score saved on this device."
+  },
+  "generic.controls": {
+    "defaultMessage": "Match scoring and management"
+  },
+  "generic.correct": {
+    "defaultMessage": "Correct entry"
+  },
+  "generic.undo": {
+    "defaultMessage": "Undo entry"
+  },
+  "generic.confirm": {
+    "defaultMessage": "Confirm action"
+  },
+  "generic.invalid": {
+    "defaultMessage": "Check the side, values and match status."
+  },
+  "generic.rules": {
+    "defaultMessage": "This match keeps the rules version selected at setup."
+  },
+  "generic.finishHelp": {
+    "defaultMessage": "The match will end with the current standings. Tied highest scores share victory. Undoing this finish remains in history."
+  },
+  "yams.title": {
+    "defaultMessage": "Yams score sheet"
+  },
+  "yams.setup": {
+    "defaultMessage": "Prepare a Yams match"
+  },
+  "yams.scroll": {
+    "defaultMessage": "Horizontally scrolling Yams score sheet"
+  },
+  "yams.variant": {
+    "defaultMessage": "Thirteen-category scorecard"
+  },
+  "yams.withBonus": {
+    "defaultMessage": "13 categories · upper bonus 63 / 35"
+  },
+  "yams.withoutBonus": {
+    "defaultMessage": "13 categories · no upper bonus"
+  },
+  "yams.help": {
+    "defaultMessage": "One category per side each turn. Enter the result or your five dice. Enter zero to cross out a category."
+  },
+  "yams.categories.0": {
+    "defaultMessage": "Ones"
+  },
+  "yams.categories.1": {
+    "defaultMessage": "Twos"
+  },
+  "yams.categories.2": {
+    "defaultMessage": "Threes"
+  },
+  "yams.categories.3": {
+    "defaultMessage": "Fours"
+  },
+  "yams.categories.4": {
+    "defaultMessage": "Fives"
+  },
+  "yams.categories.5": {
+    "defaultMessage": "Sixes"
+  },
+  "yams.categories.6": {
+    "defaultMessage": "Three of a kind"
+  },
+  "yams.categories.7": {
+    "defaultMessage": "Four of a kind"
+  },
+  "yams.categories.8": {
+    "defaultMessage": "Full house"
+  },
+  "yams.categories.9": {
+    "defaultMessage": "Small straight"
+  },
+  "yams.categories.10": {
+    "defaultMessage": "Large straight"
+  },
+  "yams.categories.11": {
+    "defaultMessage": "Yams"
+  },
+  "yams.categories.12": {
+    "defaultMessage": "Chance"
+  },
+  "yams.category": {
+    "defaultMessage": "Category"
+  },
+  "yams.upper": {
+    "defaultMessage": "Upper total"
+  },
+  "yams.bonus": {
+    "defaultMessage": "Upper bonus"
+  },
+  "yams.lower": {
+    "defaultMessage": "Lower total"
+  },
+  "yams.total": {
+    "defaultMessage": "Grand total"
+  },
+  "yams.edit": {
+    "defaultMessage": "Enter or correct a category"
+  },
+  "yams.assisted": {
+    "defaultMessage": "Calculate from dice"
+  },
+  "yams.points": {
+    "defaultMessage": "Category score"
+  },
+  "yams.undo": {
+    "defaultMessage": "Undo category"
+  },
+  "yams.saved": {
+    "defaultMessage": "Score sheet saved on this device."
+  },
+  "yams.invalid": {
+    "defaultMessage": "Invalid category or score. Check the category and dice."
+  },
+  "backup.restored": {
+    "defaultMessage": "Import complete: {added} {added, plural, one {record added} other {records added}}, {duplicates} already present."
+  },
+  "sharing.boundIdentity": {
+    "defaultMessage": "Profile assigned by organizer: {name}"
+  },
+  "sharing.permissionApplied": {
+    "defaultMessage": "Permissions applied: {role}"
+  },
+  "sharing.yourPermission": {
+    "defaultMessage": "Your permissions: {role}"
+  },
+  "sharing.proposedBy": {
+    "defaultMessage": "Proposed by {name}, approved by organizer"
+  },
+  "sharing.currentOrganizer": {
+    "defaultMessage": "Current organizer: {name}"
+  },
+  "sharing.transferEntry": {
+    "defaultMessage": "Authority transferred to {name}"
+  },
+  "sharing.journalVerified": {
+    "defaultMessage": "Journal verified: version {version}, {count} {count, plural, one {action} other {actions}}."
+  },
+  "sharing.peer": {
+    "defaultMessage": "Viewer {id}"
+  },
+  "sharing.ack": {
+    "defaultMessage": "Confirmed version: {version}"
+  },
+  "history.rules": {
+    "defaultMessage": "Saved rules: {version}"
+  },
+  "builder.turn": {
+    "defaultMessage": "Round {round}/{rounds}{hasCategory, select, yes { · {category}} other {}} · {owner}’s turn",
+    "description": "Current round and side. category is optional; hasCategory is yes or no."
+  },
+  "flip.round": {
+    "defaultMessage": "Round {round}"
+  },
+  "flip.card": {
+    "defaultMessage": "Card {value}"
+  },
+  "flip.modifier": {
+    "defaultMessage": "Bonus +{value}"
+  },
+  "flip.points": {
+    "defaultMessage": "{points} points this round"
+  },
+  "flip.entry": {
+    "defaultMessage": "Round {round} · {name}: {points} points"
+  },
+  "skull.round": {
+    "defaultMessage": "Round {round} · {cards} {cards, plural, one {card} other {cards}} per player"
+  },
+  "skull.preview": {
+    "defaultMessage": "Round score: {score}"
+  },
+  "skull.entry": {
+    "defaultMessage": "Round {round} · {name}: {kind, select, 0 {bid} other {tricks won}} {value}",
+    "description": "Journal entry: kind 0 is a bid; other values are tricks won."
+  },
+  "skull.nextEntry": {
+    "defaultMessage": "Starting round {nextRound}"
+  },
+  "dartsMatch.format": {
+    "defaultMessage": "First to {target} legs · Leg {leg}"
+  },
+  "dartsMatch.score": {
+    "defaultMessage": "{name}: {wins} {wins, plural, one {leg won} other {legs won}}"
+  },
+  "dartsMatch.legWinner": {
+    "defaultMessage": "Leg won by {name}"
+  },
+  "dartsMatch.nextStarter": {
+    "defaultMessage": "Next leg: {name} starts"
+  },
+  "dartsMatch.nextLeg": {
+    "defaultMessage": "Start leg {leg}"
+  },
+  "dartsMatch.nextEntry": {
+    "defaultMessage": "New leg: {name} starts"
+  },
+  "cricket.visit": {
+    "defaultMessage": "Dart {dart} of 3"
+  },
+  "cricket.cell": {
+    "defaultMessage": "{name} · {target, select, 25 {bull} other {{target}}}: {marks} of 3 marks{marks, select, 3 { · closed} other {}}",
+    "description": "Accessible cell label. target is a dartboard sector (25 means bull); marks ranges from 0 to 3."
+  },
+  "darts.visitTotal": {
+    "defaultMessage": "Total for {darts} remaining {darts, plural, one {dart} other {darts}}"
+  },
+  "darts.visitEntry": {
+    "defaultMessage": "{name}: visit of {total} points{hasCheckout, select, yes { · double-out confirmed} other {}}"
+  },
+  "darts.checkouts": {
+    "defaultMessage": "Possible checkouts · {darts} {darts, plural, one {dart} other {darts}} remaining"
+  },
+  "darts.checkoutCount": {
+    "defaultMessage": "Page {page} of {pages} · {total} possible routes"
+  },
+  "darts.preview": {
+    "defaultMessage": "Hit: {points} points"
+  },
+  "darts.visit": {
+    "defaultMessage": "Dart {dart} of 3 · visit start: {start}"
+  },
+  "darts.entry": {
+    "defaultMessage": "{name}: {sector, select, 0 {miss} other {{sector} × {multiplier}}} ({points} points)",
+    "description": "Recorded physical dart. sector 0 is a miss; points is the computed score."
+  },
+  "farkle.running": {
+    "defaultMessage": "Turn: {points} points · {remaining} {remaining, plural, one {die} other {dice}} to roll"
+  },
+  "farkle.lastTurns": {
+    "defaultMessage": "Final turn: {turns} {turns, plural, one {side} other {sides}} remaining"
+  },
+  "farkle.keep": {
+    "defaultMessage": "Keep die {die}"
+  },
+  "farkle.preview": {
+    "defaultMessage": "Selection: {points} points"
+  },
+  "farkle.entry": {
+    "defaultMessage": "{kind, select, 1 {{name} banks the turn’s points} other {{name} rolls {dice}}}"
+  },
+  "sixNimmt.round": {
+    "defaultMessage": "Round {round}"
+  },
+  "sixNimmt.progress": {
+    "defaultMessage": "{entered}/{total} scores entered"
+  },
+  "sixNimmt.forPlayer": {
+    "defaultMessage": "{name}’s penalties"
+  },
+  "sixNimmt.entry": {
+    "defaultMessage": "{name} · round {round}: {points} bullheads"
+  },
+  "sixNimmt.nextEntry": {
+    "defaultMessage": "Starting round {round}"
+  },
+  "timesUp.activePlayer": {
+    "defaultMessage": "Clue-giver: {name}"
+  },
+  "timesUp.round": {
+    "defaultMessage": "Round {n} of 3"
+  },
+  "timesUp.cards": {
+    "defaultMessage": "{n} {n, plural, one {card remaining} other {cards remaining}}",
+    "description": "Number of physical cards still available in the current Time’s Up! round."
+  },
+  "timesUp.turn": {
+    "defaultMessage": "{name}’s turn"
+  },
+  "timesUp.entry": {
+    "defaultMessage": "{kind, select, 2 {{name}: {points} cards guessed} 0 {{name} · timer started} 1 {{name} · timer paused} 3 {{name} · timer reset} other {{name} · timer}}",
+    "description": "Journal entry: kind 0=start, 1=pause, 2=scoring, 3=reset. points is used only for scoring."
+  },
+  "molkky.score": {
+    "defaultMessage": "{points} {points, plural, one {point} other {points}}"
+  },
+  "molkky.turn": {
+    "defaultMessage": "{name}’s turn"
+  },
+  "molkky.misses": {
+    "defaultMessage": "{name}: {count}/3 consecutive misses"
+  },
+  "molkky.eliminated": {
+    "defaultMessage": "{name}: eliminated after 3 misses"
+  },
+  "molkky.entry": {
+    "defaultMessage": "{name}: {points} {points, plural, one {point} other {points}}"
+  },
+  "four21.entry": {
+    "defaultMessage": "{name}: dice {dice} · {throws} {throws, plural, one {roll} other {rolls}}"
+  },
+  "four21.tiebreak": {
+    "defaultMessage": "Tiebreak: {best} wins, {worst} receives the tokens"
+  },
+  "four21.phase": {
+    "defaultMessage": "{phase, select, charge {Loading · Pot: {pot} tokens} other {Unloading · Empty pot}}",
+    "description": "421 phase: charge means loading tokens; other means unloading. pot is the shared token count."
+  },
+  "four21.turn": {
+    "defaultMessage": "{name}’s turn"
+  },
+  "four21.combination": {
+    "defaultMessage": "Combination value: {tokens} {tokens, plural, one {token} other {tokens}}"
+  },
+  "games.favorite": {
+    "defaultMessage": "Favorite: {name}"
+  },
+  "games.publishedVariant": {
+    "defaultMessage": "{name} · version {index}"
+  },
+  "games.versionLabel": {
+    "defaultMessage": "Published version: {name}"
+  },
+  "players.edit": {
+    "defaultMessage": "Edit {name}"
+  },
+  "players.remove": {
+    "defaultMessage": "Delete {name}"
+  },
+  "players.deleteTitle": {
+    "defaultMessage": "Delete {name}?"
+  },
+  "players.visibleCount": {
+    "defaultMessage": "{count} shown"
+  },
+  "players.select": {
+    "defaultMessage": "Select {name}"
+  },
+  "players.selectedCount": {
+    "defaultMessage": "{count} {count, plural, one {player selected} other {players selected}}"
+  },
+  "players.deleteManyTitle": {
+    "defaultMessage": "Delete {count} players?"
+  },
+  "players.deletedMany": {
+    "defaultMessage": "{count} players deleted."
+  },
+  "players.page": {
+    "defaultMessage": "Page {number}"
+  },
+  "teams.selectPlayer": {
+    "defaultMessage": "Select {name}"
+  },
+  "teams.removePlayer": {
+    "defaultMessage": "Remove {name}"
+  },
+  "teams.edit": {
+    "defaultMessage": "Edit team {name}"
+  },
+  "teams.delete": {
+    "defaultMessage": "Delete team {name}"
+  },
+  "teams.deleteTitle": {
+    "defaultMessage": "Delete team {name}?"
+  },
+  "teams.generatedName": {
+    "defaultMessage": "Team {number}"
+  },
+  "teams.generatedLabel": {
+    "defaultMessage": "Team {number} name"
+  },
+  "matches.winner": {
+    "defaultMessage": "Winner: {names}"
+  },
+  "matches.actionNumber": {
+    "defaultMessage": "Action #{sequence}"
+  },
+  "matches.record": {
+    "defaultMessage": "Entry for {name}: {values}"
+  },
+  "matches.correct": {
+    "defaultMessage": "Correct action #{sequence} — {score}"
+  },
+  "matches.undo": {
+    "defaultMessage": "Undo action #{sequence}"
+  },
+  "matches.superseded": {
+    "defaultMessage": "Replaced by action #{sequence}"
+  },
+  "matches.metadata": {
+    "defaultMessage": "By {author} · Device {device}"
+  },
+  "petanque.choose": {
+    "defaultMessage": "Choose {name}"
+  },
+  "petanque.remove": {
+    "defaultMessage": "Remove {name}"
+  },
+  "petanque.targetPoints": {
+    "defaultMessage": "{value} points"
+  },
+  "petanque.selectTeam": {
+    "defaultMessage": "Points for {name}"
+  },
+  "petanque.points": {
+    "defaultMessage": "{value} {value, plural, one {point} other {points}}"
+  },
+  "petanque.remaining": {
+    "defaultMessage": "Boules remaining for {name}"
+  },
+  "petanque.scoreLabel": {
+    "defaultMessage": "{name}: +{points}"
+  },
+  "petanque.deadLabel": {
+    "defaultMessage": "Dead jack — {result} (boules remaining: {first} / {second})"
+  },
+  "petanque.roundCount": {
+    "defaultMessage": "{count} {count, plural, one {end counted} other {ends counted}}"
+  },
+  "petanque.nextThrow": {
+    "defaultMessage": "Next jack throw: {name}"
+  },
+  "petanque.end": {
+    "defaultMessage": "End #{count}"
+  },
+  "petanque.correct": {
+    "defaultMessage": "Correct end #{count}"
+  },
+  "petanque.undo": {
+    "defaultMessage": "Undo end #{count}"
+  },
+  "generic.activeTeamPlayer": {
+    "defaultMessage": "Your turn: {name}"
+  },
+  "generic.increase": {
+    "defaultMessage": "Increase {field}"
+  },
+  "generic.decrease": {
+    "defaultMessage": "Decrease {field}"
+  },
+  "yams.cell": {
+    "defaultMessage": "{owner} — {category}: {hasScore, select, yes {{score}} other {not entered}}",
+    "description": "Accessible score cell. hasScore is yes or no; zero is a recorded score."
+  },
+  "yams.die": {
+    "defaultMessage": "Die {n}"
+  },
+  "yams.computed": {
+    "defaultMessage": "Calculated score: {score}"
+  },
+  "yams.entry": {
+    "defaultMessage": "{owner} — {category}: {points}"
+  },
+  "yams.progress": {
+    "defaultMessage": "{count} / 13 categories filled"
+  },
+  "language.title": {
+    "defaultMessage": "Language"
+  },
+  "language.help": {
+    "defaultMessage": "By default, language follows your device. Unavailable languages use English. You can also choose a language.",
+    "description": "Language is stored on this device, works offline and is excluded from backup exports."
+  },
+  "language.label": {
+    "defaultMessage": "App language"
+  },
+  "language.saved": {
+    "defaultMessage": "Language saved on this device."
+  },
+  "gameNames.6-qui-prend": {
+    "defaultMessage": "6 nimmt!"
+  },
+  "versions.four21": {
+    "defaultMessage": "Charge 21 · 421 = 10 · dice tiebreak"
+  },
+  "versions.skull": {
+    "defaultMessage": "{scoring, select, rascal {Rascal} other {Classic}} · {expansion, select, yes {2025 expansion} other {Base cards}}"
+  },
+  "versions.flip": {
+    "defaultMessage": "Edition 3.1 · 200 points"
+  },
+  "versions.sixNimmt": {
+    "defaultMessage": "{expansion, select, surprises {6 qui surprend! · 2 rounds} jokers {Jokers · ends at 66} other {Classic · ends at 66 bullheads}}"
+  },
+  "versions.timesUp": {
+    "defaultMessage": "Party · 3 rounds · {seconds} seconds"
+  },
+  "versions.molkky": {
+    "defaultMessage": "Classic · 50 points{teams, select, yes { · players or teams} other {}}",
+    "description": "Built-in rule caption. teams is yes for rules supporting teams, otherwise no."
+  },
+  "versions.farkle": {
+    "defaultMessage": "{target} · entry {entry}"
+  },
+  "versions.cricket": {
+    "defaultMessage": "Cricket · {points, select, yes {standard scoring} other {no points}}"
+  },
+  "versions.darts": {
+    "defaultMessage": "{start} · {doubleOut, select, yes {double-out} other {straight-out}}"
+  },
+  "matchOptions.mode": {
+    "defaultMessage": "{mode, select, individual {Individual} teams {Teams} cooperative {Cooperative} other {Teams and individuals}}",
+    "description": "Saved match mode, not the currently selected setup defaults."
+  },
+  "matchOptions.participants": {
+    "defaultMessage": "{players, plural, one {# player} other {# players}}{teams, plural, =0 {} one { · # team} other { · # teams}}",
+    "description": "Frozen roster counts. teams=0 hides the team count; players includes team members."
+  },
+  "matchOptions.target": {
+    "defaultMessage": "Target · {value, number} points"
+  },
+  "matchOptions.boules": {
+    "defaultMessage": "{value, plural, one {# boule per player} other {# boules per player}}"
+  },
+  "matchOptions.categories": {
+    "defaultMessage": "{count, plural, one {# category} other {# categories}}"
+  },
+  "matchOptions.upperBonus": {
+    "defaultMessage": "{enabled, select, yes {Upper bonus · +35} other {No upper bonus}}"
+  },
+  "matchOptions.entry": {
+    "defaultMessage": "{value, select, 0 {No entry threshold} other {Entry threshold · {value, number} points}}"
+  },
+  "matchOptions.x01": {
+    "defaultMessage": "X01 · {value, number}"
+  },
+  "matchOptions.doubleOut": {
+    "defaultMessage": "{enabled, select, yes {Double-out} other {Straight-out}}"
+  },
+  "matchOptions.cricket": {
+    "defaultMessage": "Cricket"
+  },
+  "matchOptions.cricketPoints": {
+    "defaultMessage": "{enabled, select, yes {Standard scoring} other {No points}}"
+  },
+  "matchOptions.legs": {
+    "defaultMessage": "First to {count, number} legs"
+  },
+  "matchOptions.startingRule": {
+    "defaultMessage": "{rule, select, alternate {Alternate starts} other {Previous loser starts}}"
+  },
+  "matchOptions.freePlay": {
+    "defaultMessage": "Free play"
+  },
+  "matchOptions.tokens": {
+    "defaultMessage": "{count, plural, one {# token} other {# tokens}}"
+  },
+  "matchOptions.skullRounds": {
+    "defaultMessage": "{count, number} rounds + tiebreaks"
+  },
+  "matchOptions.rounds": {
+    "defaultMessage": "{count, plural, one {# round} other {# rounds}}"
+  },
+  "matchOptions.bullheads": {
+    "defaultMessage": "Ends at {count, number} bullheads"
+  },
+  "matchOptions.duration": {
+    "defaultMessage": "{seconds, number} s per turn"
+  },
+  "matchOptions.cards": {
+    "defaultMessage": "{count, plural, one {# card} other {# cards}}"
+  },
+  "sixNimmt.roundHint": {
+    "defaultMessage": "Enter each player’s penalties, then save the round. Enter 0 for a player with no bullheads."
+  },
+  "sixNimmt.roundTotal": {
+    "defaultMessage": "Round total · {total, number} / {limit, number} bullheads"
+  },
+  "flip.recordBust": {
+    "defaultMessage": "Bust · 0 points"
+  },
+  "skull.recordBids": {
+    "defaultMessage": "Save all bids"
+  },
+  "skull.bidFor": {
+    "defaultMessage": "{name}’s bid"
+  },
+  "skull.bonusesFor": {
+    "defaultMessage": "Bonuses and captures · {name}"
+  },
+  "skull.closeBonuses": {
+    "defaultMessage": "Close bonuses"
+  },
+  "skull.saved": {
+    "defaultMessage": "Saved"
+  },
+  "skull.decrease": {
+    "defaultMessage": "Decrease: {name}"
+  },
+  "skull.increase": {
+    "defaultMessage": "Increase: {name}"
+  },
+  "farkle.currentPlayer": {
+    "defaultMessage": "Current player"
+  },
+  "farkle.target": {
+    "defaultMessage": "Target: {points}"
+  },
+  "farkle.banked": {
+    "defaultMessage": "Banked points"
+  },
+  "farkle.atRisk": {
+    "defaultMessage": "Points at risk"
+  },
+  "farkle.diceLeft": {
+    "defaultMessage": "Dice to roll"
+  },
+  "farkle.rollTitle": {
+    "defaultMessage": "Your roll"
+  },
+  "farkle.selectedCount": {
+    "defaultMessage": "{count} / {total} dice kept"
+  },
+  "farkle.kept": {
+    "defaultMessage": "Kept"
+  },
+  "farkle.choose": {
+    "defaultMessage": "Keep"
+  },
+  "farkle.chooseHint": {
+    "defaultMessage": "Choose the scoring dice to keep."
+  },
+  "farkle.afterRoll": {
+    "defaultMessage": "After confirming: {points} points in this turn"
+  },
+  "farkle.bankHint": {
+    "defaultMessage": "End your turn and add the confirmed points to your score."
+  },
+  "farkle.entryNeeded": {
+    "defaultMessage": "Earn {points} more points this turn to reach the opening threshold."
+  },
+  "matches.actions": {
+    "defaultMessage": "Match actions"
+  },
+  "matches.byAuthor": {
+    "defaultMessage": "By {author}"
+  },
+  "flip.selectionCount": {
+    "defaultMessage": "Number cards: {count} / 7"
+  },
+  "flip.sevenBonus": {
+    "defaultMessage": "Flip 7! +15 bonus points"
+  },
+  "matches.scoreEntry": {
+    "defaultMessage": "Score entry"
+  },
+  "matches.delete": {
+    "defaultMessage": "Delete"
+  },
+  "matches.deleteTitle": {
+    "defaultMessage": "Permanently delete this match?"
+  },
+  "matches.deleteHelp": {
+    "defaultMessage": "The match and all its scores will be permanently deleted. Players and teams will be kept."
+  },
+  "matches.cancelHelp": {
+    "defaultMessage": "The match will stop. Its scores and history will be kept."
+  },
+  "matches.actionConflict": {
+    "defaultMessage": "This match changed or was deleted. Close this window and try again from the updated list."
+  },
+  "matches.actionDenied": {
+    "defaultMessage": "This match cannot be changed on this device."
+  },
+  "matches.activeGame": {
+    "defaultMessage": "Game in progress: {game}"
+  },
+  "matches.view": {
+    "defaultMessage": "View"
+  },
+  "history.search": {
+    "defaultMessage": "Search matches"
+  },
+  "history.searchPlaceholder": {
+    "defaultMessage": "Game, player or team"
+  },
+  "matches.rematch": {
+    "defaultMessage": "Rematch"
+  },
+  "matches.rematchUnavailable": {
+    "defaultMessage": "Some participants or saved rules are no longer available. Check the profiles before starting a rematch."
+  },
+  "yams.scoringSettings": {
+    "defaultMessage": "Yams scoring"
+  },
+  "yams.fixedFourKind": {
+    "defaultMessage": "Four of a kind worth 40"
+  },
+  "yams.fourKindHint": {
+    "defaultMessage": "Off: total of all five dice. On: 40 points."
+  },
+  "yams.straights": {
+    "defaultMessage": "Straight scores"
+  },
+  "yams.customStraights": {
+    "defaultMessage": "Custom values"
+  },
+  "yams.smallStraightValue": {
+    "defaultMessage": "Small straight points"
+  },
+  "yams.largeStraightValue": {
+    "defaultMessage": "Large straight points"
+  },
+  "yams.extraYamsBonus": {
+    "defaultMessage": "Extra Yams bonus"
+  },
+  "yams.extraYamsHint": {
+    "defaultMessage": "100 points for each extra Yams after scoring 50 in the Yams box."
+  },
+  "yams.joker": {
+    "defaultMessage": "Joker"
+  },
+  "yams.jokerHint": {
+    "defaultMessage": "An extra Yams must fill the matching upper box, then an open lower box if that upper box is taken."
+  },
+  "yams.correctGrid": {
+    "defaultMessage": "Correct the grid"
+  },
+  "yams.backToPlay": {
+    "defaultMessage": "Back to play"
+  },
+  "yams.correctionHint": {
+    "defaultMessage": "Choose a filled box. New entries stay locked while correcting."
+  },
+  "yams.lockHint": {
+    "defaultMessage": "Only the active player’s column is open. Confirm a box to pass to the next player."
+  },
+  "yams.repeatRoll": {
+    "defaultMessage": "Another Yams (five matching dice)"
+  },
+  "yams.repeatFace": {
+    "defaultMessage": "Value of the five dice"
+  },
+  "yams.extraYamsTotal": {
+    "defaultMessage": "Yams bonuses"
+  },
+  "yams.jokerRequired": {
+    "defaultMessage": "The joker must fill the matching upper box if empty, otherwise an open lower box. If all lower boxes are filled, scratch an upper box."
+  },
+  "yams.turn": {
+    "defaultMessage": "{name}’s turn"
+  },
+  "yams.extraAward": {
+    "defaultMessage": "Extra Yams: +{points} points"
+  },
+  "matchOptions.yamsTurnOrder": {
+    "defaultMessage": "Take turns"
+  },
+  "matchOptions.yamsFourKind": {
+    "defaultMessage": "{mode, select, fixed40 {Four of a kind · 40 points} other {Four of a kind · dice total}}"
+  },
+  "matchOptions.yamsStraights": {
+    "defaultMessage": "Straights · {small} / {large}"
+  },
+  "matchOptions.yamsExtraBonus": {
+    "defaultMessage": "{enabled, select, yes {Yams bonus · +100} other {No extra Yams bonus}}"
+  },
+  "matchOptions.yamsJoker": {
+    "defaultMessage": "{enabled, select, yes {Joker enabled} other {No joker}}"
+  },
+  "ruleGuide.headings.goal": {
+    "defaultMessage": "Goal"
+  },
+  "ruleGuide.headings.play": {
+    "defaultMessage": "How to play"
+  },
+  "ruleGuide.headings.scoring": {
+    "defaultMessage": "Scoring"
+  },
+  "ruleGuide.headings.settings": {
+    "defaultMessage": "In this match"
+  },
+  "ruleGuide.headings.ending": {
+    "defaultMessage": "End of the game"
+  },
+  "ruleGuide.headings.sources": {
+    "defaultMessage": "Official sources"
+  },
+  "ruleGuide.table.situation": {
+    "defaultMessage": "Situation"
+  },
+  "ruleGuide.table.result": {
+    "defaultMessage": "Result"
+  },
+  "ruleGuide.external": {
+    "defaultMessage": "new tab"
+  },
+  "ruleGuide.reviewed": {
+    "defaultMessage": "Sources checked on {date}."
+  },
+  "ruleGuide.offline": {
+    "defaultMessage": "The summary stays available offline. Opening external documents requires a connection."
+  },
+  "ruleGuide.customSource": {
+    "defaultMessage": "These are custom rules; no official source is associated with this match."
+  },
+  "ruleGuide.sources.fipjp": {
+    "defaultMessage": "FIPJP — official 2021 rules, articles 1, 5, 14 and 29 (PDF, French)"
+  },
+  "ruleGuide.sources.hasbro": {
+    "defaultMessage": "Hasbro — Yahtzee Classic C2406 (PDF, English)"
+  },
+  "ruleGuide.sources.hasbroJoker": {
+    "defaultMessage": "Hasbro — extra Yahtzee and Joker rules (English)"
+  },
+  "ruleGuide.sources.playmonster": {
+    "defaultMessage": "PlayMonster — Farkle, 2016 scoring (PDF, English)"
+  },
+  "ruleGuide.sources.abi": {
+    "defaultMessage": "ABI Games — 421, booklet under downloads (French)"
+  },
+  "ruleGuide.sources.dra": {
+    "defaultMessage": "Darts Regulation Authority — 2026 rulebook, sections 6.2–6.4 (English)"
+  },
+  "ruleGuide.sources.nda": {
+    "defaultMessage": "National Dart Association — Cricket rules (English)"
+  },
+  "ruleGuide.sources.grandpa": {
+    "defaultMessage": "Grandpa Beck’s Games — Skull King rulebooks and player aids"
+  },
+  "ruleGuide.sources.flip31": {
+    "defaultMessage": "The Op / Asmodee — Flip 7, edition 3.1 (PDF, English)"
+  },
+  "ruleGuide.sources.flipFaq": {
+    "defaultMessage": "The Op — Flip 7 FAQ, including ties (English)"
+  },
+  "ruleGuide.sources.molkky": {
+    "defaultMessage": "Mölkky — manufacturer’s rules (English)"
+  },
+  "ruleGuide.sources.ffm": {
+    "defaultMessage": "French Mölkky Federation — rules (French)"
+  },
+  "ruleGuide.sources.amigo": {
+    "defaultMessage": "AMIGO — 6 nimmt! base rules (PDF, English)"
+  },
+  "ruleGuide.sources.repos": {
+    "defaultMessage": "Repos Production — Time’s Up! Party"
+  },
+  "ruleGuide.sources.party": {
+    "defaultMessage": "Repos Production — Party rulebook (PDF, English)"
+  },
+  "ruleGuide.petanque.goal": {
+    "defaultMessage": "Be the first side to reach {target} points."
+  },
+  "ruleGuide.petanque.start": {
+    "defaultMessage": "In the standard format, two sides compete. Decide who throws the jack first before starting."
+  },
+  "ruleGuide.petanque.turn": {
+    "defaultMessage": "After the first boule, the side without the closest boule plays until it takes the point or runs out of boules."
+  },
+  "ruleGuide.petanque.measure": {
+    "defaultMessage": "Once all boules are played, compare their distances to the jack before entering the end result."
+  },
+  "ruleGuide.petanque.point.label": {
+    "defaultMessage": "Winning end"
+  },
+  "ruleGuide.petanque.point.value": {
+    "defaultMessage": "1 point for each boule closer than the opponent’s closest boule."
+  },
+  "ruleGuide.petanque.deadOne.label": {
+    "defaultMessage": "Dead jack: only one side has boules left"
+  },
+  "ruleGuide.petanque.deadOne.value": {
+    "defaultMessage": "That side scores one point for each unplayed boule."
+  },
+  "ruleGuide.petanque.deadBoth.label": {
+    "defaultMessage": "Dead jack: both sides or neither have boules left"
+  },
+  "ruleGuide.petanque.deadBoth.value": {
+    "defaultMessage": "Void end: no points."
+  },
+  "ruleGuide.petanque.settings": {
+    "defaultMessage": "Saved settings: target {target}, {boules} boules per player."
+  },
+  "ruleGuide.petanque.format": {
+    "defaultMessage": "Federation formats use two sides: singles or doubles with 3 boules each, triples with 2. Other team sizes are table formats."
+  },
+  "ruleGuide.petanque.freePlay": {
+    "defaultMessage": "More than two sides is free play. Agree on special cases together; automatic dead-jack scoring is available only with two sides."
+  },
+  "ruleGuide.petanque.finish": {
+    "defaultMessage": "The game ends when a side reaches or exceeds {target} points."
+  },
+  "ruleGuide.petanque.next": {
+    "defaultMessage": "The scoring side throws the next jack. A void end keeps the previous thrower in the app."
+  },
+  "ruleGuide.yams.goal": {
+    "defaultMessage": "Have the highest total after filling all 13 categories."
+  },
+  "ruleGuide.yams.roll": {
+    "defaultMessage": "Roll five dice up to three times per turn. Between rolls, keep or reroll any dice."
+  },
+  "ruleGuide.yams.choose": {
+    "defaultMessage": "Fill one empty box. If no combination fits, scratch a box with 0. Each box is used once."
+  },
+  "ruleGuide.yams.turns": {
+    "defaultMessage": "Confirming a box passes play to the next player. Other columns stay locked; use correction mode to edit earlier entries."
+  },
+  "ruleGuide.yams.legacy": {
+    "defaultMessage": "This match retains the earlier free-entry grid without enforced turn order."
+  },
+  "ruleGuide.yams.upper.label": {
+    "defaultMessage": "Ones through sixes"
+  },
+  "ruleGuide.yams.upper.value": {
+    "defaultMessage": "Add only dice showing the selected face."
+  },
+  "ruleGuide.yams.three.label": {
+    "defaultMessage": "Three of a kind: at least 3 matching dice"
+  },
+  "ruleGuide.yams.three.value": {
+    "defaultMessage": "Total of all five dice."
+  },
+  "ruleGuide.yams.fourSum.label": {
+    "defaultMessage": "Four of a kind: at least 4 matching dice"
+  },
+  "ruleGuide.yams.fourSum.value": {
+    "defaultMessage": "Total of all five dice."
+  },
+  "ruleGuide.yams.fourFixed.label": {
+    "defaultMessage": "Four of a kind: at least 4 matching dice"
+  },
+  "ruleGuide.yams.fourFixed.value": {
+    "defaultMessage": "40 points, as selected for this match."
+  },
+  "ruleGuide.yams.full.label": {
+    "defaultMessage": "Full house: 3 matching dice and a pair"
+  },
+  "ruleGuide.yams.full.value": {
+    "defaultMessage": "25 points. Five matching dice are not a full house unless the Joker rule applies."
+  },
+  "ruleGuide.yams.small.label": {
+    "defaultMessage": "Small straight: 4 consecutive values"
+  },
+  "ruleGuide.yams.small.value": {
+    "defaultMessage": "{points} points."
+  },
+  "ruleGuide.yams.large.label": {
+    "defaultMessage": "Large straight: 5 consecutive values"
+  },
+  "ruleGuide.yams.large.value": {
+    "defaultMessage": "{points} points."
+  },
+  "ruleGuide.yams.five.label": {
+    "defaultMessage": "Yams: 5 matching dice"
+  },
+  "ruleGuide.yams.five.value": {
+    "defaultMessage": "50 points."
+  },
+  "ruleGuide.yams.chance.label": {
+    "defaultMessage": "Chance"
+  },
+  "ruleGuide.yams.chance.value": {
+    "defaultMessage": "Total of all five dice, with no combination required."
+  },
+  "ruleGuide.yams.upperOn": {
+    "defaultMessage": "Upper bonus enabled: +35 when the first six categories total at least 63."
+  },
+  "ruleGuide.yams.upperOff": {
+    "defaultMessage": "Upper bonus disabled."
+  },
+  "ruleGuide.yams.extraOn": {
+    "defaultMessage": "Each extra Yams earns +100 after a Yams scored as 50. A scratched Yams earns no bonus. Enter five matching dice or mark Another Yams."
+  },
+  "ruleGuide.yams.extraOff": {
+    "defaultMessage": "Extra Yams bonus disabled."
+  },
+  "ruleGuide.yams.jokerOn": {
+    "defaultMessage": "Joker enabled: after filling the Yams box, another Yams must use the matching upper box if empty. Otherwise, choose an empty lower box; full house and straights score their fixed values. If all lower boxes are filled, scratch an upper box."
+  },
+  "ruleGuide.yams.jokerOff": {
+    "defaultMessage": "Joker disabled: an extra Yams does not substitute for a full house or straight."
+  },
+  "ruleGuide.yams.settings": {
+    "defaultMessage": "Fixed four-of-a-kind scoring, custom straights and disabled bonuses are table choices. The table above follows this match’s settings."
+  },
+  "ruleGuide.yams.finish": {
+    "defaultMessage": "After 13 boxes per player, the highest total wins. The app awards shared victory for ties."
+  },
+  "ruleGuide.farkle.goal": {
+    "defaultMessage": "Build the highest total while aiming for {target} points without losing your turn’s points."
+  },
+  "ruleGuide.farkle.roll": {
+    "defaultMessage": "Start with six dice. After each roll, keep at least one scoring group. Each combination must come from that single roll."
+  },
+  "ruleGuide.farkle.keep": {
+    "defaultMessage": "Reroll the remaining dice or bank the turn’s points. Once all six dice have scored, you may roll all six again."
+  },
+  "ruleGuide.farkle.risk": {
+    "defaultMessage": "A roll with no scoring dice loses all unbanked turn points and passes play. Previously banked points remain safe."
+  },
+  "ruleGuide.farkle.one.label": {
+    "defaultMessage": "Single 1"
+  },
+  "ruleGuide.farkle.one.value": {
+    "defaultMessage": "100"
+  },
+  "ruleGuide.farkle.five.label": {
+    "defaultMessage": "Single 5"
+  },
+  "ruleGuide.farkle.five.value": {
+    "defaultMessage": "50"
+  },
+  "ruleGuide.farkle.triples.label": {
+    "defaultMessage": "3 matching dice"
+  },
+  "ruleGuide.farkle.triples.value": {
+    "defaultMessage": "Three 1s: 300. Other faces: 100 × face value."
+  },
+  "ruleGuide.farkle.four.label": {
+    "defaultMessage": "4 matching dice"
+  },
+  "ruleGuide.farkle.four.value": {
+    "defaultMessage": "1,000"
+  },
+  "ruleGuide.farkle.fiveKind.label": {
+    "defaultMessage": "5 matching dice"
+  },
+  "ruleGuide.farkle.fiveKind.value": {
+    "defaultMessage": "2,000"
+  },
+  "ruleGuide.farkle.sixKind.label": {
+    "defaultMessage": "6 matching dice"
+  },
+  "ruleGuide.farkle.sixKind.value": {
+    "defaultMessage": "3,000"
+  },
+  "ruleGuide.farkle.special.label": {
+    "defaultMessage": "1–6 straight, three pairs or four of a kind + a pair"
+  },
+  "ruleGuide.farkle.special.value": {
+    "defaultMessage": "1,500"
+  },
+  "ruleGuide.farkle.twoTriples.label": {
+    "defaultMessage": "Two triplets"
+  },
+  "ruleGuide.farkle.twoTriples.value": {
+    "defaultMessage": "2,500"
+  },
+  "ruleGuide.farkle.entry": {
+    "defaultMessage": "First bank: at least {entry} points in one turn. A threshold of 0 means no opening requirement."
+  },
+  "ruleGuide.farkle.settings": {
+    "defaultMessage": "The PlayMonster reference uses 10,000 points and a 500-point opening. The {target} target and threshold above are this match’s settings. The app shares tied victories."
+  },
+  "ruleGuide.farkle.finish": {
+    "defaultMessage": "Reaching {target} gives every other player one final turn. The highest final total wins; tied leaders share victory."
+  },
+  "ruleGuide.four21.goal": {
+    "defaultMessage": "Get rid of your tokens after the 21-token pot has been distributed."
+  },
+  "ruleGuide.four21.charge": {
+    "defaultMessage": "Charge: each player rolls three dice once. The weakest takes the strongest combination’s token value from the pot, capped by the remaining pot."
+  },
+  "ruleGuide.four21.discharge": {
+    "defaultMessage": "Discharge: the starter rolls one to three times. Others cannot exceed that count. The strongest gives tokens to the weakest, capped by their own holdings."
+  },
+  "ruleGuide.four21.starter": {
+    "defaultMessage": "The weakest starts the next round."
+  },
+  "ruleGuide.four21.421.label": {
+    "defaultMessage": "4–2–1"
+  },
+  "ruleGuide.four21.421.value": {
+    "defaultMessage": "10 tokens"
+  },
+  "ruleGuide.four21.ones.label": {
+    "defaultMessage": "1–1–1"
+  },
+  "ruleGuide.four21.ones.value": {
+    "defaultMessage": "7 tokens"
+  },
+  "ruleGuide.four21.pairs.label": {
+    "defaultMessage": "1–1–n, n from 6 to 2"
+  },
+  "ruleGuide.four21.pairs.value": {
+    "defaultMessage": "n tokens"
+  },
+  "ruleGuide.four21.triples.label": {
+    "defaultMessage": "n–n–n, n from 6 to 2"
+  },
+  "ruleGuide.four21.triples.value": {
+    "defaultMessage": "n tokens"
+  },
+  "ruleGuide.four21.straight.label": {
+    "defaultMessage": "Three consecutive values"
+  },
+  "ruleGuide.four21.straight.value": {
+    "defaultMessage": "2 tokens"
+  },
+  "ruleGuide.four21.ordinary.label": {
+    "defaultMessage": "Ordinary combination"
+  },
+  "ruleGuide.four21.ordinary.value": {
+    "defaultMessage": "1 token"
+  },
+  "ruleGuide.four21.nenette.label": {
+    "defaultMessage": "Nénette: 2–2–1"
+  },
+  "ruleGuide.four21.nenette.value": {
+    "defaultMessage": "The weakest combination; if it loses, transfer 2 tokens, capped by availability."
+  },
+  "ruleGuide.four21.ranking": {
+    "defaultMessage": "Ranking: 421, 111, then 116 > 666 > 115 > 555 > 114 > 444 > 113 > 333 > 112 > 222, then straights, ordinary combinations and nénette. Within a group, higher values win."
+  },
+  "ruleGuide.four21.house": {
+    "defaultMessage": "This is Charge 21, the app’s local scoring table. 421 is traditional; a publisher’s booklet describes its own edition and does not make this table universal."
+  },
+  "ruleGuide.four21.tie": {
+    "defaultMessage": "Break relevant ties with physical dice, then select the strongest and weakest among the eligible players."
+  },
+  "ruleGuide.four21.finish": {
+    "defaultMessage": "When the pot empties, players with no tokens win together. Otherwise, the first to empty their holdings during discharge wins."
+  },
+  "ruleGuide.x01.goal": {
+    "defaultMessage": "Reduce {start} to exactly 0."
+  },
+  "ruleGuide.x01.turn": {
+    "defaultMessage": "Take turns throwing up to three darts. A miss uses one dart."
+  },
+  "ruleGuide.x01.subtract": {
+    "defaultMessage": "Subtract scored points from the remaining total. A valid checkout at 0 ends the leg immediately."
+  },
+  "ruleGuide.x01.single.label": {
+    "defaultMessage": "Single 1–20"
+  },
+  "ruleGuide.x01.single.value": {
+    "defaultMessage": "Sector value"
+  },
+  "ruleGuide.x01.double.label": {
+    "defaultMessage": "Double 1–20"
+  },
+  "ruleGuide.x01.double.value": {
+    "defaultMessage": "2 × sector value"
+  },
+  "ruleGuide.x01.triple.label": {
+    "defaultMessage": "Triple 1–20"
+  },
+  "ruleGuide.x01.triple.value": {
+    "defaultMessage": "3 × sector value"
+  },
+  "ruleGuide.x01.bull.label": {
+    "defaultMessage": "Outer / inner bull"
+  },
+  "ruleGuide.x01.bull.value": {
+    "defaultMessage": "25 / 50; the inner bull counts as double 25."
+  },
+  "ruleGuide.x01.miss.label": {
+    "defaultMessage": "Miss or dart that does not stay in the board"
+  },
+  "ruleGuide.x01.miss.value": {
+    "defaultMessage": "0"
+  },
+  "ruleGuide.x01.doubleOut": {
+    "defaultMessage": "Double-out enabled: the final dart must be a double. Overshooting 0, leaving 1 or reaching 0 without a double cancels the whole visit and passes play."
+  },
+  "ruleGuide.x01.straightOut": {
+    "defaultMessage": "Straight-out enabled: reaching exactly 0 is enough. Only overshooting cancels the whole visit. This is a table format."
+  },
+  "ruleGuide.x01.entry": {
+    "defaultMessage": "Straight-in: no double is needed to start scoring. A 301 start and more than two sides are table options."
+  },
+  "ruleGuide.x01.finish": {
+    "defaultMessage": "The first valid checkout wins the leg."
+  },
+  "ruleGuide.cricket.goal": {
+    "defaultMessage": "Close 20, 19, 18, 17, 16, 15 and bull."
+  },
+  "ruleGuide.cricket.targets": {
+    "defaultMessage": "Targets may be played in any order. Three marks close a target."
+  },
+  "ruleGuide.cricket.turn": {
+    "defaultMessage": "Each visit has up to three darts, then play passes to the next side."
+  },
+  "ruleGuide.cricket.close": {
+    "defaultMessage": "A target can still score while at least one opponent has not closed it. Once everyone closes it, it scores no more points."
+  },
+  "ruleGuide.cricket.marks.label": {
+    "defaultMessage": "Sectors 15 through 20"
+  },
+  "ruleGuide.cricket.marks.value": {
+    "defaultMessage": "Single: 1 mark; double: 2; triple: 3."
+  },
+  "ruleGuide.cricket.bull.label": {
+    "defaultMessage": "Outer / inner bull"
+  },
+  "ruleGuide.cricket.bull.value": {
+    "defaultMessage": "1 / 2 marks; each excess mark is worth 25 points."
+  },
+  "ruleGuide.cricket.other.label": {
+    "defaultMessage": "Other sectors or a miss"
+  },
+  "ruleGuide.cricket.other.value": {
+    "defaultMessage": "No marks; the dart is used."
+  },
+  "ruleGuide.cricket.pointsOn": {
+    "defaultMessage": "Points enabled: marks beyond the third score the target’s value only while an opponent still has it open."
+  },
+  "ruleGuide.cricket.pointsOff": {
+    "defaultMessage": "No-score mode: excess marks are ignored. This is a table option distinct from the reference’s scoring Cricket."
+  },
+  "ruleGuide.cricket.finishPoints": {
+    "defaultMessage": "To win, close every target and have at least as many points as every opponent. At equal scores, the first complete closure wins."
+  },
+  "ruleGuide.cricket.finishNoPoints": {
+    "defaultMessage": "The first side to close every target wins."
+  },
+  "ruleGuide.dartsSeries.win": {
+    "defaultMessage": "Match mode: win {count} legs to win the match."
+  },
+  "ruleGuide.dartsSeries.alternate": {
+    "defaultMessage": "Leg starts alternate between the two sides from the saved first starter."
+  },
+  "ruleGuide.dartsSeries.loser": {
+    "defaultMessage": "The loser of a leg starts the next one. The first leg uses the saved starter."
+  },
+  "ruleGuide.dartsSeries.freePlay": {
+    "defaultMessage": "More than two sides is free play, extending the same scoring and victory conditions to every opponent."
+  },
+  "ruleGuide.skull.goal": {
+    "defaultMessage": "Predict your tricks exactly and have the highest total after ten rounds."
+  },
+  "ruleGuide.skull.deal": {
+    "defaultMessage": "Deal one card per player in round 1, then one more per round, capped at {maxCards} cards with this deck and roster."
+  },
+  "ruleGuide.skull.bid": {
+    "defaultMessage": "Everyone bids before play. Confirm all bids, then play the hand with physical cards."
+  },
+  "ruleGuide.skull.tricks": {
+    "defaultMessage": "Follow the led suit when possible; special cards may still be played. Black is trump. Pirates beat numbers and mermaids; the Skull King beats pirates, but a mermaid beats the Skull King."
+  },
+  "ruleGuide.skull.record": {
+    "defaultMessage": "Enter tricks won and bonus captures. Each trick has one card per player; its winner leads the next trick."
+  },
+  "ruleGuide.skull.exact.label": {
+    "defaultMessage": "Exact positive bid"
+  },
+  "ruleGuide.skull.exact.value": {
+    "defaultMessage": "+20 × tricks bid"
+  },
+  "ruleGuide.skull.miss.label": {
+    "defaultMessage": "Missed positive bid"
+  },
+  "ruleGuide.skull.miss.value": {
+    "defaultMessage": "−10 × the difference between bid and tricks won"
+  },
+  "ruleGuide.skull.zero.label": {
+    "defaultMessage": "Successful zero bid"
+  },
+  "ruleGuide.skull.zero.value": {
+    "defaultMessage": "+10 × cards dealt to that player"
+  },
+  "ruleGuide.skull.zeroMiss.label": {
+    "defaultMessage": "Failed zero bid"
+  },
+  "ruleGuide.skull.zeroMiss.value": {
+    "defaultMessage": "−10 × cards dealt to that player"
+  },
+  "ruleGuide.skull.fourteen.label": {
+    "defaultMessage": "Captured 14s"
+  },
+  "ruleGuide.skull.fourteen.value": {
+    "defaultMessage": "+10 per colored 14; +20 for the black 14"
+  },
+  "ruleGuide.skull.mermaid.label": {
+    "defaultMessage": "Mermaid captured by a pirate"
+  },
+  "ruleGuide.skull.mermaid.value": {
+    "defaultMessage": "+20 per mermaid"
+  },
+  "ruleGuide.skull.pirate.label": {
+    "defaultMessage": "Pirate captured by the Skull King"
+  },
+  "ruleGuide.skull.pirate.value": {
+    "defaultMessage": "+30 per pirate"
+  },
+  "ruleGuide.skull.king.label": {
+    "defaultMessage": "Skull King captured by a mermaid"
+  },
+  "ruleGuide.skull.king.value": {
+    "defaultMessage": "+40"
+  },
+  "ruleGuide.skull.bonuses": {
+    "defaultMessage": "Bonuses count only when the bid is exactly correct."
+  },
+  "ruleGuide.skull.edition": {
+    "defaultMessage": "Classic 2021 scoring without pirate abilities, advanced cards or Rascal. The Tigress acts as a pirate or escape. If everyone escapes, the first wins. If a mermaid, pirate and Skull King share a trick, the mermaid wins."
+  },
+  "ruleGuide.skull.finish": {
+    "defaultMessage": "After ten rounds, the highest total wins. If leaders tie, everyone plays another round with the final hand size until the tie breaks."
+  },
+  "ruleGuide.flip.goal": {
+    "defaultMessage": "Have the highest total at the end of a round in which someone reaches 200."
+  },
+  "ruleGuide.flip.deal": {
+    "defaultMessage": "The dealer gives everyone a face-up card. On your turn, take another card or stop to keep your points."
+  },
+  "ruleGuide.flip.choice": {
+    "defaultMessage": "Number cards run from 0 to 12. Modifiers and Action cards do not count toward the seven numbers."
+  },
+  "ruleGuide.flip.duplicate": {
+    "defaultMessage": "Receiving a duplicate number busts your hand for 0, unless Second Chance lets you discard the duplicate and that protection."
+  },
+  "ruleGuide.flip.seven": {
+    "defaultMessage": "Seven distinct numbers trigger Flip 7: +15 and the round ends immediately for everyone. The 0 counts as a distinct number."
+  },
+  "ruleGuide.flip.numbers.label": {
+    "defaultMessage": "Number cards"
+  },
+  "ruleGuide.flip.numbers.value": {
+    "defaultMessage": "Sum their values"
+  },
+  "ruleGuide.flip.double.label": {
+    "defaultMessage": "×2 modifier"
+  },
+  "ruleGuide.flip.double.value": {
+    "defaultMessage": "Double only the number-card sum."
+  },
+  "ruleGuide.flip.modifiers.label": {
+    "defaultMessage": "+2, +4, +6, +8, +10 modifiers"
+  },
+  "ruleGuide.flip.modifiers.value": {
+    "defaultMessage": "Add after applying ×2."
+  },
+  "ruleGuide.flip.bonus.label": {
+    "defaultMessage": "Flip 7"
+  },
+  "ruleGuide.flip.bonus.value": {
+    "defaultMessage": "+15 after the other calculations."
+  },
+  "ruleGuide.flip.bust.label": {
+    "defaultMessage": "Busted player"
+  },
+  "ruleGuide.flip.bust.value": {
+    "defaultMessage": "0; no card entry is needed."
+  },
+  "ruleGuide.flip.actions": {
+    "defaultMessage": "Resolve actions with the physical cards: Freeze banks that player’s points; Flip Three deals three cards, stopping on a bust or Flip 7; Second Chance protects against one duplicate."
+  },
+  "ruleGuide.flip.finish": {
+    "defaultMessage": "A round ends when everyone stops or busts, or on a Flip 7. At 200 or more, the highest total wins; if leaders tie, everyone plays another round."
+  },
+  "ruleGuide.molkky.goal": {
+    "defaultMessage": "Reach exactly 50 points."
+  },
+  "ruleGuide.molkky.setup": {
+    "defaultMessage": "Arrange the twelve numbered pins using the rulebook’s layout. Set the playing order before starting."
+  },
+  "ruleGuide.molkky.throw": {
+    "defaultMessage": "Throw the baton underhand to knock down pins. Only fully fallen pins count."
+  },
+  "ruleGuide.molkky.raise": {
+    "defaultMessage": "Stand pins back up where they fell, then pass play to the next player."
+  },
+  "ruleGuide.molkky.single.label": {
+    "defaultMessage": "One fallen pin"
+  },
+  "ruleGuide.molkky.single.value": {
+    "defaultMessage": "Its printed number"
+  },
+  "ruleGuide.molkky.several.label": {
+    "defaultMessage": "Several fallen pins"
+  },
+  "ruleGuide.molkky.several.value": {
+    "defaultMessage": "The number of pins, not their printed values"
+  },
+  "ruleGuide.molkky.miss.label": {
+    "defaultMessage": "No fully fallen pins"
+  },
+  "ruleGuide.molkky.miss.value": {
+    "defaultMessage": "0 and one miss"
+  },
+  "ruleGuide.molkky.over": {
+    "defaultMessage": "Exceeding 50 immediately resets the score to 25. You must reach 50 exactly to win."
+  },
+  "ruleGuide.molkky.elimination": {
+    "defaultMessage": "Three consecutive misses eliminate the player or side. A scoring throw resets the miss counter."
+  },
+  "ruleGuide.molkky.team": {
+    "defaultMessage": "In teams, members alternate throws and share their score and misses. The app displays 0 for an eliminated side."
+  },
+  "ruleGuide.molkky.finish": {
+    "defaultMessage": "The first side to 50 wins. In this app, the last remaining side also wins if all opponents are eliminated."
+  },
+  "ruleGuide.six.goal": {
+    "defaultMessage": "Collect as few bullheads as possible."
+  },
+  "ruleGuide.six.deal": {
+    "defaultMessage": "Deal ten cards each. Place four face-up cards to start four rows, each holding at most five cards."
+  },
+  "ruleGuide.six.choose": {
+    "defaultMessage": "Everyone chooses a card face down, then reveals together. Place them from lowest to highest."
+  },
+  "ruleGuide.six.place": {
+    "defaultMessage": "Place a card after a lower number, choosing the row whose last card is closest to it."
+  },
+  "ruleGuide.six.small": {
+    "defaultMessage": "If your card is lower than every row end, take any row and replace it with your card."
+  },
+  "ruleGuide.six.sixth": {
+    "defaultMessage": "If your card would be sixth in a row, take its five cards. Your card starts the new row."
+  },
+  "ruleGuide.six.ordinary.label": {
+    "defaultMessage": "Ordinary card"
+  },
+  "ruleGuide.six.ordinary.value": {
+    "defaultMessage": "1 bullhead"
+  },
+  "ruleGuide.six.five.label": {
+    "defaultMessage": "Multiple of 5, excluding multiples of 10 and 55"
+  },
+  "ruleGuide.six.five.value": {
+    "defaultMessage": "2 bullheads"
+  },
+  "ruleGuide.six.ten.label": {
+    "defaultMessage": "Multiple of 10"
+  },
+  "ruleGuide.six.ten.value": {
+    "defaultMessage": "3 bullheads"
+  },
+  "ruleGuide.six.eleven.label": {
+    "defaultMessage": "Multiple of 11, excluding 55"
+  },
+  "ruleGuide.six.eleven.value": {
+    "defaultMessage": "5 bullheads"
+  },
+  "ruleGuide.six.55.label": {
+    "defaultMessage": "Card 55"
+  },
+  "ruleGuide.six.55.value": {
+    "defaultMessage": "7 bullheads"
+  },
+  "ruleGuide.six.record": {
+    "defaultMessage": "After all {cards} cards, count the bullheads in each player’s penalty pile. Enter every player’s result, including an explicit 0 for no penalties."
+  },
+  "ruleGuide.six.finish": {
+    "defaultMessage": "If any cumulative score reaches at least 66, finish scoring that round; the lowest total wins. Otherwise, deal ten new cards. The app shares victory among tied leaders."
+  },
+  "ruleGuide.timesUp.goal": {
+    "defaultMessage": "Help your team guess the most cards over three rounds."
+  },
+  "ruleGuide.timesUp.setup": {
+    "defaultMessage": "Form 2–6 teams with 4–12 players total and at least 2 per team. Prepare {cards} physical cards; reuse the same cards in all three rounds."
+  },
+  "ruleGuide.timesUp.timer": {
+    "defaultMessage": "The clue-giver has {seconds} seconds. Set correctly guessed cards aside; the others still need to be guessed."
+  },
+  "ruleGuide.timesUp.rotate": {
+    "defaultMessage": "Team members take turns as clue-giver. Once all 40 cards are guessed, shuffle them for the next round."
+  },
+  "ruleGuide.timesUp.free.label": {
+    "defaultMessage": "Round 1: description"
+  },
+  "ruleGuide.timesUp.free.value": {
+    "defaultMessage": "Describe freely; the team may guess repeatedly. Cards cannot be skipped."
+  },
+  "ruleGuide.timesUp.word.label": {
+    "defaultMessage": "Round 2: one word"
+  },
+  "ruleGuide.timesUp.word.value": {
+    "defaultMessage": "One word per card and one team guess. Skipping is allowed."
+  },
+  "ruleGuide.timesUp.mime.label": {
+    "defaultMessage": "Round 3: mime"
+  },
+  "ruleGuide.timesUp.mime.value": {
+    "defaultMessage": "No words. Gestures, sound effects and humming are allowed; one guess per card, skipping allowed."
+  },
+  "ruleGuide.timesUp.point.label": {
+    "defaultMessage": "Correctly guessed card"
+  },
+  "ruleGuide.timesUp.point.value": {
+    "defaultMessage": "1 point for the team"
+  },
+  "ruleGuide.timesUp.forbidden": {
+    "defaultMessage": "During description, do not use the word or a derivative, translation, spelling or rhyming clue. Gestures and sound effects are reserved for mime."
+  },
+  "ruleGuide.timesUp.answers": {
+    "defaultMessage": "In rounds 2 and 3, only the first answer counts. A skipped or missed card cannot return during that same turn."
+  },
+  "ruleGuide.timesUp.timerChoice": {
+    "defaultMessage": "The app starts each turn with a fresh 30 seconds, including at round changes. On expiry, confirm the number of correct cards to pass play."
+  },
+  "ruleGuide.timesUp.finish": {
+    "defaultMessage": "After round three, add the correctly guessed cards. The highest total wins; the app awards shared victory for a tie."
+  },
+  "ruleGuide.custom.goal": {
+    "defaultMessage": "Play using the custom rules saved with this match."
+  },
+  "ruleGuide.custom.entry": {
+    "defaultMessage": "Choose the participant and enter the requested values within the table’s limits."
+  },
+  "ruleGuide.custom.saved": {
+    "defaultMessage": "Scores follow this match’s saved rule. Agree together on how to play the physical game."
+  },
+  "ruleGuide.custom.field": {
+    "defaultMessage": "{name}"
+  },
+  "ruleGuide.custom.range": {
+    "defaultMessage": "From {minimum} to {maximum}"
+  },
+  "ruleGuide.custom.highest": {
+    "defaultMessage": "Objective: obtain the highest total."
+  },
+  "ruleGuide.custom.lowest": {
+    "defaultMessage": "Objective: obtain the lowest total."
+  },
+  "ruleGuide.custom.target": {
+    "defaultMessage": "Saved target: {target}."
+  },
+  "ruleGuide.custom.rounds": {
+    "defaultMessage": "Number of rounds: {count}."
+  },
+  "ruleGuide.custom.shared": {
+    "defaultMessage": "The game ends at its saved target or round count, or by manual finish if allowed. Tied leaders share victory."
+  },
+  "ruleGuide.custom.continue": {
+    "defaultMessage": "The game ends at its saved target or round count, or by manual finish if allowed. Continue playing to break tied leaders."
+  },
+  "language.system": {
+    "defaultMessage": "Follow device",
+    "description": "Use the device’s current language, falling back to English when unavailable."
+  },
+  "about.title": {
+    "defaultMessage": "About"
+  },
+  "about.intro": {
+    "defaultMessage": "Scoretrackrr helps you keep score for your games, in an installable app that works offline."
+  },
+  "about.version": {
+    "defaultMessage": "Version {version}"
+  },
+  "about.github": {
+    "defaultMessage": "Source code on GitHub"
+  },
+  "about.technologies": {
+    "defaultMessage": "Technologies"
+  },
+  "about.releases": {
+    "defaultMessage": "GitHub releases"
+  },
+  "about.checkHint": {
+    "defaultMessage": "Checks the latest stable GitHub release only when requested. A connection is required."
+  },
+  "about.check": {
+    "defaultMessage": "Check for updates"
+  },
+  "about.checking": {
+    "defaultMessage": "Checking…"
+  },
+  "about.noRelease": {
+    "defaultMessage": "No stable release has been published on GitHub yet."
+  },
+  "about.viewRelease": {
+    "defaultMessage": "View release"
+  },
+  "about.published": {
+    "defaultMessage": "Published {date}"
+  },
+  "about.checked": {
+    "defaultMessage": "Last checked: {date}"
+  },
+  "about.results.available": {
+    "defaultMessage": "New version available: {version}."
+  },
+  "about.results.current": {
+    "defaultMessage": "You are using the latest published stable version ({version})."
+  },
+  "about.results.ahead": {
+    "defaultMessage": "Your version is newer than the latest published release ({version})."
+  },
+  "about.results.unknown": {
+    "defaultMessage": "Latest publication: {version}. Open the release to check its version."
+  },
+  "about.errors.offline": {
+    "defaultMessage": "Checking requires a connection. Try again when you are online."
+  },
+  "about.errors.rateLimited": {
+    "defaultMessage": "GitHub’s request limit has been reached. Try again later."
+  },
+  "about.errors.unavailable": {
+    "defaultMessage": "GitHub releases cannot be checked right now. Check your connection and try again."
+  },
+  "about.errors.invalidResponse": {
+    "defaultMessage": "GitHub’s response could not be used to check the version. Open the repository or try again later."
+  },
+  "about.errors.timeout": {
+    "defaultMessage": "GitHub is taking too long to respond. Try again shortly."
+  },
+  "about.errors.cancelled": {
+    "defaultMessage": "Check cancelled."
+  },
+  "about.stack.svelte": {
+    "defaultMessage": "Svelte"
+  },
+  "about.stack.sveltekit": {
+    "defaultMessage": "SvelteKit"
+  },
+  "about.stack.typescript": {
+    "defaultMessage": "TypeScript"
+  },
+  "about.stack.tailwind": {
+    "defaultMessage": "Tailwind CSS"
+  },
+  "about.stack.dexie": {
+    "defaultMessage": "Dexie · IndexedDB"
+  },
+  "about.stack.vite": {
+    "defaultMessage": "Vite"
+  },
+  "about.stack.icu": {
+    "defaultMessage": "IntlMessageFormat · ICU"
+  },
+  "about.stack.pwa": {
+    "defaultMessage": "PWA · Service Worker"
+  },
+  "dartsCork.enable": {
+    "defaultMessage": "Start with a cork"
+  },
+  "dartsCork.hint": {
+    "defaultMessage": "The side closest to the center starts the game or the first leg."
+  },
+  "dartsCork.winner": {
+    "defaultMessage": "Cork winner"
+  },
+  "dartsCork.instructions": {
+    "defaultMessage": "One player per side throws one dart at the center. Remove a bull (50) or outer bull (25) before the next throw. Select the side closest to the center: this throw scores no points."
+  },
+  "dartsCork.tie": {
+    "defaultMessage": "A tie, two bulls or two outer bulls: the sides tied for first throw again in reverse order until a winner is determined."
+  },
+  "dartsCork.chooseSides": {
+    "defaultMessage": "Select players or teams before choosing the cork winner."
+  },
+  "dartsCork.required": {
+    "defaultMessage": "Choose the cork winner from the selected participants."
+  },
+  "matchOptions.dartsCork": {
+    "defaultMessage": "Cork: {name}"
+  },
+  "ruleGuide.dartsCork.play": {
+    "defaultMessage": "The cork winner, determined by the dart closest to the center before play, starts. One player per side throws one dart; any bull or outer bull is removed before the next throw. Cork throws do not count toward scores."
+  },
+  "ruleGuide.dartsCork.tie": {
+    "defaultMessage": "For a tie, two bulls or two outer bulls, the sides tied for the start throw again in reverse order. The cork determines only the initial start; later legs follow the displayed setting. With more than two sides or in Cricket, this is the agreed starting procedure for this game."
+  },
+  "ruleGuide.sources.ndfc": {
+    "defaultMessage": "NDFC — official bull throw rule"
+  },
+  "pwaUpdate.title": {
+    "defaultMessage": "App updates"
+  },
+  "pwaUpdate.help": {
+    "defaultMessage": "The PWA checks its hosting site for new versions. Installing reloads the app and keeps your saved data."
+  },
+  "pwaUpdate.available": {
+    "defaultMessage": "An update is ready"
+  },
+  "pwaUpdate.notice": {
+    "defaultMessage": "Save your input before opening Settings to install it. The app never reloads automatically."
+  },
+  "pwaUpdate.open": {
+    "defaultMessage": "Update"
+  },
+  "pwaUpdate.later": {
+    "defaultMessage": "Later"
+  },
+  "pwaUpdate.check": {
+    "defaultMessage": "Check PWA updates"
+  },
+  "pwaUpdate.checking": {
+    "defaultMessage": "Checking…"
+  },
+  "pwaUpdate.apply": {
+    "defaultMessage": "Install and reload"
+  },
+  "pwaUpdate.applying": {
+    "defaultMessage": "Installing and reloading…"
+  },
+  "pwaUpdate.ready": {
+    "defaultMessage": "The new version is downloaded and ready to install."
+  },
+  "pwaUpdate.current": {
+    "defaultMessage": "Your app is up to date on this site."
+  },
+  "pwaUpdate.beforeApply": {
+    "defaultMessage": "Pause or finish your games, then close other Scoretrackrr tabs and windows. Save any unfinished input before leaving its page."
+  },
+  "pwaUpdate.unsupported": {
+    "defaultMessage": "Updates are available in the production version, in a browser that supports PWAs."
+  },
+  "pwaUpdate.errors.offline": {
+    "defaultMessage": "Reconnect to check for updates. A version already downloaded can be installed offline."
+  },
+  "pwaUpdate.errors.checkFailed": {
+    "defaultMessage": "The update could not be checked or downloaded. Your current version remains available; try again later."
+  },
+  "pwaUpdate.errors.otherTabs": {
+    "defaultMessage": "Close other Scoretrackrr tabs and windows, then try again."
+  },
+  "pwaUpdate.errors.activationFailed": {
+    "defaultMessage": "The update could not be applied. Try again, or close all app windows before reopening it."
+  },
+  "pwaUpdate.errors.gameRunning": {
+    "defaultMessage": "A game is running. Pause or finish it before installing the update."
+  },
+  "pwaUpdate.errors.storage": {
+    "defaultMessage": "Local storage is unavailable. Updating is blocked to protect your games."
+  },
+  "matches.controlsError": {
+    "defaultMessage": "The game controls could not be loaded. Your saved scores are preserved. Try again."
+  },
+  "parameters.labels.target5000": {
+    "defaultMessage": "5,000-point target"
+  },
+  "parameters.labels.x01": {
+    "defaultMessage": "Play X01"
+  },
+  "parameters.x01Start": {
+    "defaultMessage": "Starting score"
+  },
+  "parameters.x01StartHint": {
+    "defaultMessage": "Choose the starting score, from 101 to 701 points."
+  },
+  "play.order": {
+    "defaultMessage": "Playing order"
+  },
+  "play.orderHint": {
+    "defaultMessage": "This order defines turns. Cork and starting rules take priority."
+  },
+  "play.moveUp": {
+    "defaultMessage": "Move {name} up"
+  },
+  "play.moveDown": {
+    "defaultMessage": "Move {name} down"
+  },
+  "play.shuffle": {
+    "defaultMessage": "Shuffle playing order"
+  },
+  "play.presets": {
+    "defaultMessage": "Favorite setups"
+  },
+  "play.presetHint": {
+    "defaultMessage": "Save settings and participants on this device. Edit a setup before creating the match. Cork must be played again."
+  },
+  "play.presetChoose": {
+    "defaultMessage": "Saved setup"
+  },
+  "play.presetName": {
+    "defaultMessage": "Setup name"
+  },
+  "play.savePreset": {
+    "defaultMessage": "Save setup"
+  },
+  "play.apply": {
+    "defaultMessage": "Apply"
+  },
+  "play.presetSaved": {
+    "defaultMessage": "Setup saved."
+  },
+  "play.presetApplied": {
+    "defaultMessage": "Setup applied. Check participants and the starter."
+  },
+  "play.presetUnavailable": {
+    "defaultMessage": "Setup unavailable: a player, team or settings have changed."
+  },
+  "play.presetLimit": {
+    "defaultMessage": "Choose a name (up to 40 setups)."
+  },
+  "play.storageError": {
+    "defaultMessage": "Unable to save locally. Your match remains available."
+  },
+  "play.draftRecovered": {
+    "defaultMessage": "Input recovered · review before saving. No points added."
+  },
+  "play.preview": {
+    "defaultMessage": "Before saving"
+  },
+  "play.previewIncomplete": {
+    "defaultMessage": "Complete a valid entry to preview the result."
+  },
+  "play.bust": {
+    "defaultMessage": "Bust · this visit does not count"
+  },
+  "play.pendingPoints": {
+    "defaultMessage": "{points} pending points, not banked"
+  },
+  "play.winningInput": {
+    "defaultMessage": "This entry finishes the match."
+  },
+  "play.display": {
+    "defaultMessage": "Match display"
+  },
+  "play.tableMode": {
+    "defaultMessage": "Table mode"
+  },
+  "play.keepAwake": {
+    "defaultMessage": "Keep screen awake"
+  },
+  "play.wakeUnsupported": {
+    "defaultMessage": "Keeping the screen awake is unavailable."
+  },
+  "play.wakeRefused": {
+    "defaultMessage": "The system declined to keep the screen awake."
+  },
+  "play.wakeActive": {
+    "defaultMessage": "Screen is staying awake."
+  },
+  "play.wakeReleased": {
+    "defaultMessage": "The system released the screen lock."
+  },
+  "play.situation": {
+    "defaultMessage": "Match situation"
+  },
+  "play.entryStates.draft": {
+    "defaultMessage": "Ready to start"
+  },
+  "play.entryStates.in_progress": {
+    "defaultMessage": "Ready to play"
+  },
+  "play.entryStates.paused": {
+    "defaultMessage": "Entry paused"
+  },
+  "play.entryStates.finished": {
+    "defaultMessage": "Final result"
+  },
+  "play.entryStates.cancelled": {
+    "defaultMessage": "Read only"
+  },
+  "play.entryClosed": {
+    "defaultMessage": "Entry is closed. Scores remain available above."
+  },
+  "skull.needTrick": {
+    "defaultMessage": "Win at least one trick before adding captures."
+  },
+  "skull.inventoryHint": {
+    "defaultMessage": "Limits include tricks and captures already assigned, including unsubmitted entries."
+  },
+  "timesUp.cardCount": {
+    "defaultMessage": "Number of cards"
+  },
+  "timesUp.durationSeconds": {
+    "defaultMessage": "Timer duration (seconds)"
+  },
+  "sixNimmt.jokers": {
+    "defaultMessage": "Vachement bien! · Jokers"
+  },
+  "sixNimmt.surprises": {
+    "defaultMessage": "6 qui surprend! · Action cards"
+  },
+  "sixNimmt.surprisesSetup": {
+    "defaultMessage": "2–8 players · 12 number cards · 3 action cards · 2 rounds"
+  },
+  "sixNimmt.passCards": {
+    "defaultMessage": "Pass one card to the left"
+  },
+  "sixNimmt.variableRows": {
+    "defaultMessage": "Variable-length rows"
+  },
+  "sixNimmt.surprisesHint": {
+    "defaultMessage": "Enter the bullheads left in each player’s pile after applying action cards, including Minus = Plus. A round cannot score below zero. The match ends after round 2."
+  },
+  "skull.advancedCards": {
+    "defaultMessage": "Advanced base cards"
+  },
+  "skull.advancedHint": {
+    "defaultMessage": "Kraken and White Whale"
+  },
+  "skull.expansion": {
+    "defaultMessage": "2025 expansion"
+  },
+  "skull.expansionHint": {
+    "defaultMessage": "19 cards, including First Mate Con, Davy Jones’ Locker and the Spotted Stingray"
+  },
+  "skull.loot": {
+    "defaultMessage": "Loot cards"
+  },
+  "skull.lootHint": {
+    "defaultMessage": "Count only successful Loot partnerships: both players must meet their bids exactly. Each receives 20 points per partnership, including with Rascal scoring."
+  },
+  "skull.rascal": {
+    "defaultMessage": "Rascal scoring"
+  },
+  "skull.rascalHint": {
+    "defaultMessage": "10 points per card dealt for an exact bid; half for a bid off by one; zero otherwise. Capture bonuses follow the same multiplier."
+  },
+  "skull.discardedHint": {
+    "defaultMessage": "{count} tricks unassigned. With sea creatures, discarded tricks have no winner; leave them unassigned."
+  },
+  "skull.bonusFields.sevens": {
+    "defaultMessage": "Captured 7s (−5)"
+  },
+  "skull.bonusFields.eights": {
+    "defaultMessage": "Captured 8s (+5)"
+  },
+  "skull.bonusFields.mate": {
+    "defaultMessage": "Captured First Mate (+30)"
+  },
+  "skull.bonusFields.monsters": {
+    "defaultMessage": "Sea creatures caught by Davy (+20)"
+  },
+  "skull.bonusFields.loot": {
+    "defaultMessage": "Successful Loot partnerships (+20)"
+  },
+  "ruleGuide.six.surprisesDeal": {
+    "defaultMessage": "Deal 12 number cards and 3 action cards to each of 2–8 players. Begin four rows. Action cards are played on the physical table."
+  },
+  "ruleGuide.six.jokers": {
+    "defaultMessage": "Deal one Joker per player in addition to the usual 10 cards. Each Joker is worth one bullhead; unused Jokers return to the box. A Joker can go on any row, never directly after another Joker."
+  },
+  "ruleGuide.six.passCards": {
+    "defaultMessage": "Before revealing cards, each player passes one card face down to their left-hand neighbor. Skip the exchange on the last turn."
+  },
+  "ruleGuide.six.variableRows": {
+    "defaultMessage": "The first card with several bullheads sets the row’s length: 2, 3, 5 or 7 bullheads allow 1, 2, 4 or 6 more cards before the next player takes the row."
+  },
+  "ruleGuide.six.surprisesRecord": {
+    "defaultMessage": "Record each player’s remaining penalty pile after action-card effects. Minus = Plus removes penalties within the current round; excess cancellation is lost. Start a fresh pile next round."
+  },
+  "ruleGuide.six.surprisesFinish": {
+    "defaultMessage": "Play exactly two rounds. Add both penalties; the lowest total wins, with shared victories on ties."
+  },
+  "ruleGuide.skull.rascal": {
+    "defaultMessage": "Rascal: exact bid earns 10 × cards dealt; off by one earns half; further away earns zero. Apply the same multiplier to capture bonuses. Loot still requires exact bids."
+  },
+  "ruleGuide.skull.advanced": {
+    "defaultMessage": "Kraken discards its trick. White Whale removes special cards: the highest number wins. If no winning card remains, discard the trick. Record only tricks actually won."
+  },
+  "ruleGuide.skull.expansion": {
+    "defaultMessage": "Expansion captures: each 7 is −5; each 8 is +5; First Mate is +30 when captured by the King or a Mermaid. Davy earns +20 per captured sea creature, even without winning the trick. The 0/14 cards have no capture bonus."
+  },
+  "ruleGuide.skull.loot": {
+    "defaultMessage": "Each of the two Loot cards can reward both partners with 20 points only when both meet their bids exactly. Enter successful partnerships for each partner."
+  },
+  "ruleGuide.sources.skullExpansion": {
+    "defaultMessage": "Grandpa Beck’s — Expansion rules"
+  },
+  "ruleGuide.sources.rascal": {
+    "defaultMessage": "Grandpa Beck’s — Rascal scoring"
+  },
+  "ruleGuide.sources.sixJokers": {
+    "defaultMessage": "Gigamic — Vachement bien! rules"
+  },
+  "ruleGuide.sources.sixSurprises": {
+    "defaultMessage": "Gigamic — 6 qui surprend! rules"
+  },
+  "matchOptions.sixExpansion": {
+    "defaultMessage": "{kind, select, none {Classic} jokers {Vachement bien! · Jokers} other {6 qui surprend!}}"
+  },
+  "matchOptions.passCards": {
+    "defaultMessage": "Pass cards left"
+  },
+  "matchOptions.variableRows": {
+    "defaultMessage": "Variable-length rows"
+  },
+  "matchOptions.skullAdvanced": {
+    "defaultMessage": "Kraken · White Whale"
+  },
+  "matchOptions.skullExpansion": {
+    "defaultMessage": "2025 expansion"
+  },
+  "matchOptions.skullLoot": {
+    "defaultMessage": "Loot: {enabled, select, yes {on} other {off}}"
+  },
+  "matchOptions.skullScoring": {
+    "defaultMessage": "{kind, select, rascal {Rascal scoring} other {Classic scoring}}"
+  },
+  "skull.noTrickHint": {
+    "defaultMessage": "Only bonuses allowed without winning a trick remain available."
+  },
+  "scoreSheet.entry": {
+    "defaultMessage": "Scores to enter"
+  },
+  "scoreSheet.round": {
+    "defaultMessage": "Round {round}"
+  },
+  "scoreSheet.turn": {
+    "defaultMessage": "Turn {round}"
+  },
+  "scoreSheet.final": {
+    "defaultMessage": "Final scoring"
+  },
+  "scoreSheet.last": {
+    "defaultMessage": "Finish the match with this entry"
+  },
+  "scoreSheet.choose": {
+    "defaultMessage": "Choose a player"
+  },
+  "scoreSheet.closer": {
+    "defaultMessage": "Player who closed the round"
+  },
+  "scoreSheet.taker": {
+    "defaultMessage": "Taker"
+  },
+  "scoreSheet.partner": {
+    "defaultMessage": "Called partner"
+  },
+  "scoreSheet.none": {
+    "defaultMessage": "None"
+  },
+  "scoreSheet.bouts": {
+    "defaultMessage": "Oudlers"
+  },
+  "scoreSheet.contract": {
+    "defaultMessage": "Contract"
+  },
+  "scoreSheet.contract1": {
+    "defaultMessage": "Petite"
+  },
+  "scoreSheet.contract2": {
+    "defaultMessage": "Garde"
+  },
+  "scoreSheet.contract4": {
+    "defaultMessage": "Garde sans"
+  },
+  "scoreSheet.contract6": {
+    "defaultMessage": "Garde contre"
+  },
+  "scoreSheet.cardPoints": {
+    "defaultMessage": "Taker side’s card points"
+  },
+  "scoreSheet.bonuses": {
+    "defaultMessage": "Net bonus for the taker side"
+  },
+  "scoreSheet.blocked": {
+    "defaultMessage": "Blocked game, no player went out"
+  },
+  "scoreSheet.player": {
+    "defaultMessage": "Player"
+  },
+  "scoreSheet.winner": {
+    "defaultMessage": "Winner of the round"
+  },
+  "scoreSheet.remaining": {
+    "defaultMessage": "Points remaining"
+  },
+  "scoreSheet.points": {
+    "defaultMessage": "Points"
+  },
+  "scoreSheet.save": {
+    "defaultMessage": "Save scores"
+  },
+  "scoreSheet.saveFinal": {
+    "defaultMessage": "Save and finish"
+  },
+  "scoreSheet.numbers": {
+    "defaultMessage": "Total value of number cards"
+  },
+  "scoreSheet.actions": {
+    "defaultMessage": "Number of 20-point cards"
+  },
+  "scoreSheet.wilds": {
+    "defaultMessage": "Number of 50-point cards"
+  },
+  "scoreSheet.drawColor": {
+    "defaultMessage": "Number of Wild Draw Color cards (60 points)"
+  },
+  "scoreSheet.wonders": {
+    "defaultMessage": "Wonder stages"
+  },
+  "scoreSheet.military": {
+    "defaultMessage": "Military points"
+  },
+  "scoreSheet.civilian": {
+    "defaultMessage": "Civilian points"
+  },
+  "scoreSheet.commerce": {
+    "defaultMessage": "Commercial points"
+  },
+  "scoreSheet.guilds": {
+    "defaultMessage": "Guild points"
+  },
+  "scoreSheet.red": {
+    "defaultMessage": "Red"
+  },
+  "scoreSheet.yellow": {
+    "defaultMessage": "Yellow"
+  },
+  "scoreSheet.green": {
+    "defaultMessage": "Green"
+  },
+  "scoreSheet.blue": {
+    "defaultMessage": "Blue"
+  },
+  "scoreSheet.orange": {
+    "defaultMessage": "Orange"
+  },
+  "scoreSheet.purple": {
+    "defaultMessage": "Purple"
+  },
+  "scoreSheet.penalties": {
+    "defaultMessage": "Missed moves"
+  },
+  "scoreSheet.foxes": {
+    "defaultMessage": "Foxes"
+  },
+  "scoreSheet.lowest": {
+    "defaultMessage": "The lowest total wins."
+  },
+  "scoreSheet.highest": {
+    "defaultMessage": "The highest total wins."
+  },
+  "scoreSheet.threshold": {
+    "defaultMessage": "Play until someone reaches {target} points."
+  },
+  "scoreSheet.manualEnd": {
+    "defaultMessage": "Mark the last entry when the table agrees the match is over."
+  },
+  "scoreSheet.finalEnd": {
+    "defaultMessage": "Save one complete scoring sheet to determine the result."
+  },
+  "scoreSheet.history": {
+    "defaultMessage": "Entry {round} · {scores}"
+  },
+  "scoreSheet.roster": {
+    "defaultMessage": "{min, plural, one {1} other {#}}–{max, number} players"
+  },
+  "scoreSheet.beloteRoster": {
+    "defaultMessage": "Select two teams of two players."
+  },
+  "games.kinds.skyjo": {
+    "defaultMessage": "Cards"
+  },
+  "games.descriptions.skyjo": {
+    "defaultMessage": "Enter the value of each player’s remaining grid and identify who closed."
+  },
+  "scoreSheet.skyjo.hint": {
+    "defaultMessage": "Enter the value of each player’s remaining grid and identify who closed. A positive score doubles if that player fails to score strictly lower than everyone else."
+  },
+  "games.kinds.belote": {
+    "defaultMessage": "Cards"
+  },
+  "games.descriptions.belote": {
+    "defaultMessage": "Enter each team’s awarded points after applying your classic Belote or Coinche contracts, bonuses and rounding rules.."
+  },
+  "scoreSheet.belote.hint": {
+    "defaultMessage": "Enter each team’s awarded points after applying your classic Belote or Coinche contracts, bonuses and rounding rules."
+  },
+  "games.kinds.tarot": {
+    "defaultMessage": "Cards"
+  },
+  "games.descriptions.tarot": {
+    "defaultMessage": "Enter the contract, oudlers and the taker side’s card points."
+  },
+  "scoreSheet.tarot.hint": {
+    "defaultMessage": "Enter the contract, oudlers and the taker side’s card points. Enter the net bonuses for the taker side, including any signed Petit au bout and applicable hand or slam bonuses."
+  },
+  "games.kinds.rummy": {
+    "defaultMessage": "Cards"
+  },
+  "games.descriptions.rummy": {
+    "defaultMessage": "Choose the player who went out and enter the value of each opponent’s remaining hand."
+  },
+  "scoreSheet.rummy.hint": {
+    "defaultMessage": "Choose the player who went out and enter the value of each opponent’s remaining hand. Those points go to the winner."
+  },
+  "games.kinds.uno": {
+    "defaultMessage": "Cards"
+  },
+  "games.descriptions.uno": {
+    "defaultMessage": "Choose the player who went out."
+  },
+  "scoreSheet.uno.hint": {
+    "defaultMessage": "Choose the player who went out. Count the other players’ remaining cards, using the visible side for UNO Flip. Number cards keep their face value."
+  },
+  "games.kinds.scrabble": {
+    "defaultMessage": "Board"
+  },
+  "games.descriptions.scrabble": {
+    "defaultMessage": "Enter each turn’s score after applying board premiums."
+  },
+  "scoreSheet.scrabble.hint": {
+    "defaultMessage": "Enter each turn’s score after applying board premiums. At the end, enter remaining tile values to subtract them and credit the player who went out, if any."
+  },
+  "games.kinds.seven-wonders": {
+    "defaultMessage": "Board"
+  },
+  "games.descriptions.seven-wonders": {
+    "defaultMessage": "Enter each player’s points in the seven categories."
+  },
+  "scoreSheet.seven-wonders.hint": {
+    "defaultMessage": "Enter each player’s points by category. Coins and science symbols are converted into points automatically."
+  },
+  "games.kinds.qwixx": {
+    "defaultMessage": "Dice"
+  },
+  "games.descriptions.qwixx": {
+    "defaultMessage": "Enter each player’s marked boxes by color, including row locks, and their missed moves."
+  },
+  "scoreSheet.qwixx.hint": {
+    "defaultMessage": "Enter each player’s marked boxes by color, including row locks, and their missed moves. Each missed move costs five points."
+  },
+  "games.kinds.clever": {
+    "defaultMessage": "Dice"
+  },
+  "games.descriptions.clever": {
+    "defaultMessage": "Enter scores for the five colored zones and count the foxes."
+  },
+  "scoreSheet.clever.hint": {
+    "defaultMessage": "Enter scores for the five colored zones and count the foxes. Each fox scores the value of the lowest zone."
+  },
+  "games.kinds.dominoes": {
+    "defaultMessage": "Tiles"
+  },
+  "games.descriptions.dominoes": {
+    "defaultMessage": "For draw or block play, select the hand winner and enter the pips left with each opponent."
+  },
+  "scoreSheet.dominoes.hint": {
+    "defaultMessage": "For draw or block play, select the hand winner and enter the pips left with each opponent. The winner scores their sum."
+  },
+  "ruleGuide.sources.sheet-skyjo": {
+    "defaultMessage": "Magilano"
+  },
+  "ruleGuide.sources.sheet-belote": {
+    "defaultMessage": "Fédération Française de Belote"
+  },
+  "ruleGuide.sources.sheet-coinche": {
+    "defaultMessage": "Fédération Française de Belote · Coinche"
+  },
+  "ruleGuide.sources.sheet-tarot": {
+    "defaultMessage": "Fédération Française de Tarot"
+  },
+  "ruleGuide.sources.sheet-rummy": {
+    "defaultMessage": "Bicycle Cards"
+  },
+  "ruleGuide.sources.sheet-uno": {
+    "defaultMessage": "Mattel · UNO"
+  },
+  "ruleGuide.sources.sheet-unoFlip": {
+    "defaultMessage": "Mattel · UNO Flip"
+  },
+  "ruleGuide.sources.sheet-scrabble": {
+    "defaultMessage": "FFSc / FISF"
+  },
+  "ruleGuide.sources.sheet-seven-wonders": {
+    "defaultMessage": "Repos Production"
+  },
+  "ruleGuide.sources.sheet-qwixx": {
+    "defaultMessage": "Gigamic"
+  },
+  "ruleGuide.sources.sheet-clever": {
+    "defaultMessage": "Schmidt Spiele"
+  },
+  "ruleGuide.sources.sheet-dominoes": {
+    "defaultMessage": "ZiMAD · Domino"
+  },
+  "scoreSheet.coins": {
+    "defaultMessage": "Coins remaining"
+  },
+  "scoreSheet.tablet": {
+    "defaultMessage": "Tablets"
+  },
+  "scoreSheet.compass": {
+    "defaultMessage": "Compasses"
+  },
+  "scoreSheet.gear": {
+    "defaultMessage": "Gears"
+  },
+  "scoreSheet.play": {
+    "defaultMessage": "Play {name}"
+  },
+  "scoreSheet.skyjo.scoring": {
+    "defaultMessage": "A grid worth 12 doubles to 24 if the closer ties another player on 12. Zero and negative scores stay unchanged."
+  },
+  "scoreSheet.belote.scoring": {
+    "defaultMessage": "The app adds the points entered for each team. Apply the last-trick bonus, announcements, contract and any carryover before saving."
+  },
+  "scoreSheet.tarot.scoring": {
+    "defaultMessage": "The contract multiplier applies to 25 plus the absolute margin. The total is signed according to success or failure, then the signed bonuses are added."
+  },
+  "scoreSheet.rummy.scoring": {
+    "defaultMessage": "In basic Rummy, face cards are worth 10, aces 1 and number cards their face value."
+  },
+  "scoreSheet.uno.scoring": {
+    "defaultMessage": "Count 20 for ordinary actions and 50 for wilds. In UNO Flip, count 60 for Wild Draw Color."
+  },
+  "scoreSheet.scrabble.scoring": {
+    "defaultMessage": "In a blocked game, everyone loses the value of their remaining tiles. If a player goes out, add the other players’ deductions to that player’s score."
+  },
+  "scoreSheet.seven-wonders.scoring": {
+    "defaultMessage": "Each set of three distinct science symbols adds 7 points. Each symbol type also scores the square of its count. Every 3 coins add 1 point."
+  },
+  "scoreSheet.qwixx.scoring": {
+    "defaultMessage": "For example, four marks in a row score 10 points. Two missed moves cost 10 points."
+  },
+  "scoreSheet.clever.scoring": {
+    "defaultMessage": "A zone with zero points makes every fox worth zero."
+  },
+  "scoreSheet.dominoes.scoring": {
+    "defaultMessage": "This sheet uses the sum of the opponents’ remaining pips. Agree on this scoring convention before starting."
+  },
+  "pwaInstall.action": {
+    "defaultMessage": "Install app"
+  },
+  "pwaInstall.fallback": {
+    "defaultMessage": "To install Scoretrackrr, use your browser menu."
+  }
+}

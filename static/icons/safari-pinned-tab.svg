@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="background" x1="0%" y1="0%" x2="93%" y2="100%">
+      <stop offset="0%" stop-color="#2280EF"/>
+      <stop offset="34%" stop-color="#2459D3"/>
+      <stop offset="74%" stop-color="#103B9E"/>
+      <stop offset="100%" stop-color="#0B204F"/>
+    </linearGradient>
+    <linearGradient id="bars" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9FBCFF"/>
+      <stop offset="100%" stop-color="#449EF5"/>
+    </linearGradient>
+  </defs>
+  
+  <g transform="translate(103 103) scale(0.798)">
+    <!-- Rounded tilted scoring panel -->
+    <path d="M 281 307 Q 320 286 359 285 L 699 279
+             Q 768 281 807 323 Q 843 357 831 407
+             L 777 741 Q 765 787 708 796 L 251 810
+             Q 193 813 191 749 L 224 407 Q 232 332 281 307 Z"
+          fill="none" stroke="#000" stroke-width="40"
+          stroke-linejoin="round"/>
+    <!-- Player 1 -->
+    <circle cx="355" cy="428" r="23" fill="#000"/>
+    <path d="M 318 498 Q 321 458 355 458 Q 389 458 392 498
+             Q 392 510 380 510 L 330 510 Q 318 510 318 498 Z" fill="#000"/>
+    <rect x="427" y="461" width="175" height="39" rx="20" fill="#000"/>
+    <text x="639" y="505" fill="#000" font-family="DejaVu Sans, Arial, sans-serif"
+      font-weight="800" font-size="87">24</text>
+    <!-- Player 2 -->
+    <circle cx="342" cy="558" r="23" fill="#000"/>
+    <path d="M 303 628 Q 306 586 342 586 Q 378 586 381 628
+             Q 381 640 368 640 L 316 640 Q 303 640 303 628 Z" fill="#000"/>
+    <rect x="416" y="589" width="175" height="39" rx="20" fill="#000"/>
+    <text x="628" y="632" fill="#000" font-family="DejaVu Sans, Arial, sans-serif"
+      font-weight="800" font-size="87">18</text>
+    <!-- Player 3 -->
+    <circle cx="330" cy="686" r="23" fill="#000"/>
+    <path d="M 291 755 Q 294 713 330 713 Q 366 713 369 755
+             Q 369 768 356 768 L 304 768 Q 291 768 291 755 Z" fill="#000"/>
+    <rect x="405" y="718" width="176" height="39" rx="20" fill="#000"/>
+    <text x="618" y="762" fill="#000" font-family="DejaVu Sans, Arial, sans-serif"
+      font-weight="800" font-size="87">12</text>
+    <!-- Trophy badge -->
+    <circle cx="752" cy="250" r="121" fill="none" stroke="#000" stroke-width="25"/>
+    <g fill="#000">
+      <rect x="714" y="177" width="80" height="102" rx="12"/>
+      <path d="M 714 198 L 675 198 Q 663 198 665 214
+               Q 672 266 719 269 L 724 249
+               Q 690 246 685 216 L 714 216 Z"/>
+      <path d="M 794 198 L 835 198 Q 847 198 845 214
+               Q 838 266 789 269 L 786 249
+               Q 821 246 825 216 L 794 216 Z"/>
+      <rect x="742" y="276" width="25" height="28" rx="5"/>
+      <rect x="708" y="303" width="92" height="17" rx="9"/>
+    </g>
+    <!-- Energetic but subtle swoosh, matching the chosen mark -->
+    <path d="M 224 914 Q 490 823 862 817
+             Q 556 849 250 917 Q 225 923 224 914 Z" fill="#000"/>
+  </g>
+</svg>

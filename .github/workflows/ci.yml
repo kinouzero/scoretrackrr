@@ -5,6 +5,10 @@ on:
     tags: ['v[0-9]*.[0-9]*.[0-9]*']
   pull_request:
   workflow_dispatch:
+    inputs:
+      granboard_release_tag:
+        description: Published stable tag that needs its GranBoard relay image
+        type: string
 permissions:
   contents: read
 concurrency:
@@ -13,6 +17,7 @@ concurrency:
 
 jobs:
   verify:
+    if: ${{ !inputs.granboard_release_tag }}
     name: Application checks, browsers and coverage
     timeout-minutes: 30
     runs-on: ubuntu-24.04
@@ -81,7 +86,10 @@ jobs:
   publish:
     name: GitHub release and container images
     needs: verify
-    if: needs.verify.outputs.publish == 'true'
+    if: >-
+      ${{ !cancelled() &&
+      ((needs.verify.result == 'success' && needs.verify.outputs.publish == 'true') ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master' && inputs.granboard_release_tag != '')) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     permissions:
@@ -96,10 +104,42 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .node-version
-      - name: Recheck eligibility before publishing
+      - name: Verify release source before publishing
+        id: source
+        env:
+          RELEASE_TAG: ${{ inputs.granboard_release_tag || github.ref_name }}
+          RELAY_ONLY: ${{ github.event_name == 'workflow_dispatch' }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
         run: |
           git fetch --no-tags origin +refs/heads/master:refs/remotes/origin/master
-          node scripts/release-eligibility.mjs
+          if [[ "$RELAY_ONLY" == true ]]; then
+            [[ "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)[.](0|[1-9][0-9]*)[.](0|[1-9][0-9]*)$ ]]
+            revision=$(git rev-parse --verify "refs/tags/$RELEASE_TAG^{commit}")
+            git merge-base --is-ancestor "$revision" refs/remotes/origin/master
+            version=$(git show "$revision:package.json" | node -p 'JSON.parse(require("node:fs").readFileSync(0, "utf8")).version')
+            test "$version" = "${RELEASE_TAG#v}"
+            published=$(gh release view "$RELEASE_TAG" --json isDraft,isPrerelease --jq '(.isDraft or .isPrerelease) | not')
+            test "$published" = true
+          else
+            node scripts/release-eligibility.mjs
+            revision="$GITHUB_SHA"
+            version="${RELEASE_TAG#v}"
+          fi
+          {
+            echo "version=$version"
+            echo "revision=$revision"
+          } >> "$GITHUB_OUTPUT"
+      - name: Prepare the tagged relay sources
+        id: relay_context
+        if: ${{ inputs.granboard_release_tag != '' }}
+        env:
+          RELEASE_SHA: ${{ steps.source.outputs.revision }}
+        run: |
+          context=$(mktemp -d "$RUNNER_TEMP/granboard-release.XXXXXXXX")
+          git archive "$RELEASE_SHA" LICENSE docker/granboard/relay.py | tar -x -C "$context"
+          cp docker/granboard/Dockerfile "$context/docker/granboard/Dockerfile"
+          echo "path=$context" >> "$GITHUB_OUTPUT"
       - name: Check Docker Hub configuration
         env:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -115,8 +155,18 @@ jobs:
           {
             echo "ghcr=ghcr.io/${REPOSITORY,,}"
             echo "dockerhub=docker.io/$DOCKERHUB_USERNAME/scoretrackrr"
-            echo "version=${GITHUB_REF_NAME#v}"
           } >> "$GITHUB_OUTPUT"
+      - name: Verify the published Compose image versions
+        if: ${{ !inputs.granboard_release_tag }}
+        env:
+          GHCR_IMAGE: ${{ steps.images.outputs.ghcr }}
+          VERSION: ${{ steps.source.outputs.version }}
+        run: |
+          web=$(docker compose --env-file /dev/null config --images)
+          images=$(docker compose --env-file /dev/null -f compose.yaml -f compose.granboard.yaml --profile granboard config --images)
+          test "$web" = "$GHCR_IMAGE:$VERSION"
+          grep -Fxq "$web" <<< "$images"
+          grep -Fxq "$GHCR_IMAGE:granboard-$VERSION" <<< "$images"
       - name: Set up ARM emulation
         uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4
@@ -131,46 +181,82 @@ jobs:
         with:
           username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and publish both registries
-        id: build
+      - name: Publish the web image to both registries
+        if: ${{ !inputs.granboard_release_tag }}
+        id: web
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7
         with:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ steps.images.outputs.ghcr }}:${{ steps.images.outputs.version }}
+            ${{ steps.images.outputs.ghcr }}:${{ steps.source.outputs.version }}
             ${{ steps.images.outputs.ghcr }}:${{ github.ref_name }}
-            ${{ steps.images.outputs.dockerhub }}:${{ steps.images.outputs.version }}
+            ${{ steps.images.outputs.dockerhub }}:${{ steps.source.outputs.version }}
             ${{ steps.images.outputs.dockerhub }}:${{ github.ref_name }}
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
-            org.opencontainers.image.version=${{ steps.images.outputs.version }}
+            org.opencontainers.image.version=${{ steps.source.outputs.version }}
             org.opencontainers.image.revision=${{ github.sha }}
           cache-from: type=gha,scope=release
           cache-to: type=gha,mode=max,scope=release
           provenance: true
           sbom: true
-      - name: Create GitHub release after both image pushes
+      - name: Publish the GranBoard relay image to both registries
+        id: relay
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7
+        with:
+          context: ${{ steps.relay_context.outputs.path || '.' }}
+          file: ${{ steps.relay_context.outputs.path || '.' }}/docker/granboard/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ${{ steps.images.outputs.ghcr }}:granboard-${{ steps.source.outputs.version }}
+            ${{ steps.images.outputs.dockerhub }}:granboard-${{ steps.source.outputs.version }}
+          labels: |
+            org.opencontainers.image.title=Scoretrackrr GranBoard Relay
+            org.opencontainers.image.description=Bluetooth relay for GranBoard 3s
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.version=${{ steps.source.outputs.version }}
+            org.opencontainers.image.revision=${{ steps.source.outputs.revision }}
+          cache-from: type=gha,scope=release-granboard
+          cache-to: type=gha,mode=max,scope=release-granboard
+          provenance: true
+          sbom: true
+      - name: Create GitHub release after publishing web and relay images
+        if: ${{ !inputs.granboard_release_tag }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           GHCR_IMAGE: ${{ steps.images.outputs.ghcr }}
           DOCKERHUB_IMAGE: ${{ steps.images.outputs.dockerhub }}
-          VERSION: ${{ steps.images.outputs.version }}
-          IMAGE_DIGEST: ${{ steps.build.outputs.digest }}
+          VERSION: ${{ steps.source.outputs.version }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+          WEB_DIGEST: ${{ steps.web.outputs.digest }}
+          RELAY_DIGEST: ${{ steps.relay.outputs.digest }}
         run: |
           notes="$RUNNER_TEMP/release-notes.md"
           cat > "$notes" <<EOF
-          Container images (linux/amd64 and linux/arm64):
+          ## Web image (linux/amd64 and linux/arm64)
 
           - \`$GHCR_IMAGE:$VERSION\`
           - \`$DOCKERHUB_IMAGE:$VERSION\`
 
-          Image digest: \`$IMAGE_DIGEST\`.
+          Image digest: \`$WEB_DIGEST\`.
+
+          ## GranBoard relay image (linux/amd64 and linux/arm64)
+
+          - \`$GHCR_IMAGE:granboard-$VERSION\`
+          - \`$DOCKERHUB_IMAGE:granboard-$VERSION\`
+
+          Image digest: \`$RELAY_DIGEST\`.
+
+          Follow the [GranBoard relay setup guide]($REPO_URL/wiki/Hosting#optional-granboard-relay-for-iphone).
           EOF
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
             echo 'Release already exists; leaving its notes and assets unchanged.'
           else
-            gh release create "$GITHUB_REF_NAME" --verify-tag --title "$GITHUB_REF_NAME" --generate-notes --notes-file "$notes"
+            compose_archive="$RUNNER_TEMP/scoretrackrr-compose-$GITHUB_REF_NAME.tar.gz"
+            git archive --format=tar.gz --output="$compose_archive" HEAD compose.yaml compose.granboard.yaml docker/granboard-proxy.conf
+            gh release create "$GITHUB_REF_NAME" --verify-tag --title "$GITHUB_REF_NAME" --generate-notes --notes-file "$notes" "$compose_archive"
           fi

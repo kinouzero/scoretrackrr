@@ -8,15 +8,14 @@ Scoretrackrr keeps score for tabletop and outdoor games on one shared phone or t
 
 ## Install the website
 
-First host Scoretrackrr at an HTTPS address your phone can reach. With Git, Docker and Docker Compose installed:
+First host Scoretrackrr at an HTTPS address your phone can reach. Download and extract the Compose bundle from the [latest GitHub release](https://github.com/kinouzero/scoretrackrr/releases/latest). In the extracted directory, run:
 
 ```sh
-git clone --recurse-submodules https://github.com/kinouzero/scoretrackrr.git
-cd scoretrackrr
-docker compose up -d --build
+docker compose pull
+docker compose up -d --no-build
 ```
 
-Open **http://127.0.0.1:8090** on the host computer, then configure your HTTPS reverse proxy to forward to that address. The local HTTP endpoint alone is not sufficient for installing the PWA on another device.
+The Compose bundle pulls the corresponding web image from GitHub Container Registry. Open **http://127.0.0.1:8090** on the host computer, then configure your HTTPS reverse proxy to forward to that address. The local HTTP endpoint alone is not sufficient for installing the PWA on another device.
 
 See [website installation](https://github.com/kinouzero/scoretrackrr/wiki/Hosting) for HTTPS setup, ports, updates and a static-hosting alternative. Once the HTTPS site is reachable, follow [phone installation](https://github.com/kinouzero/scoretrackrr/wiki/Install-and-Update).
 

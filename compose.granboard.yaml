@@ -5,7 +5,10 @@ services:
 
   granboard:
     profiles: [granboard]
-    build: ./docker/granboard
+    image: '${GRANBOARD_IMAGE:-ghcr.io/kinouzero/scoretrackrr:granboard-0.2.0}'
+    build:
+      context: .
+      dockerfile: docker/granboard/Dockerfile
     restart: unless-stopped
     user: '${GRANBOARD_UID:-1000}:${GRANBOARD_GID:-1000}'
     environment:

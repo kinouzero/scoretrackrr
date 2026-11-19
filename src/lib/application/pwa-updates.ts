@@ -31,11 +31,7 @@ export class PwaUpdates {
   private container?: ServiceWorkerContainer;
   private waiting?: ServiceWorker;
   private lastCheck = -Infinity;
-  private accepted = false;
-  private expected?: ServiceWorker;
-  private reloadStarted = false;
-  private activationTimer?: ReturnType<typeof setTimeout>;
-  private port?: MessagePort;
+  private cancelActivation?: () => void;
   private cleanup?: () => void;
   private lifecycle = 0;
   private cancelCheck?: () => void;
@@ -53,19 +49,6 @@ export class PwaUpdates {
       this.set({ waiting: Boolean(worker), dismissed: false, ...(worker ? { error: '' } : {}) });
     }
   }
-  private reloadIfReady = () => {
-    if (
-      !this.accepted ||
-      !this.expected ||
-      this.container?.controller !== this.expected ||
-      this.reloadStarted
-    )
-      return;
-    this.reloadStarted = true;
-    clearTimeout(this.activationTimer);
-    this.port?.close();
-    window.location.reload();
-  };
   start(): () => void {
     if (this.cleanup) return this.cleanup;
     if (!('serviceWorker' in navigator)) return () => {};
@@ -104,7 +87,6 @@ export class PwaUpdates {
       )
         void this.check(false);
     };
-    this.container.addEventListener('controllerchange', this.reloadIfReady);
     window.addEventListener('online', automatic);
     document.addEventListener('visibilitychange', automatic);
     const interval = setInterval(automatic, checkInterval);
@@ -126,9 +108,7 @@ export class PwaUpdates {
       this.lifecycle += 1;
       this.cancelCheck?.();
       clearInterval(interval);
-      clearTimeout(this.activationTimer);
-      this.port?.close();
-      this.container?.removeEventListener('controllerchange', this.reloadIfReady);
+      this.cancelActivation?.();
       window.removeEventListener('online', automatic);
       document.removeEventListener('visibilitychange', automatic);
       this.registration?.removeEventListener('updatefound', watch);
@@ -136,9 +116,6 @@ export class PwaUpdates {
       this.registration = undefined;
       this.container = undefined;
       this.waiting = undefined;
-      this.expected = undefined;
-      this.accepted = false;
-      this.reloadStarted = false;
       this.lastCheck = -Infinity;
       this.cancelCheck = undefined;
       this.set({ ...initial });
@@ -208,34 +185,54 @@ export class PwaUpdates {
   /** Call only after the Settings page has checked saved matches and pending data transfer. */
   apply() {
     if (this.value.applying) return;
+    const container = this.container;
     const worker = this.registration?.waiting;
-    if (!worker || window.location.pathname.replace(/\/$/, '') !== '/settings') {
+    if (!container || !worker || window.location.pathname.replace(/\/$/, '') !== '/settings') {
       this.syncWaiting();
       this.set({ error: 'activationFailed' });
       return;
     }
-    this.expected = worker;
-    this.accepted = false;
-    this.set({ applying: true, error: '' });
     const channel = new MessageChannel();
-    this.port = channel.port1;
-    const fail = (error: PwaUpdateError) => {
-      clearTimeout(this.activationTimer);
+    const cleanup = () => {
+      this.cancelActivation = undefined;
+      clearTimeout(timer);
+      container.removeEventListener('controllerchange', changed);
+      worker.removeEventListener('statechange', changed);
       channel.port1.close();
-      this.accepted = false;
-      this.expected = undefined;
-      this.set({ applying: false, error });
     };
-    this.activationTimer = setTimeout(() => fail('activationFailed'), activationTimeout);
+    const reloadIfReady = () => {
+      if (this.cancelActivation !== cleanup) return false;
+      if (worker.state !== 'activated' && container.controller !== worker) return false;
+      cleanup();
+      window.location.reload();
+      return true;
+    };
+    const fail = (error: PwaUpdateError) => {
+      if (this.cancelActivation !== cleanup) return;
+      if (!reloadIfReady()) {
+        cleanup();
+        this.syncWaiting();
+        this.set({ applying: false, error });
+      }
+    };
+    const changed = () => {
+      if (worker.state === 'redundant') fail('activationFailed');
+      else reloadIfReady();
+    };
+    // The waiting worker can activate even if the reply or controllerchange is lost.
+    this.cancelActivation = cleanup;
+    container.addEventListener('controllerchange', changed);
+    worker.addEventListener('statechange', changed);
+    const timer = setTimeout(() => fail('activationFailed'), activationTimeout);
     channel.port1.onmessage = (event: MessageEvent<unknown>) => {
       const message = event.data as { type?: unknown; status?: unknown } | null;
       if (!message || message.type !== 'SCORETRACKRR_UPDATE_RESULT') return;
       if (message.status === 'otherTabs') fail('otherTabs');
-      else if (message.status === 'accepted') {
-        this.accepted = true;
-        this.reloadIfReady();
-      } else fail('activationFailed');
+      else if (message.status === 'accepted') reloadIfReady();
+      else fail('activationFailed');
     };
+    this.set({ applying: true, error: '' });
+    if (this.cancelActivation !== cleanup) return;
     try {
       worker.postMessage({ type: 'SCORETRACKRR_APPLY_UPDATE' }, [channel.port2]);
     } catch {

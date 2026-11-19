@@ -139,6 +139,33 @@ test('blocks activation with another window and never reloads its unsaved form',
   expect(shells).toHaveLength(3);
   expect(shells).not.toContainEqual(expect.stringContaining('-test-windows-a'));
 });
+test('reopens the shell automatically when the activation notifications are interrupted', async ({
+  page,
+  context,
+}) => {
+  await context.addInitScript(() => {
+    navigator.serviceWorker.addEventListener('controllerchange', (event) => {
+      event.stopImmediatePropagation();
+    });
+  });
+  await installed(page, context, 'activation');
+  await page.getByLabel('Thème', { exact: true }).selectOption('dark');
+  await prepare(page, context, 'activation-b');
+  await page.evaluate(async () => {
+    const worker = (await navigator.serviceWorker.ready).waiting!;
+    const post = worker.postMessage.bind(worker);
+    Object.defineProperty(worker, 'postMessage', {
+      value(message: unknown) {
+        const channel = new MessageChannel();
+        post(message, [channel.port2]);
+        channel.port1.close();
+      },
+    });
+  });
+  await apply(page);
+  await expect(panel(page).getByRole('alert')).toHaveCount(0);
+  await expect(page.getByLabel('Thème', { exact: true })).toHaveValue('dark');
+});
 test('blocks a running match, then updates a paused match without losing its score', async ({
   page,
   context,

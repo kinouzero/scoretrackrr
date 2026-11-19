@@ -142,12 +142,24 @@ it('reloads exactly once after accepting the expected new controller', async () 
   updates.apply();
   expect(worker.postMessage).toHaveBeenCalledTimes(1);
   await vi.waitFor(() => expect(get(updates).applying).toBe(true));
-  await new Promise((resolve) => setTimeout(resolve, 10));
+  container.controller = new Worker();
+  container.dispatchEvent(new Event('controllerchange'));
   expect(browserWindow.location.reload).not.toHaveBeenCalled();
   container.controller = worker;
   container.dispatchEvent(new Event('controllerchange'));
   container.dispatchEvent(new Event('controllerchange'));
   expect(browserWindow.location.reload).toHaveBeenCalledTimes(1);
+});
+it('rechecks activation before showing a timeout if the browser missed both events', async () => {
+  vi.useFakeTimers();
+  const worker = new Worker();
+  registration.waiting = worker;
+  await updates.check();
+  updates.apply();
+  worker.state = 'activated';
+  await vi.advanceTimersByTimeAsync(15_000);
+  expect(browserWindow.location.reload).toHaveBeenCalledOnce();
+  expect(get(updates).error).toBe('');
 });
 it('times out a stalled activation without reloading', async () => {
   vi.useFakeTimers();

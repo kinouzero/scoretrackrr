@@ -12,8 +12,8 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+  group: ${{ github.workflow }}-${{ inputs.granboard_release_tag && format('refs/tags/{0}', inputs.granboard_release_tag) || github.ref }}
+  cancel-in-progress: ${{ inputs.granboard_release_tag == '' && !startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
   verify:

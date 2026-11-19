@@ -97,6 +97,11 @@ test('plays the no-score Cricket variant with excess hits worth zero', async ({ 
   await dart(25);
   await expect(page.getByText('Victoire : Alice', { exact: true })).toBeVisible();
   await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Alice0');
+  const stats = page.getByRole('table', { name: 'Statistiques de la partie' });
+  await expect(stats.getByRole('row', { name: /^Alice / }).getByRole('cell')).toHaveText([
+    '3',
+    '21',
+  ]);
 });
 
 test('resets Cricket marks between legs while retaining the match score and next starter', async ({

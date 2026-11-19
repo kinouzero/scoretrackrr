@@ -28,6 +28,7 @@
   import { defaultYamsOptions, yamsScoring, createYamsGame } from '#lib/domain/games/yams';
   import { configuredTimesUpVersion, createTimesUpGame } from '#lib/domain/games/times-up';
   import { createGame } from '#lib/domain/games/engine';
+  import { MAX_DARTS_LEGS_PER_SET, MAX_DARTS_SETS_TO_WIN } from '#lib/domain/games/darts-match';
   import { StorageError } from '#lib/storage/errors';
   import { TeamValidationError } from '#lib/domain/teams';
   import { EngineError } from '#lib/domain/engine/types';
@@ -110,6 +111,8 @@
   let matchMode = $state(false);
   let x01Start = $state(301);
   let legsToWin = $state(3);
+  let useSets = $state(false);
+  let setsToWin = $state(2);
   let startingRule = $state<'alternate' | 'loser'>('alternate');
   let firstStarterId = $state('');
   let corkEnabled = $state(false);
@@ -225,6 +228,7 @@
       x01Start,
       matchMode,
       legsToWin,
+      ...(matchMode && useSets ? { setsToWin } : {}),
       startingRule,
       corkEnabled,
       cooperativeName,
@@ -269,6 +273,17 @@
         Number(options[name]) > 1000
       )
         throw new Error('Invalid preset number');
+    const presetSets = options.setsToWin;
+    if (
+      presetSets !== undefined &&
+      (typeof presetSets !== 'number' ||
+        !Number.isInteger(presetSets) ||
+        presetSets < 2 ||
+        presetSets > MAX_DARTS_SETS_TO_WIN ||
+        Number(options.legsToWin) < 2 ||
+        Number(options.legsToWin) > MAX_DARTS_LEGS_PER_SET)
+    )
+      throw new Error('Invalid preset number');
     variants = result.versions;
     version = result.selected;
     mode = options.mode as MatchMode;
@@ -283,6 +298,8 @@
     x01Start = options.x01Start as number;
     matchMode = options.matchMode as boolean;
     legsToWin = options.legsToWin as number;
+    useSets = presetSets !== undefined;
+    setsToWin = (presetSets as number | undefined) ?? 2;
     startingRule = options.startingRule as typeof startingRule;
     corkEnabled = options.corkEnabled as boolean;
     if (result.selected.gameId === '6-qui-prend')
@@ -365,6 +382,7 @@
           ? {
               dartsMatch: {
                 legsToWin,
+                ...(useSets ? { setsToWin } : {}),
                 startingRule,
                 firstStarterId: corkEnabled ? corkWinnerId : firstStarterId,
               },
@@ -617,11 +635,29 @@
             onchange={(enabled) => (matchMode = enabled)}
           />
           {#if matchMode}<p>{messages.dartsMatch.setupHint}</p>
-            <label for="legs-to-win">{messages.dartsMatch.legsToWin}</label><input
+            <SettingToggle
+              label={messages.dartsMatch.enableSets}
+              checked={useSets}
+              onchange={(enabled) => (useSets = enabled)}
+            />
+            {#if useSets}
+              <label for="sets-to-win">{messages.dartsMatch.setsToWin}</label><input
+                id="sets-to-win"
+                type="number"
+                min="2"
+                max={MAX_DARTS_SETS_TO_WIN}
+                step="1"
+                bind:value={setsToWin}
+                required
+              />
+            {/if}
+            <label for="legs-to-win"
+              >{useSets ? messages.dartsMatch.legsPerSet : messages.dartsMatch.legsToWin}</label
+            ><input
               id="legs-to-win"
               type="number"
               min="2"
-              max="15"
+              max={useSets ? MAX_DARTS_LEGS_PER_SET : 15}
               step="1"
               bind:value={legsToWin}
               required

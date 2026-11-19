@@ -5,7 +5,7 @@ services:
 
   granboard:
     profiles: [granboard]
-    image: '${GRANBOARD_IMAGE:-ghcr.io/kinouzero/scoretrackrr:granboard-0.2.0}'
+    image: '${GRANBOARD_IMAGE:-ghcr.io/kinouzero/scoretrackrr:granboard-0.2.1}'
     build:
       context: .
       dockerfile: docker/granboard/Dockerfile

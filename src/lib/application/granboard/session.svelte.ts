@@ -1,5 +1,7 @@
-import type { BoardConnector } from './connection';
+import type { BoardConnector, LightWriter } from './connection';
 import { decodeHit, type BoardHit } from './protocol';
+
+import { impactLight, playImpact, readyLight, type ImpactOutcome } from './feedback';
 
 type Status = 'connecting' | 'connected' | 'reconnecting' | 'failed';
 
@@ -7,10 +9,42 @@ class GranBoardSession {
   matchId = $state<string>();
   status = $state<Status>();
   private connection?: AbortController;
-  private receiver?: { matchId: string; hit: (hit: BoardHit) => void };
+  private receiver?: { matchId: string; hit: (hit: BoardHit) => void; next: () => void };
+  private audio?: AudioContext;
+  private light?: LightWriter;
+  private lightReset?: ReturnType<typeof setTimeout>;
+  private nextButtonAt = -Infinity;
+  sound = $state(true);
 
-  listen(matchId: string, hit: (hit: BoardHit) => void) {
-    const receiver = { matchId, hit };
+  enableAudio() {
+    if (!this.sound) return;
+    try {
+      this.audio ??= new AudioContext();
+      void this.audio.resume().catch(() => {});
+    } catch {
+      // Scoring remains available on devices without Web Audio.
+    }
+  }
+
+  captureFeedback() {
+    const audio = this.audio;
+    const light = this.light;
+    return (hit: BoardHit, outcome: ImpactOutcome) => {
+      if (this.sound && audio) playImpact(audio, hit, outcome);
+      if (!light || this.light !== light) return;
+      clearTimeout(this.lightReset);
+      void light(impactLight(hit, outcome === 'bust')).catch(() => {});
+      this.lightReset = setTimeout(() => this.signalReady(), 600);
+    };
+  }
+
+  signalReady() {
+    clearTimeout(this.lightReset);
+    void this.light?.(readyLight()).catch(() => {});
+  }
+
+  listen(matchId: string, hit: (hit: BoardHit) => void, next = () => {}) {
+    const receiver = { matchId, hit, next };
     this.receiver = receiver;
     return () => {
       if (this.receiver === receiver) this.receiver = undefined;
@@ -21,6 +55,13 @@ class GranBoardSession {
     if (this.matchId !== matchId) return;
     this.connection?.abort();
     this.connection = undefined;
+    clearTimeout(this.lightReset);
+    this.light = undefined;
+    const audio = this.audio;
+    this.audio = undefined;
+    // Let the last dart's victory cue finish when the match releases the board.
+    if (audio) setTimeout(() => void audio.close().catch(() => {}), 800);
+    this.nextButtonAt = -Infinity;
     this.matchId = undefined;
     this.status = undefined;
   }
@@ -45,6 +86,8 @@ class GranBoardSession {
         if (signal.aborted) return;
         clearTimeout(timeout);
         attempt.abort();
+        clearTimeout(this.lightReset);
+        this.light = undefined;
         if (!hasConnected) {
           this.status = 'failed';
           return;
@@ -62,14 +105,24 @@ class GranBoardSession {
           const receiver = this.receiver;
           if (signal.aborted || this.status !== 'connected' || receiver?.matchId !== matchId)
             return;
+          if (frame === 'BTN@') {
+            const now = performance.now();
+            if (now - this.nextButtonAt >= 450) {
+              this.nextButtonAt = now;
+              receiver.next();
+            }
+            return;
+          }
           const hit = decodeHit(frame);
           if (hit) receiver.hit(hit);
         },
-        ready: () => {
+        ready: (light) => {
           if (signal.aborted) return;
           clearTimeout(timeout);
           hasConnected = true;
+          this.light = light;
           this.status = 'connected';
+          this.signalReady();
         },
         lost,
       }).catch(lost);

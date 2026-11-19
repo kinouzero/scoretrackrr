@@ -133,6 +133,7 @@ test('recovers Flip7 card buttons and bonuses without recording the hand', async
 test('keeps tabletop display after reload and releases an optional screen lock on pause', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
   await page.addInitScript(() => {
     const state = { requests: 0, releases: 0 };
     Object.assign(window, { wakeTest: state });
@@ -154,8 +155,26 @@ test('keeps tabletop display after reload and releases an optional screen lock o
   });
   await profiles(page);
   await start(page, await setup(page));
-  await page.getByRole('button', { name: 'Mode table', exact: true }).click();
+  await expect(page.locator('.match-status[data-status="in_progress"]')).toBeVisible();
+  const title = page.getByRole('heading', { level: 1 });
+  const controls = page.getByRole('group', { name: 'Affichage de la partie' });
+  const keepAwake = controls.getByRole('button', { name: 'Garder l’écran allumé', exact: true });
+  async function alignment() {
+    return Promise.all(
+      [title, controls, keepAwake].map((locator) =>
+        locator.evaluate((element) => {
+          const { x, y } = element.getBoundingClientRect();
+          return { x, y: y + window.scrollY };
+        }),
+      ),
+    );
+  }
+  const normalAlignment = await alignment();
+  await controls.getByRole('button', { name: 'Mode table', exact: true }).click();
+  const normalView = controls.getByRole('button', { name: 'Vue normale', exact: true });
+  await expect(normalView).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('data-table-mode', 'true');
+  expect(await alignment()).toEqual(normalAlignment);
   await page.getByRole('button', { name: 'Garder l’écran allumé', exact: true }).click();
   await expect(page.getByText('Écran maintenu allumé.', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Mettre en pause', exact: true }).click();
@@ -168,15 +187,21 @@ test('keeps tabletop display after reload and releases an optional screen lock o
     )
     .toBe(1);
   await page.getByRole('button', { name: 'Reprendre', exact: true }).click();
-  await expect(page.getByRole('button', { name: 'Mode table', exact: true })).toHaveAttribute(
-    'aria-pressed',
-    'true',
-  );
+  await expect(normalView).toBeVisible();
   await page.reload();
-  await expect(page.getByRole('button', { name: 'Mode table', exact: true })).toHaveAttribute(
-    'aria-pressed',
-    'true',
-  );
+  await expect(normalView).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('data-table-mode', 'true');
+  await normalView.click();
+  await expect(controls.getByRole('button', { name: 'Mode table', exact: true })).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('data-table-mode', 'false');
+  expect(await alignment()).toEqual(normalAlignment);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  const compactAlignment = await alignment();
+  await controls.getByRole('button', { name: 'Mode table', exact: true }).click();
+  await expect(normalView).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('data-table-mode', 'true');
+  expect(await alignment()).toEqual(compactAlignment);
 });
 test('recovers the entire six-nimmt round and previews totals before its atomic save', async ({
   page,

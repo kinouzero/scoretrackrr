@@ -3,7 +3,9 @@ import { notifyUuid, serviceUuid } from './protocol';
 interface Characteristic extends EventTarget {
   uuid: string;
   value?: DataView;
-  properties: { notify: boolean };
+  properties: { notify?: boolean; write?: boolean; writeWithoutResponse?: boolean };
+  writeValueWithResponse?(frame: Uint8Array<ArrayBuffer>): Promise<void>;
+  writeValueWithoutResponse?(frame: Uint8Array<ArrayBuffer>): Promise<void>;
   startNotifications(): Promise<unknown>;
 }
 interface Server {
@@ -21,7 +23,12 @@ interface Bluetooth {
 
 const relayPath = '/api/granboard/';
 type Device = Awaited<ReturnType<Bluetooth['requestDevice']>>;
-type Receiver = { frame: (frame: string) => void; ready: () => void; lost: () => void };
+export type LightWriter = (frame: Uint8Array<ArrayBuffer>) => Promise<void>;
+type Receiver = {
+  frame: (frame: string) => void;
+  ready: (light?: LightWriter) => void;
+  lost: () => void;
+};
 
 export function bluetooth() {
   return (navigator as Navigator & { bluetooth?: Bluetooth }).bluetooth;
@@ -48,9 +55,8 @@ async function connectBluetooth(device: Device, signal: AbortSignal, receiver: R
   if (signal.aborted) server.disconnect();
   signal.throwIfAborted();
   const service = await server.getPrimaryService(serviceUuid);
-  const notifications = (await service.getCharacteristics()).filter(
-    (item) => item.properties.notify,
-  );
+  const characteristics = await service.getCharacteristics();
+  const notifications = characteristics.filter((item) => item.properties.notify);
   const characteristic =
     notifications.find((item) => item.uuid === notifyUuid) ??
     (notifications.length === 1 ? notifications[0] : undefined);
@@ -69,7 +75,27 @@ async function connectBluetooth(device: Device, signal: AbortSignal, receiver: R
   );
   await characteristic.startNotifications();
   signal.throwIfAborted();
-  receiver.ready();
+  const output = characteristics.find(
+    (item) => item.uuid === '442f1572-8a00-9a28-cbe1-e1d4212d53eb',
+  );
+  const write = output?.properties.writeWithoutResponse
+    ? output.writeValueWithoutResponse
+    : output?.properties.write
+      ? output.writeValueWithResponse
+      : undefined;
+  let pendingWrite = Promise.resolve();
+  receiver.ready(
+    write
+      ? (frame) => {
+          const result = pendingWrite.then(async () => {
+            signal.throwIfAborted();
+            await write.call(output, frame);
+          });
+          pendingWrite = result.catch(() => {});
+          return result;
+        }
+      : undefined,
+  );
 }
 
 export async function relayAvailable(signal: AbortSignal) {

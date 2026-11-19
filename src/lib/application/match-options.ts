@@ -63,7 +63,12 @@ export function matchOptions(match: MatchRecord): MatchOption[] {
         if (name) add('dartsCork', { name });
       }
       const series = object(match.settingsSnapshot.dartsMatch);
-      number('legs', 'count', series.legsToWin);
+      number('sets', 'count', series.setsToWin);
+      number(
+        typeof series.setsToWin === 'number' ? 'legsPerSet' : 'legs',
+        'count',
+        series.legsToWin,
+      );
       if (series.startingRule === 'alternate' || series.startingRule === 'loser')
         add('startingRule', { rule: series.startingRule });
       if ((match.mode === 'teams' ? match.teamsSnapshot.length : match.playersSnapshot.length) > 2)

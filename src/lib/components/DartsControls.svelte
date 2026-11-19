@@ -1,5 +1,6 @@
 <script lang="ts">
   import GranBoardControls from './GranBoardControls.svelte';
+  import { granBoard } from '../application/granboard/session.svelte';
   import type { BoardHit } from '#lib/application/granboard/protocol';
   import EntrySituation from './EntrySituation.svelte';
   import ScorePreview from './ScorePreview.svelte';
@@ -14,12 +15,13 @@
   import { createDartsMatchGame } from '#lib/domain/games/darts-match';
   import { createCricketGame, cricketTargets } from '#lib/domain/games/cricket';
   import { x01Checkouts, type CheckoutDart } from '#lib/domain/games/checkouts';
+  import { dartsStats } from '#lib/domain/games/darts-stats';
   import { createX01Game, dartScore } from '#lib/domain/games/darts';
   import { activeTeamPlayer } from '#lib/domain/team-turn';
   import { scoreSlots } from '#lib/domain/score-slots';
   import { petanqueErrorMessage } from '#lib/application/petanque-errors';
-  import { EngineError } from '#lib/domain/engine/types';
-  import { messages } from '#lib/i18n/index';
+  import { EngineError, type EngineState } from '#lib/domain/engine/types';
+  import { getLocale, messages } from '#lib/i18n/index';
   let {
     match,
     view,
@@ -50,9 +52,14 @@
   );
   const seriesConfig = $derived(game.validateConfig(match.settingsSnapshot.engineConfig));
   const config = $derived(series?.getLegConfig(view.state, seriesConfig) ?? seriesConfig);
-  const position = $derived(
-    game.inspect(series ? series.inspect(view.state, seriesConfig).legState : view.state, config),
-  );
+  function inspectLeg(state: EngineState, legConfig = config) {
+    return game.inspect(series ? series.inspect(state, seriesConfig).legState : state, legConfig);
+  }
+  const position = $derived(inspectLeg(view.state));
+  function impactOutcome(result: JournalView, next: ReturnType<typeof inspectLeg>) {
+    if (result.projection.status === 'finished') return 'win';
+    return 'bust' in next && next.bust ? 'bust' : 'hit';
+  }
   const progress = $derived(series?.getProgress(view.state, seriesConfig));
   const current = $derived(config.ownerIds[position.turn]!);
   const activePlayer = $derived(activeTeamPlayer(match, view.audit, current));
@@ -83,6 +90,9 @@
       .at(-1),
   );
   const status = $derived(view.projection.status);
+  const stats = $derived(status === 'finished' ? dartsStats(match, view.audit) : []);
+  const statsWithPoints = $derived(!isCricket || match.rulesSnapshot.definition.points === true);
+  const statsNumber = $derived(new Intl.NumberFormat(getLocale(), { maximumFractionDigits: 1 }));
   let entryMode = $state<'dart' | 'visit'>('dart');
   let visitTotal = $state(0);
   let doubleFinish = $state(false);
@@ -103,6 +113,8 @@
   let armed = $state(false);
   let boardVersion = 0;
   let boardMatchId = '';
+  let boardOwner = '';
+  let endingVisit = false;
   let remaining = 0;
   let pending: BoardHit[] = [];
   let draining = $state(false);
@@ -111,18 +123,25 @@
     armed = false;
     pending = [];
     remaining = 0;
+    endingVisit = false;
   }
   function boardConnection(value: boolean) {
     disarm();
     connected = value;
     if (value) entryMode = 'dart';
   }
+  function selectBoardVisit(ownerId: string, version: number, dartsUsed: number) {
+    boardMatchId = match.id;
+    boardOwner = ownerId;
+    boardVersion = version;
+    remaining = 3 - dartsUsed;
+    armed = true;
+    granBoard.signalReady();
+  }
   function armBoard() {
     if (!canArm || document.hidden) return;
-    boardMatchId = match.id;
-    boardVersion = view.projection.lastEventSequence;
-    remaining = 3 - position.dartsUsed;
-    armed = true;
+    granBoard.enableAudio();
+    selectBoardVisit(current, view.projection.lastEventSequence, position.dartsUsed);
   }
   const canArm = $derived(
     connected &&
@@ -132,9 +151,27 @@
       status === 'in_progress' &&
       view.projection.lastEventSequence < MAX_JOURNAL_EVENTS,
   );
-  async function boardHit(hit: BoardHit) {
+  function boardNext() {
+    if (
+      !connected ||
+      document.hidden ||
+      prompt ||
+      status !== 'in_progress' ||
+      progress?.nextStarterId ||
+      (saving && !draining)
+    )
+      return;
+    if (!armed) {
+      armBoard();
+      return;
+    }
+    endingVisit = true;
+    void drainBoard();
+  }
+  function boardHit(hit: BoardHit) {
     if (
       !armed ||
+      endingVisit ||
       status !== 'in_progress' ||
       document.hidden ||
       boardMatchId !== match.id ||
@@ -143,38 +180,44 @@
       return;
     remaining--;
     pending.push(hit);
+    void drainBoard();
+  }
+  async function drainBoard() {
     if (draining) return;
     draining = true;
     try {
-      // The journal version prevents a stale UI or another tab from advancing this visit.
-      const ownerId = current;
-      while (armed && pending.length > 0) {
+      // Serialize scoring and the button behind hits already received for the same player.
+      while (armed && (pending.length > 0 || endingVisit)) {
+        const hit = pending.shift();
+        const feedback = hit ? granBoard.captureFeedback() : undefined;
         const result = await act(
-          { type: 'record', ownerId, values: pending.shift()! },
+          { type: 'record', ownerId: boardOwner, values: hit ?? { sector: 0, multiplier: 1 } },
           boardVersion,
           true,
         );
-        if (
-          !armed ||
-          !result ||
-          result.projection.status !== 'in_progress' ||
-          series?.getProgress(result.state, seriesConfig).nextStarterId
-        ) {
+        if (!result || (!armed && result.projection.status !== 'finished')) {
           disarm();
           break;
         }
-        const leg = series ? series.inspect(result.state, seriesConfig).legState : result.state;
         const legConfig = series?.getLegConfig(result.state, seriesConfig) ?? seriesConfig;
-        const next = game.inspect(leg, legConfig);
+        const next = inspectLeg(result.state, legConfig);
+        if (hit) feedback?.(hit, impactOutcome(result, next));
+        const version = result.projection.lastEventSequence;
         if (
-          next.dartsUsed === 0 ||
-          legConfig.ownerIds[next.turn] !== ownerId ||
-          result.projection.lastEventSequence >= MAX_JOURNAL_EVENTS
+          result.projection.status !== 'in_progress' ||
+          series?.getProgress(result.state, seriesConfig).nextStarterId ||
+          version >= MAX_JOURNAL_EVENTS
         ) {
           disarm();
           break;
         }
-        boardVersion = result.projection.lastEventSequence;
+        if (next.dartsUsed === 0) {
+          const readyNext = endingVisit;
+          disarm();
+          if (readyNext) selectBoardVisit(legConfig.ownerIds[next.turn]!, version, 0);
+          break;
+        }
+        boardVersion = version;
       }
     } finally {
       draining = false;
@@ -233,16 +276,22 @@
     promptVersion = view.projection.lastEventSequence;
     dialog.showModal();
   }
-  function record(event: SubmitEvent) {
+  async function record(event: SubmitEvent) {
     event.preventDefault();
-    void act({
+    const hit = { sector, multiplier };
+    const feedback = connected ? granBoard.captureFeedback() : undefined;
+    const result = await act({
       type: 'record',
       ownerId: current,
       values:
         !isCricket && !connected && entryMode === 'visit'
           ? { total: visitTotal, checkout: needsDouble && doubleFinish ? 1 : 0 }
-          : { sector, multiplier },
+          : hit,
     });
+    if (result && feedback) {
+      const legConfig = series?.getLegConfig(result.state, seriesConfig) ?? seriesConfig;
+      feedback(hit, impactOutcome(result, inspectLeg(result.state, legConfig)));
+    }
   }
   const draft = entryDraft(
     () => `${match.id}:darts`,
@@ -298,6 +347,19 @@
         onclick={() => confirm({ type: 'cancel' })}
         ><Icon name="cancel" />{messages.matches.cancel}</button
       >{/if}
+    {#if status === 'in_progress'}
+      {#key match.id}
+        <GranBoardControls
+          matchId={match.id}
+          onhit={boardHit}
+          onnext={boardNext}
+          onconnection={boardConnection}
+          onarm={armBoard}
+          {armed}
+          {canArm}
+        />
+      {/key}
+    {/if}
   {/if}
 {/snippet}
 
@@ -331,7 +393,15 @@
     <div class="situation-phase">
       {#if progress && series}<section class="legs-summary" aria-labelledby="legs-title">
           <h3 id="legs-title">{messages.dartsMatch.title}</h3>
-          <p>{messages.dartsMatch.format(series.options.legsToWin, progress.number)}</p>
+          <p>
+            {series.options.setsToWin === undefined
+              ? messages.dartsMatch.format(series.options.legsToWin, progress.number)
+              : messages.dartsMatch.setFormat(
+                  series.options.setsToWin,
+                  progress.setNumber,
+                  progress.number,
+                )}
+          </p>
           <p>
             {series.options.startingRule === 'alternate'
               ? messages.dartsMatch.alternate
@@ -339,10 +409,15 @@
           </p>
           <ul>
             {#each seriesConfig.ownerIds as id (id)}<li>
-                {messages.dartsMatch.score(owner(id), progress.wins[id]!)}
+                {progress.sets
+                  ? messages.dartsMatch.setScore(owner(id), progress.sets[id]!, progress.wins[id]!)
+                  : messages.dartsMatch.score(owner(id), progress.wins[id]!)}
               </li>{/each}
           </ul>
-          {#if progress.legWinnerId}<p role="status">
+          {#if progress.setWinnerId}<p role="status">
+              {messages.dartsMatch.setWinner(owner(progress.setWinnerId))}
+            </p>
+          {:else if progress.legWinnerId}<p role="status">
               {messages.dartsMatch.legWinner(owner(progress.legWinnerId))}
             </p>{/if}
           {#if progress.nextStarterId}<p>
@@ -357,13 +432,55 @@
                     ownerId: progress!.nextStarterId!,
                     values: { nextLeg: 1 },
                   })}
-                ><Icon name="arrow-right" />{messages.dartsMatch.nextLeg(
-                  progress.number + 1,
-                )}</button
+                ><Icon name="arrow-right" />{progress.setWinnerId
+                  ? messages.dartsMatch.nextSet(progress.setNumber + 1)
+                  : messages.dartsMatch.nextLeg(progress.number + 1)}</button
               >{/if}{/if}
         </section>{/if}
     </div>
   </EntrySituation>
+  {#if stats.length}
+    <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+    <div class="grid-scroll" role="region" aria-label={messages.dartsStats.title} tabindex="0">
+      <table>
+        <caption>{messages.dartsStats.title}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{messages.dartsStats.side}</th>
+            <th scope="col">{messages.dartsStats.visits}</th>
+            {#if statsWithPoints}
+              <th scope="col">{messages.dartsStats.points}</th>
+              <th scope="col">{messages.dartsStats.best}</th>
+              <th scope="col">{messages.dartsStats.average}</th>
+            {/if}
+            {#if isCricket}
+              <th scope="col">{messages.dartsStats.marks}</th>
+            {:else}
+              <th scope="col">{messages.dartsStats.busts}</th>
+            {/if}
+          </tr>
+        </thead>
+        <tbody>
+          {#each stats as row (row.id)}
+            <tr>
+              <th scope="row">{owner(row.id)}</th>
+              <td>{statsNumber.format(row.visits)}</td>
+              {#if statsWithPoints}
+                <td>{statsNumber.format(row.points)}</td>
+                <td>{statsNumber.format(row.best)}</td>
+                <td>{row.visits ? statsNumber.format(row.points / row.visits) : '—'}</td>
+              {/if}
+              {#if isCricket}
+                <td>{statsNumber.format(row.marks)}</td>
+              {:else}
+                <td>{statsNumber.format(row.busts)}</td>
+              {/if}
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+  {/if}
   {#if 'marks' in position}<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
     <div class="grid-scroll" role="region" aria-label={messages.cricket.grid} tabindex="0">
       <table>
@@ -385,18 +502,6 @@
       </table>
     </div>{/if}
   {#if 'bust' in position && position.bust}<p role="status">{messages.darts.bust}</p>{/if}
-  {#if status === 'in_progress' && !selfOnly}
-    {#key match.id}
-      <GranBoardControls
-        matchId={match.id}
-        onhit={boardHit}
-        onconnection={boardConnection}
-        onarm={armBoard}
-        {armed}
-        {canArm}
-      />
-    {/key}
-  {/if}
   {#if status === 'in_progress' && !progress?.nextStarterId}
     {#if !isCricket}<aside
         class="checkout-panel"

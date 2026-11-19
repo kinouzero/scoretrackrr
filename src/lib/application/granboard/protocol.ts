@@ -28,6 +28,7 @@ const segments = [
   ['3.3@', '3.4@', '3.5@', '3.6@'],
 ];
 const hits = new Map<string, BoardHit>([
+  ['OUT@', { sector: 0, multiplier: 1 }],
   ['8.0@', { sector: 25, multiplier: 1 }],
   ['4.0@', { sector: 25, multiplier: 2 }],
 ]);

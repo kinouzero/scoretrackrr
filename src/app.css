@@ -1896,25 +1896,6 @@ html[data-table-mode='true'] .game-play-area h3 {
 html[data-table-mode='true'] .journal-history {
   opacity: 0.85;
 }
-html[data-table-mode='true'] .match-toolbar .button {
-  font-size: 0.85rem;
-}
-@media (min-width: 1100px) {
-  html[data-table-mode='true'] .app-frame {
-    grid-template-columns: 80px minmax(0, 1fr);
-  }
-  html[data-table-mode='true'] .app-frame > nav a {
-    justify-content: center;
-    padding: 0.75rem;
-  }
-  html[data-table-mode='true'] .app-frame > nav a > span:last-child {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-  }
-}
 @media (max-width: 900px) {
   .app-frame {
     grid-template-columns: 152px minmax(0, 1fr);

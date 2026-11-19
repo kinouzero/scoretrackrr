@@ -3,8 +3,14 @@ import { copyBoundedJson, immutable } from '../engine/validation';
 import { recordedGame } from './recorded';
 import { createX01Game } from './darts';
 import { createCricketGame } from './cricket';
+
+// Keep the longest possible set match within the engine's bounded history array.
+export const MAX_DARTS_LEGS_PER_SET = 7;
+export const MAX_DARTS_SETS_TO_WIN = 5;
+
 export interface DartsMatchOptions {
   legsToWin: number;
+  setsToWin?: number;
   startingRule: 'alternate' | 'loser';
   firstStarterId: string;
 }
@@ -18,10 +24,16 @@ export function dartsMatchOptions(input: unknown): Readonly<DartsMatchOptions> {
   if (
     !value ||
     typeof value !== 'object' ||
-    Object.keys(value).length !== 3 ||
+    Object.keys(value).length !== (Object.hasOwn(value, 'setsToWin') ? 4 : 3) ||
     !Number.isInteger(value.legsToWin) ||
     value.legsToWin < 2 ||
     value.legsToWin > 15 ||
+    (Object.hasOwn(value, 'setsToWin') &&
+      (typeof value.setsToWin !== 'number' ||
+        !Number.isInteger(value.setsToWin) ||
+        value.setsToWin < 2 ||
+        value.setsToWin > MAX_DARTS_SETS_TO_WIN ||
+        value.legsToWin > MAX_DARTS_LEGS_PER_SET)) ||
     !['alternate', 'loser'].includes(value.startingRule) ||
     typeof value.firstStarterId !== 'string'
   )
@@ -52,6 +64,32 @@ export function createDartsMatchGame(input: unknown, optionsInput: unknown) {
       ownerIds: [starterId, ...config.ownerIds.filter((id) => id !== starterId)],
     };
   }
+  function standings(history: readonly string[], config: EngineConfig) {
+    const empty = () => Object.fromEntries(config.ownerIds.map((id) => [id, 0]));
+    let legs = empty();
+    const sets = empty();
+    let setWinnerId: string | undefined;
+    let winnerId: string | undefined;
+    for (const id of history) {
+      if (setWinnerId) {
+        legs = empty();
+        setWinnerId = undefined;
+      }
+      legs[id] = legs[id]! + 1;
+      if (legs[id] !== options.legsToWin) continue;
+      if (options.setsToWin === undefined) {
+        winnerId = id;
+        break;
+      }
+      setWinnerId = id;
+      sets[id] = sets[id]! + 1;
+      if (sets[id] === options.setsToWin) {
+        winnerId = id;
+        break;
+      }
+    }
+    return { legs, sets, setWinnerId, winnerId };
+  }
   function derive(
     legState: EngineState,
     legWinners: string[],
@@ -59,9 +97,8 @@ export function createDartsMatchGame(input: unknown, optionsInput: unknown) {
     eventCount: number,
     config: EngineConfig,
   ): DartsMatchState {
-    const winnerIds = config.ownerIds.filter(
-      (id) => legWinners.filter((winner) => winner === id).length >= options.legsToWin,
-    );
+    const { winnerId } = standings(legWinners, config);
+    const winnerIds = winnerId ? [winnerId] : [];
     return {
       legState,
       legWinners,
@@ -91,7 +128,8 @@ export function createDartsMatchGame(input: unknown, optionsInput: unknown) {
       if (
         Object.keys(state).length !== 7 ||
         !Array.isArray(state.legWinners) ||
-        state.legWinners.length > options.legsToWin * 2 - 1 ||
+        state.legWinners.length >
+          (options.legsToWin * 2 - 1) * ((options.setsToWin ?? 1) * 2 - 1) ||
         state.legWinners.some((id) => !config.ownerIds.includes(id)) ||
         !config.ownerIds.includes(state.starterId)
       )
@@ -105,9 +143,7 @@ export function createDartsMatchGame(input: unknown, optionsInput: unknown) {
             leg.winnerIds.length !== 1 ||
             state.legWinners.at(-1) !== leg.winnerIds[0])) ||
         state.starterId !== starter(prior, config) ||
-        config.ownerIds.some(
-          (id) => prior.filter((winner) => winner === id).length >= options.legsToWin,
-        ) ||
+        standings(prior, config).winnerId !== undefined ||
         state.eventCount < state.legWinners.length
       )
         throw new EngineError('invalid_state');
@@ -161,19 +197,22 @@ export function createDartsMatchGame(input: unknown, optionsInput: unknown) {
     getProgress: (state: EngineState, input: EngineConfig) => {
       const config = validateConfig(input);
       const value = engine.inspect(state, config);
+      const completed = value.legState.status === 'finished';
+      const { legs, sets, setWinnerId } = standings(value.legWinners, config);
+      const newSet = !completed && setWinnerId !== undefined;
+      const wins = newSet ? Object.fromEntries(config.ownerIds.map((id) => [id, 0])) : legs;
+      const setNumber =
+        Object.values(sets).reduce((total, wins) => total + wins, 0) +
+        (completed && setWinnerId ? 0 : 1);
       return immutable({
-        number: value.legWinners.length + (value.legState.status === 'finished' ? 0 : 1),
-        wins: Object.fromEntries(
-          config.ownerIds.map((id) => [
-            id,
-            value.legWinners.filter((winner) => winner === id).length,
-          ]),
-        ),
-        legWinnerId: value.legState.status === 'finished' ? value.legState.winnerIds[0] : undefined,
+        number: Object.values(wins).reduce((total, wins) => total + wins, 0) + (completed ? 0 : 1),
+        wins,
+        sets: options.setsToWin === undefined ? undefined : sets,
+        setNumber,
+        setWinnerId: completed ? setWinnerId : undefined,
+        legWinnerId: completed ? value.legState.winnerIds[0] : undefined,
         nextStarterId:
-          value.legState.status === 'finished' && value.status !== 'finished'
-            ? starter(value.legWinners, config)
-            : undefined,
+          completed && value.status !== 'finished' ? starter(value.legWinners, config) : undefined,
       });
     },
   });

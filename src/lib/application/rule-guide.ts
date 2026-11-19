@@ -425,7 +425,11 @@ export function ruleGuide(match: MatchRecord): RuleGuide {
     }
     const series = object(match.settingsSnapshot.dartsMatch);
     if (typeof series.legsToWin === 'number') {
-      guide.ending.push(text('dartsSeries.win', { count: series.legsToWin }));
+      guide.ending.push(
+        typeof series.setsToWin === 'number'
+          ? text('dartsSeries.sets', { legs: series.legsToWin, sets: series.setsToWin })
+          : text('dartsSeries.win', { count: series.legsToWin }),
+      );
       guide.notes.push(
         text(series.startingRule === 'loser' ? 'dartsSeries.loser' : 'dartsSeries.alternate'),
       );

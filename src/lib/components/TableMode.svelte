@@ -71,9 +71,13 @@
 </script>
 
 <div class="table-tools" role="group" aria-label={messages.play.display}>
-  <button class="button secondary" aria-pressed={enabled} onclick={() => (enabled = !enabled)}
-    ><Icon name="table" />{messages.play.tableMode}</button
-  >
+  <button class="button secondary" onclick={() => (enabled = !enabled)}>
+    <Icon name="table" />
+    <span class="table-view-label">
+      <span>{enabled ? messages.play.normalView : messages.play.tableMode}</span>
+      <span aria-hidden="true">{enabled ? messages.play.tableMode : messages.play.normalView}</span>
+    </span>
+  </button>
   {#if running}
     <button
       class="button secondary"
@@ -94,3 +98,15 @@
     >
   {/if}
 </div>
+
+<style>
+  .table-view-label {
+    display: grid;
+  }
+  .table-view-label > span {
+    grid-area: 1 / 1;
+  }
+  .table-view-label > [aria-hidden='true'] {
+    visibility: hidden;
+  }
+</style>

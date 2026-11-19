@@ -389,8 +389,17 @@
   "dartsMatch.legsToWin": {
     "defaultMessage": "Nombre de legs à gagner"
   },
+  "dartsMatch.enableSets": {
+    "defaultMessage": "Jouer en sets"
+  },
+  "dartsMatch.setsToWin": {
+    "defaultMessage": "Nombre de sets à gagner"
+  },
+  "dartsMatch.legsPerSet": {
+    "defaultMessage": "Nombre de legs à gagner par set"
+  },
   "dartsMatch.setupHint": {
-    "defaultMessage": "Duel entre deux joueurs ou deux équipes. Premier au nombre de legs choisi ; de 2 à 15 legs à gagner. Le premier lanceur est fixé pour chaque leg."
+    "defaultMessage": "Duel entre deux joueurs ou deux équipes. Choisissez comment déterminer le premier lanceur de chaque leg."
   },
   "dartsMatch.startRule": {
     "defaultMessage": "Premier lanceur au leg suivant"
@@ -458,14 +467,47 @@
   "granboard.armed": {
     "defaultMessage": "Impacts enregistrés pour ce tour"
   },
+  "granboard.httpsRequired": {
+    "defaultMessage": "Ouvre Scoretrackrr avec une adresse HTTPS pour connecter une GranBoard."
+  },
+  "granboard.unavailable": {
+    "defaultMessage": "La connexion GranBoard est indisponible ici. Ouvre Scoretrackrr dans Chrome sur Android pour le Bluetooth direct, ou utilise une instance avec le relais GranBoard."
+  },
+  "granboard.impactSound": {
+    "defaultMessage": "Sons des impacts"
+  },
   "granboard.help": {
-    "defaultMessage": "Active la cible à chaque tour. Saisis les ratés à la main et retire les fléchettes avant d’activer le tour suivant."
+    "defaultMessage": "Avant de lancer, appuie sur le bouton de la cible ou active la saisie à l’écran. Appuie sur le bouton de la cible pour passer au joueur suivant. Les fléchettes restantes comptent comme des ratés."
   },
   "granboard.failed": {
     "defaultMessage": "Connexion impossible. Vérifie que la cible est allumée et disponible, ainsi que le code si tu utilises le relais."
   },
   "granboard.reconnecting": {
     "defaultMessage": "Connexion à la cible perdue. Reconnexion en cours…"
+  },
+  "dartsStats.title": {
+    "defaultMessage": "Statistiques de la partie"
+  },
+  "dartsStats.side": {
+    "defaultMessage": "Joueur ou équipe"
+  },
+  "dartsStats.visits": {
+    "defaultMessage": "Volées"
+  },
+  "dartsStats.points": {
+    "defaultMessage": "Points marqués"
+  },
+  "dartsStats.best": {
+    "defaultMessage": "Meilleure volée"
+  },
+  "dartsStats.average": {
+    "defaultMessage": "Points par volée"
+  },
+  "dartsStats.marks": {
+    "defaultMessage": "Marques"
+  },
+  "dartsStats.busts": {
+    "defaultMessage": "Busts"
   },
   "darts.title": {
     "defaultMessage": "Fléchettes X01"
@@ -1865,6 +1907,15 @@
   "dartsMatch.format": {
     "defaultMessage": "Premier à {target} legs · Leg {leg}"
   },
+  "dartsMatch.setFormat": {
+    "defaultMessage": "Premier à {target} sets · Set {set} · Leg {leg}"
+  },
+  "dartsMatch.setScore": {
+    "defaultMessage": "{name} · {sets, plural, one {# set} other {# sets}} · {legs, plural, one {# leg} other {# legs}}"
+  },
+  "dartsMatch.setWinner": {
+    "defaultMessage": "Set remporté par {name}"
+  },
   "dartsMatch.score": {
     "defaultMessage": "{name} : {wins} leg(s) gagné(s)"
   },
@@ -1876,6 +1927,9 @@
   },
   "dartsMatch.nextLeg": {
     "defaultMessage": "Démarrer le leg {leg}"
+  },
+  "dartsMatch.nextSet": {
+    "defaultMessage": "Démarrer le set {set}"
   },
   "dartsMatch.nextEntry": {
     "defaultMessage": "Nouveau leg : {name} commence"
@@ -2200,6 +2254,12 @@
   },
   "matchOptions.legs": {
     "defaultMessage": "Premier à {count, number} legs"
+  },
+  "matchOptions.sets": {
+    "defaultMessage": "Premier à {count, number} sets"
+  },
+  "matchOptions.legsPerSet": {
+    "defaultMessage": "{count, number} legs pour gagner un set"
   },
   "matchOptions.startingRule": {
     "defaultMessage": "{rule, select, alternate {Départs alternés} other {Le perdant commence}}"
@@ -2873,6 +2933,9 @@
   "ruleGuide.dartsSeries.win": {
     "defaultMessage": "Mode match : il faut gagner {count} legs pour remporter la partie."
   },
+  "ruleGuide.dartsSeries.sets": {
+    "defaultMessage": "Gagnez {legs} legs pour remporter un set et {sets} sets pour gagner le match. Les deux camps repartent de zéro leg à chaque set."
+  },
   "ruleGuide.dartsSeries.alternate": {
     "defaultMessage": "Le départ des legs alterne entre les deux camps, à partir du premier lanceur enregistré."
   },
@@ -3458,6 +3521,9 @@
   },
   "play.tableMode": {
     "defaultMessage": "Mode table"
+  },
+  "play.normalView": {
+    "defaultMessage": "Vue normale"
   },
   "play.keepAwake": {
     "defaultMessage": "Garder l’écran allumé"

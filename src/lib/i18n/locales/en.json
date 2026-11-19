@@ -389,8 +389,17 @@
   "dartsMatch.legsToWin": {
     "defaultMessage": "Legs to win"
   },
+  "dartsMatch.enableSets": {
+    "defaultMessage": "Play in sets"
+  },
+  "dartsMatch.setsToWin": {
+    "defaultMessage": "Sets to win"
+  },
+  "dartsMatch.legsPerSet": {
+    "defaultMessage": "Legs to win per set"
+  },
   "dartsMatch.setupHint": {
-    "defaultMessage": "Two players or two teams. First to the selected number of legs wins; choose 2 to 15 legs. The starting side is fixed for each leg."
+    "defaultMessage": "Play with two players or two teams. Choose how the first thrower is determined for each leg."
   },
   "dartsMatch.startRule": {
     "defaultMessage": "Starting side in the next leg"
@@ -458,14 +467,47 @@
   "granboard.armed": {
     "defaultMessage": "Recording hits for this turn"
   },
+  "granboard.httpsRequired": {
+    "defaultMessage": "Open Scoretrackrr over HTTPS to connect a GranBoard."
+  },
+  "granboard.unavailable": {
+    "defaultMessage": "GranBoard connection is unavailable here. Open Scoretrackrr in Chrome on Android for direct Bluetooth, or use an instance with the GranBoard relay."
+  },
+  "granboard.impactSound": {
+    "defaultMessage": "Impact sounds"
+  },
   "granboard.help": {
-    "defaultMessage": "Enable the board at each turn. Enter misses manually and remove the darts before enabling the next turn."
+    "defaultMessage": "Press the board button or enable input on screen before throwing. Press the board button to move on. It records remaining darts as misses."
   },
   "granboard.failed": {
     "defaultMessage": "Could not connect to the board. Check that it is on and available, and verify the relay code if you used one."
   },
   "granboard.reconnecting": {
     "defaultMessage": "Board connection lost. Reconnecting…"
+  },
+  "dartsStats.title": {
+    "defaultMessage": "Match statistics"
+  },
+  "dartsStats.side": {
+    "defaultMessage": "Player or team"
+  },
+  "dartsStats.visits": {
+    "defaultMessage": "Visits"
+  },
+  "dartsStats.points": {
+    "defaultMessage": "Points scored"
+  },
+  "dartsStats.best": {
+    "defaultMessage": "Best visit"
+  },
+  "dartsStats.average": {
+    "defaultMessage": "Points per visit"
+  },
+  "dartsStats.marks": {
+    "defaultMessage": "Marks"
+  },
+  "dartsStats.busts": {
+    "defaultMessage": "Busts"
   },
   "darts.title": {
     "defaultMessage": "Darts X01"
@@ -1867,6 +1909,15 @@
   "dartsMatch.format": {
     "defaultMessage": "First to {target} legs · Leg {leg}"
   },
+  "dartsMatch.setFormat": {
+    "defaultMessage": "First to {target} sets · Set {set} · Leg {leg}"
+  },
+  "dartsMatch.setScore": {
+    "defaultMessage": "{name} · {sets, plural, one {# set} other {# sets}} · {legs, plural, one {# leg} other {# legs}}"
+  },
+  "dartsMatch.setWinner": {
+    "defaultMessage": "Set won by {name}"
+  },
   "dartsMatch.score": {
     "defaultMessage": "{name}: {wins} {wins, plural, one {leg won} other {legs won}}"
   },
@@ -1878,6 +1929,9 @@
   },
   "dartsMatch.nextLeg": {
     "defaultMessage": "Start leg {leg}"
+  },
+  "dartsMatch.nextSet": {
+    "defaultMessage": "Start set {set}"
   },
   "dartsMatch.nextEntry": {
     "defaultMessage": "New leg: {name} starts"
@@ -2212,6 +2266,12 @@
   },
   "matchOptions.legs": {
     "defaultMessage": "First to {count, number} legs"
+  },
+  "matchOptions.sets": {
+    "defaultMessage": "First to {count, number} sets"
+  },
+  "matchOptions.legsPerSet": {
+    "defaultMessage": "{count, number} legs to win a set"
   },
   "matchOptions.startingRule": {
     "defaultMessage": "{rule, select, alternate {Alternate starts} other {Previous loser starts}}"
@@ -2885,6 +2945,9 @@
   "ruleGuide.dartsSeries.win": {
     "defaultMessage": "Match mode: win {count} legs to win the match."
   },
+  "ruleGuide.dartsSeries.sets": {
+    "defaultMessage": "Win {legs} legs to take a set and {sets} sets to win the match. Both sides start each set with zero legs won."
+  },
   "ruleGuide.dartsSeries.alternate": {
     "defaultMessage": "Leg starts alternate between the two sides from the saved first starter."
   },
@@ -3470,6 +3533,9 @@
   },
   "play.tableMode": {
     "defaultMessage": "Table mode"
+  },
+  "play.normalView": {
+    "defaultMessage": "Standard view"
   },
   "play.keepAwake": {
     "defaultMessage": "Keep screen awake"

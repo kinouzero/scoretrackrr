@@ -111,6 +111,49 @@ describe('pinned multi-leg darts matches', () => {
       visitStart: 301,
     });
   });
+  it.each(['alternate', 'loser'] as const)(
+    'resets legs after a set, preserves %s starters and ends on the decisive set',
+    (startingRule) => {
+      const game = setup({ legsToWin: 2, setsToWin: 2, startingRule });
+      let state = game.initialState(config);
+      state = winLeg(game, state, 'alice');
+      state = apply(game, state, next('bob'));
+      state = winLeg(game, state, 'alice');
+      const starter = startingRule === 'alternate' ? 'alice' : 'bob';
+      expect(state.status).toBe('in_progress');
+      expect(game.getProgress(state, config)).toMatchObject({
+        number: 2,
+        setNumber: 1,
+        wins: { alice: 2, bob: 0 },
+        sets: { alice: 1, bob: 0 },
+        setWinnerId: 'alice',
+        nextStarterId: starter,
+      });
+      state = apply(game, state, next(starter));
+      expect(game.getProgress(state, config)).toMatchObject({
+        number: 1,
+        setNumber: 2,
+        wins: { alice: 0, bob: 0 },
+        sets: { alice: 1, bob: 0 },
+        setWinnerId: undefined,
+      });
+      for (const winner of ['bob', 'bob', 'alice', 'bob', 'alice']) {
+        state = winLeg(game, state, winner);
+        const progress = game.getProgress(state, config);
+        if (progress.nextStarterId) state = apply(game, state, next(progress.nextStarterId));
+      }
+      expect(state).toMatchObject({ status: 'finished', winnerIds: ['alice'] });
+      expect(game.getProgress(state, config)).toMatchObject({
+        number: 3,
+        setNumber: 3,
+        wins: { alice: 2, bob: 1 },
+        sets: { alice: 2, bob: 1 },
+        setWinnerId: 'alice',
+        nextStarterId: undefined,
+      });
+      expect(() => apply(game, state, next('bob'))).toThrow('finished');
+    },
+  );
   it('allows a chosen first starter, maximum-length match and final lead changes', () => {
     const game = setup({ legsToWin: 2, firstStarterId: 'bob', startingRule: 'loser' });
     let state = game.initialState(config);
@@ -152,6 +195,10 @@ describe('pinned multi-leg darts matches', () => {
     { legsToWin: 1 },
     { legsToWin: 2.5 },
     { legsToWin: 16 },
+    { setsToWin: 1 },
+    { setsToWin: 2.5 },
+    { setsToWin: 6 },
+    { setsToWin: 2, legsToWin: 8 },
     { startingRule: 'winner' },
     { firstStarterId: 'absent' },
     { extra: true },

@@ -5,7 +5,7 @@ import { expect, test, type Page } from '../fixtures/browser';
 async function create(
   page: Page,
   variant = '301 · sortie double',
-  series?: { target: number; rule: 'alternate' | 'loser' },
+  series?: { target: number; rule: 'alternate' | 'loser'; sets?: number },
 ) {
   await seedPlayers(page, ['Alice', 'Bob']);
   await page.goto('/games/');
@@ -17,7 +17,16 @@ async function create(
     await setup.getByRole('checkbox', { name: `Sélectionner ${name}`, exact: true }).check();
   if (series) {
     await setup.getByRole('switch', { name: 'Match en plusieurs legs', exact: true }).check();
-    await setup.getByLabel('Nombre de legs à gagner', { exact: true }).fill(String(series.target));
+    if (series.sets !== undefined) {
+      await setup.getByRole('switch', { name: 'Jouer en sets', exact: true }).check();
+      await setup.getByLabel('Nombre de sets à gagner', { exact: true }).fill(String(series.sets));
+    }
+    await setup
+      .getByLabel(
+        series.sets === undefined ? 'Nombre de legs à gagner' : 'Nombre de legs à gagner par set',
+        { exact: true },
+      )
+      .fill(String(series.target));
     await setup
       .getByLabel('Premier lanceur au leg suivant', { exact: true })
       .selectOption(series.rule);
@@ -88,6 +97,14 @@ test('plays 301 double-out offline with a whole-visit bust, reversal and persist
   await expect(page.getByText('Victoire : Alice', { exact: true })).toBeVisible();
   await page.reload();
   await expect(page.getByText('Victoire : Alice', { exact: true })).toBeVisible();
+  const stats = page.getByRole('table', { name: 'Statistiques de la partie' });
+  await expect(stats.getByRole('row', { name: /^Alice / }).getByRole('cell')).toHaveText([
+    '3',
+    '301',
+    '180',
+    '100,3',
+    '0',
+  ]);
   await page.screenshot({ path: test.info().outputPath('301-offline.png'), fullPage: true });
   expect(errors).toEqual([]);
 });
@@ -187,6 +204,50 @@ test('switches between per-dart and total-visit entry with bust, checkout and au
   await expect(page.getByText('Victoire : Alice', { exact: true })).toBeVisible();
 });
 
+test('plays a darts match in sets and resumes after a reload at the set boundary', async ({
+  page,
+}) => {
+  await create(page, '301 · sortie simple', { target: 2, sets: 2, rule: 'alternate' });
+  const summary = page.getByRole('region', { name: 'Score du match', exact: true });
+  async function visit(total: number) {
+    const newest = page.locator('.journal-entries > li').first().getByRole('heading');
+    const before = await newest.innerText();
+    await page.getByLabel('Mode de saisie', { exact: true }).selectOption('visit');
+    await page.getByLabel(/^Total des/).fill(String(total));
+    await page
+      .getByRole('button', { name: 'Enregistrer le total de la volée', exact: true })
+      .click();
+    await expect(newest).not.toHaveText(before);
+  }
+  async function winLeg(second: boolean) {
+    await expect(
+      page.getByRole('heading', {
+        name: second ? 'Au tour de Bob' : 'Au tour de Alice',
+        exact: true,
+      }),
+    ).toBeVisible();
+    if (second) await visit(0);
+    await visit(180);
+    await visit(0);
+    await visit(121);
+  }
+  await expect(summary).toContainText('Set 1 · Leg 1');
+  await winLeg(false);
+  await page.getByRole('button', { name: 'Démarrer le leg 2', exact: true }).click();
+  await winLeg(true);
+  await expect(summary).toContainText('Set remporté par Alice');
+  await expect(page.getByText('Victoire : Alice', { exact: true })).not.toBeVisible();
+  await page.reload();
+  await page.getByRole('button', { name: 'Démarrer le set 2', exact: true }).click();
+  await expect(summary).toContainText('Set 2 · Leg 1');
+  await expect(summary).toContainText('Alice · 1 set · 0 leg');
+  await winLeg(false);
+  await page.getByRole('button', { name: 'Démarrer le leg 2', exact: true }).click();
+  await winLeg(true);
+  await expect(page.getByText('Victoire : Alice', { exact: true })).toBeVisible();
+  await expect(summary).toContainText('Alice · 2 sets · 2 legs');
+});
+
 for (const rule of ['alternate', 'loser'] as const)
   test(`plays a three-leg target offline with ${rule} starters and a reversible match win`, async ({
     page,
@@ -254,6 +315,14 @@ for (const rule of ['alternate', 'loser'] as const)
     await page.reload();
     await expect(page.getByText('Victoire : Alice', { exact: true })).toBeVisible();
     await expect(summary).toContainText('Alice : 3 leg(s) gagné(s)');
+    const stats = page.getByRole('table', { name: 'Statistiques de la partie' });
+    await expect(stats.getByRole('row', { name: /^Alice / }).getByRole('cell')).toHaveText([
+      '6',
+      '903',
+      '180',
+      '150,5',
+      '0',
+    ]);
     expect(errors).toEqual([]);
   });
 

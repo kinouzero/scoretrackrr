@@ -1,5 +1,6 @@
 import { waitForOfflineReady } from '../fixtures/offline';
 import { expect, test, type Page } from '../fixtures/browser';
+import { seedPlayers } from '../fixtures/players';
 
 async function profiles(page: Page, names = ['Alice', 'Lucas', 'Emma', 'Hugo']) {
   await page.goto('/players/');
@@ -204,14 +205,11 @@ test('selects three teams, keeps score for each and rejects a stale correction c
   page,
   context,
 }) => {
-  await page.goto('/');
+  const rosters = { Bleus: ['Alice', 'Lucas'], Rouges: ['Emma', 'Hugo'], Verts: ['Léa', 'Max'] };
+  await seedPlayers(page, Object.values(rosters).flat(), rosters);
   await waitForOfflineReady(page);
   await context.setOffline(true);
-  await profiles(page, ['Alice', 'Lucas', 'Emma', 'Hugo', 'Léa', 'Max']);
-  await team(page, 'Bleus', ['Alice', 'Lucas']);
-  await team(page, 'Rouges', ['Emma', 'Hugo']);
-  await team(page, 'Verts', ['Léa', 'Max']);
-  await prepareTeams(page, ['Bleus', 'Rouges', 'Verts']);
+  await prepareTeams(page, Object.keys(rosters));
   await record(page, 'Verts', 3);
   await record(page, 'Bleus', 4);
   const scores = page.getByRole('region', { name: 'Scores', exact: true });

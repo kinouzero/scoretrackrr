@@ -28,6 +28,8 @@ pnpm audit
 
 `check` verifies documentation links, ICU parity, generated-validator parity, Svelte/TypeScript and service-worker types. `lint` runs ESLint and Prettier. Tests exercise pure scoring, fake IndexedDB transactions/migrations and the production static build in Chromium/WebKit. Python 3 serves browser fixtures and runs the optional Linux GranBoard relay. Do not rebuild while browser tests are running.
 
+GitHub Actions keeps browser traces for failed attempts and retries in the `browser-failure-diagnostics` artifact for seven days, including when a retry makes the job pass.
+
 After changing trusted engine schemas, run `pnpm generate:engine`. Do not hand-edit generated validators or accept external runtime schemas/code. Keep focused tests for invalid input, state transitions, stale/concurrent commands, replay, compatibility and quota rollback. Do not add cosmetic tests that only lock exact markup/styles.
 
 ## Design and localization

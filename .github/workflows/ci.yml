@@ -59,6 +59,7 @@ jobs:
         env:
           COVERAGE: '1'
       - run: pnpm test:e2e --workers=2 --max-failures=1
+        id: browser
         env:
           COVERAGE: '1'
       - run: pnpm coverage:report
@@ -74,13 +75,15 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-      - name: Upload failed browser diagnostics
-        if: failure()
+      - name: Upload browser failure and retry diagnostics
+        if: ${{ !cancelled() && (steps.browser.outcome == 'success' || steps.browser.outcome == 'failure') }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: browser-failure-diagnostics
-          path: test-results/
-          if-no-files-found: warn
+          path: |
+            test-results/**/trace.zip
+            test-results/**/error-context.md
+          if-no-files-found: ignore
           retention-days: 7
 
   publish:

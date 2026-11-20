@@ -20,13 +20,31 @@ export async function connectRelay(code: string, signal: AbortSignal, receiver: 
   signal.addEventListener('abort', () => stream.close(), { once: true });
   let sequence = 0;
   let ready = false;
+  let pendingLight = Promise.resolve();
   stream.onerror = receiver.lost;
   stream.addEventListener('board', (event: MessageEvent<string>) => {
     try {
       const value = JSON.parse(event.data);
       if (value.type === 'ready' && !ready) {
         ready = true;
-        receiver.ready();
+        receiver.ready(
+          value.lights === true
+            ? (frame) => {
+                const write = pendingLight.then(async () => {
+                  signal.throwIfAborted();
+                  const response = await fetch(relayPath + 'lights', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/octet-stream' },
+                    body: frame,
+                    signal,
+                  });
+                  if (!response.ok) throw new Error('Relay light command failed');
+                });
+                pendingLight = write.catch(() => {});
+                return write;
+              }
+            : undefined,
+        );
       } else if (ready && value.type === 'hit' && typeof value.frame === 'string') {
         if (value.sequence === sequence) return;
         if (value.sequence !== sequence + 1) throw new Error('Missing relay event');

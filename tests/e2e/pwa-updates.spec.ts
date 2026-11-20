@@ -68,6 +68,26 @@ test('applies an update after opening Settings from the app home', async ({ page
   await apply(page);
   await expect(panel(page).getByRole('alert')).toHaveCount(0);
 });
+test('accepts an update from an older app after navigating to Settings', async ({
+  page,
+  context,
+}) => {
+  await installed(page, context, 'legacy-settings');
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Réglages', exact: true }).click();
+  await prepare(page, context, 'legacy-settings-b');
+  await page.evaluate(async () => {
+    const worker = (await navigator.serviceWorker.ready).waiting!;
+    const post = worker.postMessage.bind(worker);
+    Object.defineProperty(worker, 'postMessage', {
+      value({ type }: { type: string }, transfer: Transferable[]) {
+        post({ type }, transfer);
+      },
+    });
+  });
+  await apply(page);
+  await expect(panel(page).getByRole('alert')).toHaveCount(0);
+});
 test('detects a real waiting worker, defers without losing a draft and applies offline preserving saved profiles', async ({
   page,
   context,
@@ -138,7 +158,7 @@ test('blocks activation with another window and never reloads its unsaved form',
       registration.waiting!.postMessage({ type: 'SCORETRACKRR_APPLY_UPDATE' }, [channel.port2]);
     });
   });
-  expect(rejection).toBe('unavailable');
+  expect(rejection).toBe('otherTabs');
   await other.close();
   await apply(page);
   for (const value of ['windows-c', 'windows-d']) {

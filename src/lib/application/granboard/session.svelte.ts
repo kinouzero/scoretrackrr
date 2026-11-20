@@ -13,11 +13,20 @@ class GranBoardSession {
   private audio?: AudioContext;
   private light?: LightWriter;
   private lightReset?: ReturnType<typeof setTimeout>;
+  private finishTimer?: ReturnType<typeof setTimeout>;
   private nextButtonAt = -Infinity;
   sound = $state(true);
 
   enableAudio() {
     if (!this.sound) return;
+    const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
+    if (session) {
+      try {
+        session.type = 'playback';
+      } catch {
+        // The browser can still play audio using its default session.
+      }
+    }
     try {
       this.audio ??= new AudioContext();
       void this.audio.resume().catch(() => {});
@@ -33,8 +42,8 @@ class GranBoardSession {
       if (this.sound && audio) playImpact(audio, hit, outcome);
       if (!light || this.light !== light) return;
       clearTimeout(this.lightReset);
-      void light(impactLight(hit, outcome === 'bust')).catch(() => {});
-      this.lightReset = setTimeout(() => this.signalReady(), 600);
+      void light(impactLight(hit, outcome)).catch(() => {});
+      if (outcome !== 'win') this.lightReset = setTimeout(() => this.signalReady(), 600);
     };
   }
 
@@ -51,8 +60,16 @@ class GranBoardSession {
     };
   }
 
+  finish(matchId: string) {
+    if (this.matchId !== matchId || this.finishTimer !== undefined) return;
+    // Give the last accepted hit time to reach the board before disconnecting.
+    this.finishTimer = setTimeout(() => this.stop(matchId), 800);
+  }
+
   stop(matchId = this.matchId) {
     if (this.matchId !== matchId) return;
+    clearTimeout(this.finishTimer);
+    this.finishTimer = undefined;
     this.connection?.abort();
     this.connection = undefined;
     clearTimeout(this.lightReset);
@@ -68,6 +85,7 @@ class GranBoardSession {
 
   start(matchId: string, connect: BoardConnector, initialTimeout: number) {
     this.stop();
+    this.enableAudio();
     const connection = new AbortController();
     this.connection = connection;
     this.matchId = matchId;

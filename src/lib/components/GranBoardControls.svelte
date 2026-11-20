@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, untrack } from 'svelte';
   import { messages } from '#lib/i18n/index';
   import { bluetooth, bluetoothConnector } from '#lib/application/granboard/bluetooth';
   import { connectRelay, relayAvailable } from '#lib/application/granboard/relay';
@@ -15,6 +15,7 @@
     onarm,
     armed,
     canArm,
+    awaitingNext,
   }: {
     matchId: string;
     onhit: (hit: BoardHit) => void;
@@ -23,6 +24,7 @@
     onarm: () => void;
     armed: boolean;
     canArm: boolean;
+    awaitingNext: boolean;
   } = $props();
 
   let direct = $state(false);
@@ -47,11 +49,11 @@
         20000,
       );
     }
-    granBoard.enableAudio();
   }
 
   $effect(() => {
-    onconnection(connectionState === 'connected');
+    const connected = connectionState === 'connected';
+    untrack(() => onconnection(connected));
   });
 
   onMount(() => {
@@ -76,87 +78,154 @@
   });
 </script>
 
-<details class="stack" open={Boolean(connectionState)}>
-  <summary class="button secondary"><Icon name="darts" />{messages.granboard.title}</summary>
-  {#if secureContext === false}
-    <p>{messages.granboard.httpsRequired}</p>
-  {:else if direct || relay || connectionState}
-    <div class="stack">
-      <p>{messages.granboard.help}</p>
+<details class="granboard" open={Boolean(connectionState)}>
+  <summary class="button secondary">
+    <Icon name="darts" />
+    <span>{messages.granboard.title}</span>
+    {#if connectionState === 'connected'}<span class="connection-dot" aria-hidden="true"
+      ></span>{/if}
+  </summary>
+  <div class="board-panel">
+    {#if secureContext === false}
+      <p>{messages.granboard.httpsRequired}</p>
+    {:else if connectionState === 'connected'}
+      <p class="connected-state" role="status">
+        <Icon name="check" />{armed ? messages.granboard.armed : messages.granboard.connected}
+      </p>
+      <p class="board-help">{messages.granboard.help}</p>
+      <div class="board-actions">
+        {#if !awaitingNext}
+          <button type="button" class="button" disabled={!canArm || armed} onclick={onarm}>
+            <Icon name="play" />{messages.granboard.ready}
+          </button>
+        {/if}
+        <button type="button" class="button secondary" onclick={disconnect}>
+          <Icon name="close" />{messages.granboard.disconnect}
+        </button>
+      </div>
+      <label class="impact-sound">
+        <input
+          type="checkbox"
+          checked={granBoard.sound}
+          onchange={(event) => {
+            granBoard.sound = event.currentTarget.checked;
+            granBoard.enableAudio();
+          }}
+        />
+        {messages.granboard.impactSound}
+      </label>
+    {:else if connectionState === 'connecting' || connectionState === 'reconnecting'}
+      <p role="status">
+        {connectionState === 'connecting'
+          ? messages.granboard.connecting
+          : messages.granboard.reconnecting}
+      </p>
+      <button type="button" class="button secondary" onclick={disconnect}>
+        <Icon name="close" />{messages.granboard.disconnect}
+      </button>
+    {:else if direct || relay}
       {#if connectionState === 'failed'}<p class="error" role="alert">
           {messages.granboard.failed}
         </p>{/if}
-      {#if connectionState === 'reconnecting'}<p role="status">
-          {messages.granboard.reconnecting}
-        </p>{/if}
-      {#if connectionState === 'connecting'}<p role="status">
-          {messages.granboard.connecting}
-        </p>{/if}
-      {#if connectionState === 'connected'}
-        <p role="status">{armed ? messages.granboard.armed : messages.granboard.connected}</p>
-        <label class="impact-sound">
-          <input
-            type="checkbox"
-            checked={granBoard.sound}
-            onchange={(event) => {
-              granBoard.sound = event.currentTarget.checked;
-              granBoard.enableAudio();
-            }}
-          />{messages.granboard.impactSound}
-        </label>
-      {/if}
-      <div class="button-row">
-        {#if connectionState === 'connected'}
-          <button type="button" class="button" disabled={!canArm || armed} onclick={onarm}
-            ><Icon name="play" />{messages.granboard.ready}</button
-          >
-        {/if}
-        {#if connectionState && connectionState !== 'failed'}
-          <button type="button" class="button secondary" onclick={disconnect}
-            ><Icon name="close" />{messages.granboard.disconnect}</button
-          >
-        {:else if direct}
-          <button type="button" class="button secondary" onclick={() => start('bluetooth')}
-            ><Icon name="bluetooth" />{messages.granboard.bluetooth}</button
-          >
-        {/if}
-      </div>
-      {#if relay && (!connectionState || connectionState === 'failed')}
+      {#if direct}
+        <button type="button" class="button" onclick={() => start('bluetooth')}>
+          <Icon name="bluetooth" />{messages.granboard.bluetooth}
+        </button>
+      {:else}
         <form
-          class="stack"
+          class="relay-form"
           onsubmit={(event) => {
             event.preventDefault();
-            void start('relay');
+            start('relay');
           }}
         >
           <label class="game-field">
             {messages.granboard.code}
             <input type="password" bind:value={code} required maxlength={128} autocomplete="off" />
           </label>
-          <div class="button-row">
-            <button class="button secondary" disabled={!code.trim()}
-              ><Icon name="link" />{messages.granboard.relay}</button
-            >
-          </div>
+          <button class="button" disabled={!code.trim()}>
+            <Icon name="link" />{messages.granboard.relay}
+          </button>
         </form>
       {/if}
-    </div>
-  {:else if relay === false}
-    <p role="status">{messages.granboard.unavailable}</p>
-  {/if}
+    {:else if relay === false}
+      <p role="status">{messages.granboard.unavailable}</p>
+    {/if}
+  </div>
 </details>
 
 <style>
-  details {
+  .granboard {
     min-inline-size: 0;
   }
-  details[open] {
+  .granboard[open] {
     flex-basis: 100%;
+  }
+  summary {
+    justify-content: flex-start;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .granboard[open] > summary.button {
+    inline-size: 100%;
+    margin-block-end: 0;
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+  }
+  summary::after {
+    margin-inline-start: auto;
+  }
+  .connection-dot {
+    inline-size: 0.55rem;
+    block-size: 0.55rem;
+    background: var(--success);
+    border-radius: 50%;
+  }
+  .board-panel {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--border);
+    border-block-start: 0;
+    border-radius: 0 0 11px 11px;
+    background: var(--surface);
+  }
+  .board-panel p {
+    margin: 0;
+  }
+  .connected-state {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--success);
+    font-weight: 650;
+  }
+  .board-help {
+    color: var(--muted-text);
+  }
+  .board-actions,
+  .relay-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: var(--space-2);
+    inline-size: 100%;
+  }
+  .relay-form .game-field {
+    flex: 1 1 12rem;
+    min-inline-size: 0;
+  }
+  .board-actions > button,
+  .relay-form > button {
+    flex: 1 1 auto;
   }
   .impact-sound {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-2);
     min-height: 44px;
   }
 </style>

@@ -152,7 +152,6 @@ it('requires a response port', () => {
 it.each([
   null,
   {},
-  { id: 'settings-client', url: origin + '/games/' },
   { id: 'settings-client', url: 'https://other.example/settings/' },
   { id: 'settings-client', url: 'not a URL' },
 ])('refuses activation from an invalid client %j', async (source) => {
@@ -186,6 +185,7 @@ it.each([[{ id: 'settings-client' }, { id: 'other-client' }], [{ id: 'other-clie
 );
 it.each([
   ['/settings', undefined],
+  ['/', undefined],
   ['/', '/settings/'],
 ])('acknowledges an explicit sole Settings client (entry=%s, route=%s)', async (entry, route) => {
   const action = update({ id: 'settings-client', url: origin + entry }, route);

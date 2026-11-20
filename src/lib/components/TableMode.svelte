@@ -100,6 +100,17 @@
 </div>
 
 <style>
+  .table-tools {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+    align-items: stretch;
+  }
+  .table-tools > button {
+    min-inline-size: 0;
+  }
+  .field-hint {
+    grid-column: 1 / -1;
+  }
   .table-view-label {
     display: grid;
   }

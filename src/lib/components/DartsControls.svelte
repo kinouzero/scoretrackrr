@@ -63,6 +63,7 @@
   const progress = $derived(series?.getProgress(view.state, seriesConfig));
   const current = $derived(config.ownerIds[position.turn]!);
   const activePlayer = $derived(activeTeamPlayer(match, view.audit, current));
+  const checkoutPageSize = 6;
   let checkoutPage = $state(0);
   const checkouts = $derived(
     !isCricket
@@ -111,9 +112,12 @@
   let saving = $state(false);
   let connected = $state(false);
   let armed = $state(false);
+  let handoff = $state<{ ownerId: string; playerName?: string }>();
+  const displayedPlayer = $derived(handoff ? handoff.playerName : activePlayer?.displayName);
   let boardVersion = 0;
   let boardMatchId = '';
   let boardOwner = '';
+  let boardPlayerName: string | undefined;
   let endingVisit = false;
   let remaining = 0;
   let pending: BoardHit[] = [];
@@ -129,10 +133,17 @@
     disarm();
     connected = value;
     if (value) entryMode = 'dart';
+    if (granBoard.matchId !== match.id) handoff = undefined;
   }
-  function selectBoardVisit(ownerId: string, version: number, dartsUsed: number) {
+  function selectBoardVisit(
+    ownerId: string,
+    version: number,
+    dartsUsed: number,
+    audit = view.audit,
+  ) {
     boardMatchId = match.id;
     boardOwner = ownerId;
+    boardPlayerName = activeTeamPlayer(match, audit, ownerId)?.displayName;
     boardVersion = version;
     remaining = 3 - dartsUsed;
     armed = true;
@@ -141,6 +152,7 @@
   function armBoard() {
     if (!canArm || document.hidden) return;
     granBoard.enableAudio();
+    handoff = undefined;
     selectBoardVisit(current, view.projection.lastEventSequence, position.dartsUsed);
   }
   const canArm = $derived(
@@ -189,6 +201,7 @@
       // Serialize scoring and the button behind hits already received for the same player.
       while (armed && (pending.length > 0 || endingVisit)) {
         const hit = pending.shift();
+        const playerName = boardPlayerName;
         const feedback = hit ? granBoard.captureFeedback() : undefined;
         const result = await act(
           { type: 'record', ownerId: boardOwner, values: hit ?? { sector: 0, multiplier: 1 } },
@@ -214,7 +227,8 @@
         if (next.dartsUsed === 0) {
           const readyNext = endingVisit;
           disarm();
-          if (readyNext) selectBoardVisit(legConfig.ownerIds[next.turn]!, version, 0);
+          if (readyNext) selectBoardVisit(legConfig.ownerIds[next.turn]!, version, 0, result.audit);
+          else handoff = { ownerId: boardOwner, playerName };
           break;
         }
         boardVersion = version;
@@ -240,7 +254,10 @@
     version = view.projection.lastEventSequence,
     fromBoard = false,
   ) {
-    if (!fromBoard) disarm();
+    if (!fromBoard) {
+      disarm();
+      handoff = undefined;
+    }
     if (saving) return;
     saving = true;
     error = '';
@@ -278,6 +295,9 @@
   }
   async function record(event: SubmitEvent) {
     event.preventDefault();
+    if (handoff) return;
+    const ownerId = current;
+    const playerName = activePlayer?.displayName;
     const hit = { sector, multiplier };
     const feedback = connected ? granBoard.captureFeedback() : undefined;
     const result = await act({
@@ -290,7 +310,15 @@
     });
     if (result && feedback) {
       const legConfig = series?.getLegConfig(result.state, seriesConfig) ?? seriesConfig;
-      feedback(hit, impactOutcome(result, inspectLeg(result.state, legConfig)));
+      const next = inspectLeg(result.state, legConfig);
+      feedback(hit, impactOutcome(result, next));
+      if (
+        connected &&
+        result.projection.status === 'in_progress' &&
+        !series?.getProgress(result.state, seriesConfig).nextStarterId &&
+        next.dartsUsed === 0
+      )
+        handoff = { ownerId, playerName };
     }
   }
   const draft = entryDraft(
@@ -357,6 +385,7 @@
           onarm={armBoard}
           {armed}
           {canArm}
+          awaitingNext={Boolean(handoff)}
         />
       {/key}
     {/if}
@@ -380,14 +409,20 @@
 
   <EntrySituation {status}>
     <div class="situation-player situation-active">
-      <h3>{messages.four21.turn(owner(current))}</h3>
-      {#if activePlayer}<p role="status">
-          <strong>{messages.generic.activeTeamPlayer(activePlayer.displayName)}</strong>
+      <h3>
+        {handoff
+          ? messages.granboard.visitComplete(owner(handoff.ownerId))
+          : messages.four21.turn(owner(current))}
+      </h3>
+      {#if displayedPlayer}<p role="status">
+          <strong>{messages.generic.activeTeamPlayer(displayedPlayer)}</strong>
         </p>{/if}
       <p aria-live="polite">
-        {'visitStart' in position
-          ? messages.darts.visit(position.dartsUsed + 1, position.visitStart)
-          : messages.cricket.visit(position.dartsUsed + 1)}
+        {handoff
+          ? messages.granboard.waitForButton
+          : 'visitStart' in position
+            ? messages.darts.visit(position.dartsUsed + 1, position.visitStart)
+            : messages.cricket.visit(position.dartsUsed + 1)}
       </p>
     </div>
     <div class="situation-phase">
@@ -502,42 +537,63 @@
       </table>
     </div>{/if}
   {#if 'bust' in position && position.bust}<p role="status">{messages.darts.bust}</p>{/if}
-  {#if status === 'in_progress' && !progress?.nextStarterId}
+  {#if status === 'in_progress' && handoff}
+    <button class="button secondary handoff-action" disabled={!canArm} onclick={armBoard}>
+      <Icon name="arrow-right" />{messages.granboard.nextPlayer}
+    </button>
+  {:else if status === 'in_progress' && !progress?.nextStarterId}
     {#if !isCricket}<aside
         class="checkout-panel"
         aria-labelledby="checkouts-title"
         aria-live="polite"
       >
-        <h4 id="checkouts-title">{messages.darts.checkouts(3 - position.dartsUsed)}</h4>
-        {#if checkouts.length}<p>{messages.darts.checkoutHint}</p>
-          <ul>
-            {#each checkouts.slice(checkoutPage * 8, (checkoutPage + 1) * 8) as route (route
-              .map((d) => `${d.sector}-${d.multiplier}`)
-              .join(','))}<li>{route.map(checkoutLabel).join(' → ')}</li>{/each}
+        <h4 id="checkouts-title">
+          <Icon name="darts" />{messages.darts.checkouts(3 - position.dartsUsed)}
+        </h4>
+        {#if checkouts.length}
+          <ul class="checkout-routes" role="list">
+            {#each checkouts.slice(checkoutPage * checkoutPageSize, (checkoutPage + 1) * checkoutPageSize) as route (route
+              .map((dart) => `${dart.sector}-${dart.multiplier}`)
+              .join(','))}
+              <li>
+                {#each route as dart, index (index)}
+                  {#if index > 0}<span class="checkout-arrow"><Icon name="arrow-right" /></span
+                    >{/if}
+                  <span class="checkout-dart" class:checkout-finish={index === route.length - 1}
+                    >{checkoutLabel(dart)}</span
+                  >
+                {/each}
+              </li>
+            {/each}
           </ul>
-          {#if checkouts.length > 8}<p>
-              {messages.darts.checkoutCount(
-                checkoutPage + 1,
-                Math.ceil(checkouts.length / 8),
-                checkouts.length,
-              )}
-            </p>
-            <div class="button-row">
+          {#if checkouts.length > checkoutPageSize}
+            <div class="checkout-pagination">
               <button
                 type="button"
                 class="button secondary"
+                aria-label={messages.darts.previousCheckouts}
                 disabled={checkoutPage === 0}
-                onclick={() => checkoutPage--}
-                ><Icon name="arrow-left" />{messages.darts.previousCheckouts}</button
-              ><button
+                onclick={() => checkoutPage--}><Icon name="arrow-left" /></button
+              >
+              <p>
+                {messages.darts.checkoutCount(
+                  checkoutPage + 1,
+                  Math.ceil(checkouts.length / checkoutPageSize),
+                  checkouts.length,
+                )}
+              </p>
+              <button
                 type="button"
                 class="button secondary"
-                disabled={(checkoutPage + 1) * 8 >= checkouts.length}
-                onclick={() => checkoutPage++}
-                ><Icon name="arrow-right" />{messages.darts.nextCheckouts}</button
+                aria-label={messages.darts.nextCheckouts}
+                disabled={(checkoutPage + 1) * checkoutPageSize >= checkouts.length}
+                onclick={() => checkoutPage++}><Icon name="arrow-right" /></button
               >
-            </div>{/if}
-        {:else}<p>{messages.darts.noCheckout}</p>{/if}
+            </div>
+          {/if}
+        {:else}
+          <p>{messages.darts.noCheckout}</p>
+        {/if}
       </aside>{/if}
     {#if !isCricket && !connected}<div class="game-field">
         <label for="dart-entry-mode">{messages.darts.entryMode}</label><select
@@ -655,13 +711,68 @@
     gap: var(--space-3);
     min-height: 44px;
   }
-  .checkout-panel {
-    border: 1px solid var(--border);
-    border-radius: 0.75rem;
-    padding: 1rem;
+  .handoff-action {
+    justify-self: start;
   }
-  .checkout-panel li {
-    padding-block: 0.25rem;
+  .checkout-panel {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: 0.75rem;
+    background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  }
+  .checkout-panel h4 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+  }
+  .checkout-panel p {
+    margin: 0;
+    color: var(--muted-text);
+  }
+  .checkout-routes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .checkout-routes li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    border-radius: 0.65rem;
+    background: var(--surface);
+  }
+  .checkout-dart {
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.4rem;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+  .checkout-finish {
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  }
+  .checkout-arrow {
+    display: flex;
+    color: var(--muted-text);
+  }
+  .checkout-pagination {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-2);
+    text-align: center;
+  }
+  .checkout-pagination > button {
+    inline-size: 44px;
+    padding-inline: 0;
   }
   .grid-scroll {
     overflow-x: auto;

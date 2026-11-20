@@ -13,6 +13,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 SERVICE = "442f1570-8a00-9a28-cbe1-e1d4212d53eb"
 NOTIFY = "442f1571-8a00-9a28-cbe1-e1d4212d53eb"
+LIGHTS = "442f1572-8a00-9a28-cbe1-e1d4212d53eb"
 PREFIX = "/api/granboard/"
 COOKIE = "scoretrackrr_granboard"
 
@@ -22,7 +23,9 @@ class Sessions:
         self.code = code.encode()
         self.lock = threading.Lock()
         self.pending = None
-        self.active = False
+        self.active = None
+        self.lights_enabled = False
+        self.light = None
         self.next_attempt = 0
 
     def pair(self, code):
@@ -49,16 +52,37 @@ class Sessions:
             if time.monotonic() >= expires or not hmac.compare_digest(token, expected):
                 return 401
             self.pending = None
-            self.active = True
+            self.active = token
             return 200
+
+    def enable_lights(self):
+        with self.lock:
+            self.lights_enabled = True
+
+    def set_light(self, token, frame):
+        with self.lock:
+            if not self.active or not hmac.compare_digest(token, self.active):
+                return 401
+            if not self.lights_enabled:
+                return 409
+            self.light = frame
+            return 204
+
+    def take_light(self):
+        with self.lock:
+            frame, self.light = self.light, None
+            return frame
 
     def release(self):
         with self.lock:
-            self.active = False
+            self.active = None
+            self.lights_enabled = False
+            self.light = None
 
 
-async def stream_board(address, send, heartbeat):
+async def stream_board(address, send, heartbeat, take_light):
     from bleak import BleakClient, BleakScanner
+    from bleak.exc import BleakError
 
     queue = asyncio.Queue(maxsize=16)
     failed = asyncio.Event()
@@ -95,17 +119,33 @@ async def stream_board(address, send, heartbeat):
         async with asyncio.timeout(5):
             await board.start_notify(characteristic, notify)
         # Keep the connection alive only while the browser consumes this stream.
-        send({"type": "ready"})
+        output = next((item for item in service.characteristics if item.uuid == LIGHTS), None)
+        properties = output.properties if output else []
+        lights = "write-without-response" in properties or "write" in properties
+        send({"type": "ready", "lights": True} if lights else {"type": "ready"})
         sequence = 0
+        next_heartbeat = time.monotonic() + 3
         while not failed.is_set():
+            if lights and (light := take_light()) is not None:
+                try:
+                    async with asyncio.timeout(1):
+                        await board.write_gatt_char(
+                            output, light, response="write-without-response" not in properties
+                        )
+                except (BleakError, OSError, TimeoutError):
+                    # A failed ring animation must not interrupt scoring.
+                    pass
             try:
-                frame = await asyncio.wait_for(queue.get(), timeout=3)
+                frame = await asyncio.wait_for(queue.get(), timeout=0.1 if lights else 3)
             except TimeoutError:
-                heartbeat()
+                if time.monotonic() >= next_heartbeat:
+                    heartbeat()
+                    next_heartbeat = time.monotonic() + 3
                 continue
             if not failed.is_set():
                 sequence += 1
                 send({"type": "hit", "sequence": sequence, "frame": frame})
+                next_heartbeat = time.monotonic() + 3
 
 
 class RelayServer(ThreadingHTTPServer):
@@ -155,11 +195,14 @@ class RelayHandler(BaseHTTPRequestHandler):
             self.wfile.write(body)
 
     def do_POST(self):
-        if self.path != PREFIX + "session":
+        if self.path not in (PREFIX + "session", PREFIX + "lights"):
             self.respond(404)
             return
         if self.headers.get("Sec-Fetch-Site") not in (None, "same-origin"):
             self.respond(403)
+            return
+        if self.path == PREFIX + "lights":
+            self.write_lights()
             return
         try:
             size = int(self.headers.get("Content-Length", "0"))
@@ -175,10 +218,38 @@ class RelayHandler(BaseHTTPRequestHandler):
             return
         status, token = self.server.sessions.pair(code)
         cookie = (
-            f"{COOKIE}={token}; Max-Age=20; Path={PREFIX}; HttpOnly; Secure; SameSite=Strict"
+            f"{COOKIE}={token}; Path={PREFIX}; HttpOnly; Secure; SameSite=Strict"
             if token else None
         )
         self.respond(status, cookie=cookie)
+
+    def session_token(self):
+        try:
+            token = SimpleCookie(self.headers.get("Cookie"))[COOKIE].value
+        except (CookieError, KeyError):
+            return None
+        return token if re.fullmatch(r"[A-Za-z0-9_-]{43}", token) else None
+
+    def write_lights(self):
+        token = self.session_token()
+        if token is None:
+            self.respond(401)
+            return
+        try:
+            if (int(self.headers.get("Content-Length", "0")) != 16 or
+                    self.headers.get_content_type() != "application/octet-stream"):
+                raise ValueError
+            frame = self.rfile.read(16)
+            if (
+                len(frame) != 16 or frame[0] not in (0x14, 0x15)
+                or frame[4] != (0x7D if frame[0] == 0x14 else 0)
+                or any(frame[5:12]) or frame[12] > 35 or frame[13:] != b"\x00\x00\x01"
+            ):
+                raise ValueError
+        except (ValueError, TimeoutError):
+            self.respond(400)
+            return
+        self.respond(self.server.sessions.set_light(token, frame))
 
     def do_GET(self):
         if self.path == PREFIX + "status":
@@ -187,13 +258,8 @@ class RelayHandler(BaseHTTPRequestHandler):
         if self.path != PREFIX + "events":
             self.respond(404)
             return
-        try:
-            cookie = SimpleCookie(self.headers.get("Cookie"))
-            token = cookie[COOKIE].value
-        except (CookieError, KeyError):
-            self.respond(401)
-            return
-        if not re.fullmatch(r"[A-Za-z0-9_-]{43}", token):
+        token = self.session_token()
+        if token is None:
             self.respond(401)
             return
         status = self.server.sessions.claim(token)
@@ -207,7 +273,7 @@ class RelayHandler(BaseHTTPRequestHandler):
             self.send_header("X-Accel-Buffering", "no")
             self.end_headers()
             self.wfile.write(b": connecting\n\n")
-            asyncio.run(self.server.transport(self.send_event, self.heartbeat))
+            asyncio.run(self.server.transport(self.send_event, self.heartbeat, self.server.sessions.take_light))
         except OSError:
             pass
         except Exception as error:
@@ -216,6 +282,8 @@ class RelayHandler(BaseHTTPRequestHandler):
             self.server.sessions.release()
 
     def send_event(self, event):
+        if event.get("type") == "ready" and event.get("lights") is True:
+            self.server.sessions.enable_lights()
         self.wfile.write(f"event: board\ndata: {json.dumps(event)}\n\n".encode())
 
     def heartbeat(self):
@@ -230,8 +298,8 @@ def main():
     if not re.fullmatch(r"[A-Za-z0-9_-]{32,128}", code):
         raise SystemExit("Set GRANBOARD_PAIRING_CODE to a random 32–128 character URL-safe code.")
 
-    async def transport(send, heartbeat):
-        await stream_board(address, send, heartbeat)
+    async def transport(send, heartbeat, take_light):
+        await stream_board(address, send, heartbeat, take_light)
 
     with RelayServer(("0.0.0.0", 8081), code, transport) as server:
         server.serve_forever()

@@ -5,25 +5,36 @@ import sys
 import threading
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import AsyncMock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "docker" / "granboard"))
-from relay import COOKIE, PREFIX, RelayServer
+from relay import COOKIE, LIGHTS, NOTIFY, PREFIX, RelayServer, stream_board
 
 CODE = "test_code_for_the_fake_board_only"
+LIGHT = bytes([0x15, 0, 200, 95, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 1])
 
 
 class RelayTest(unittest.TestCase):
     def setUp(self):
         self.release = threading.Event()
         self.board_requested = threading.Event()
+        self.light_received = threading.Event()
+        self.frame = None
 
-        async def simulated_board(send, heartbeat):
+        async def simulated_board(send, heartbeat, take_light):
             self.board_requested.set()
-            send({"type": "ready"})
+            send({"type": "ready", "lights": True})
             send({"type": "hit", "sequence": 1, "frame": "3.4@"})
             send({"type": "hit", "sequence": 2, "frame": "3.4@"})
             heartbeat()
-            await asyncio.to_thread(self.release.wait, 2)
+            for _ in range(200):
+                if self.release.is_set():
+                    break
+                if (frame := take_light()) is not None:
+                    self.frame = frame
+                    self.light_received.set()
+                await asyncio.sleep(0.01)
 
         self.server = RelayServer(("127.0.0.1", 0), CODE, simulated_board)
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
@@ -59,6 +70,12 @@ class RelayTest(unittest.TestCase):
         self.assertIn("Path=" + PREFIX, cookie)
         token = cookie.split(";", 1)[0]
         self.assertTrue(token.startswith(COOKIE + "="))
+        def light(frame=LIGHT, **headers):
+            return self.request("POST", "lights", body=frame, headers={
+                "Content-Type": "application/octet-stream", "Cookie": token, **headers,
+            })
+
+        self.assertEqual(light().status, 401)
         stream = self.request("GET", "events", headers={"Cookie": token})
         self.addCleanup(stream.close)
         self.assertEqual(stream.status, 200)
@@ -69,7 +86,7 @@ class RelayTest(unittest.TestCase):
         self.assertEqual(stream.readline().strip(), b": connecting")
         self.assertEqual(stream.readline().strip(), b"")
         for event in [
-            {"type": "ready"},
+            {"type": "ready", "lights": True},
             {"type": "hit", "sequence": 1, "frame": "3.4@"},
             {"type": "hit", "sequence": 2, "frame": "3.4@"},
         ]:
@@ -78,14 +95,69 @@ class RelayTest(unittest.TestCase):
             self.assertEqual(stream.readline().strip(), b"")
         self.assertEqual(stream.readline().strip(), b": heartbeat")
         self.assertTrue(self.board_requested.is_set())
+        self.assertEqual(light(**{"Sec-Fetch-Site": "cross-site"}).status, 403)
+        self.assertEqual(light(b"\x10" + LIGHT[1:]).status, 400)
+        self.assertEqual(light(Cookie="").status, 401)
+        self.assertEqual(light().status, 204)
+        self.assertTrue(self.light_received.wait(1))
+        self.assertEqual(self.frame, LIGHT)
         self.release.set()
         stream.read()
+        self.assertEqual(light().status, 401)
         self.assertEqual(self.request("GET", "events", headers={"Cookie": token}).status, 401)
 
     def test_rejects_cross_site_and_limits_failed_pairing(self):
         self.assertEqual(self.pair(**{"Sec-Fetch-Site": "cross-site"}).status, 403)
         self.assertEqual(self.pair(code="wrong").status, 403)
         self.assertEqual(self.pair().status, 429)
+
+
+class BoardTransportTest(unittest.IsolatedAsyncioTestCase):
+    async def test_forwards_an_impact_and_writes_the_ring_over_bluetooth(self):
+        notify = SimpleNamespace(uuid=NOTIFY, properties=["notify"])
+        output = SimpleNamespace(uuid=LIGHTS, properties=["write-without-response"])
+        service = SimpleNamespace(characteristics=[notify, output])
+        events = []
+        writes = []
+        subscriptions = []
+
+        class Board:
+            services = SimpleNamespace(get_service=lambda _: service)
+
+            def __init__(self, _, disconnected_callback, timeout):
+                self.disconnect = disconnected_callback
+
+            async def __aenter__(self):
+                return self
+
+            async def __aexit__(self, *_):
+                pass
+
+            async def start_notify(self, characteristic, notify_hit):
+                subscriptions.append(characteristic)
+                notify_hit(characteristic, b"3.4@")
+
+            async def write_gatt_char(self, characteristic, frame, *, response):
+                writes.append((characteristic, frame, response))
+                # Let the transport drain the recorded hit before losing the board.
+                asyncio.get_running_loop().call_later(0.015, self.disconnect, None)
+
+        def take_light():
+            return LIGHT if len(events) == 2 else None
+
+        scanner = SimpleNamespace(find_device_by_address=AsyncMock(return_value="board"))
+        with patch.dict(sys.modules, {
+            "bleak": SimpleNamespace(BleakClient=Board, BleakScanner=scanner),
+            "bleak.exc": SimpleNamespace(BleakError=type("BleakError", (Exception,), {})),
+        }):
+            await asyncio.wait_for(stream_board("A", events.append, lambda: None, take_light), 1)
+
+        self.assertEqual(subscriptions, [notify])
+        self.assertEqual(events, [
+            {"type": "ready", "lights": True},
+            {"type": "hit", "sequence": 1, "frame": "3.4@"},
+        ])
+        self.assertEqual(writes, [(output, LIGHT, False)])
 
 
 if __name__ == "__main__":

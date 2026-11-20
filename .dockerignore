@@ -15,6 +15,7 @@
 !docker/
 !docker/nginx.conf
 !docker/granboard-proxy.conf
+!docker/start-nginx.sh
 !docker/granboard/
 !docker/granboard/Dockerfile
 !docker/granboard/relay.py

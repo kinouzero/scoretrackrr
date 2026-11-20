@@ -5,6 +5,8 @@ services:
     build: .
     image: '${SCORETRACKRR_IMAGE:-ghcr.io/kinouzero/scoretrackrr:0.2.0}'
     restart: unless-stopped
+    environment:
+      GRANBOARD_HOST: '${GRANBOARD_HOST:-granboard}'
     ports:
       - '${SCORETRACKRR_BIND_ADDRESS:-127.0.0.1}:${SCORETRACKRR_PORT:-8090}:8080'
     read_only: true

@@ -464,6 +464,15 @@
   "granboard.ready": {
     "defaultMessage": "Activer la cible pour ce tour"
   },
+  "granboard.visitComplete": {
+    "defaultMessage": "Volée terminée · {name}"
+  },
+  "granboard.waitForButton": {
+    "defaultMessage": "Retire les fléchettes, puis appuie sur le bouton de la cible."
+  },
+  "granboard.nextPlayer": {
+    "defaultMessage": "Joueur suivant"
+  },
   "granboard.armed": {
     "defaultMessage": "Impacts enregistrés pour ce tour"
   },

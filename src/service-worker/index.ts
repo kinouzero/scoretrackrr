@@ -77,12 +77,12 @@ self.addEventListener('message', (event) => {
           return;
         }
         const url = new URL(source.url);
-        // Client.url can still be the document's entry URL after client-side navigation.
-        const pathname = message.pathname === undefined ? url.pathname : message.pathname;
+        // Older Settings clients send no path. Client.url can still be their entry URL.
+        const pathname = message.pathname;
         if (
           url.origin !== self.location.origin ||
-          typeof pathname !== 'string' ||
-          pathname.replace(/\/$/, '') !== '/settings' ||
+          (pathname !== undefined &&
+            (typeof pathname !== 'string' || pathname.replace(/\/$/, '') !== '/settings')) ||
           !self.registration.waiting
         ) {
           reply('unavailable');

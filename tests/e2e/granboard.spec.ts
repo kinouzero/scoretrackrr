@@ -70,9 +70,11 @@ async function mockBluetooth(page: Page) {
     };
     let sounds = 0;
     class MockAudio {
-      state = 'running';
+      state = 'suspended';
       currentTime = 0;
-      resume = async () => {};
+      resume = async () => {
+        this.state = 'running';
+      };
       close = async () => {};
       createGain = () => ({
         gain: { setValueAtTime() {}, exponentialRampToValueAtTime() {} },
@@ -165,10 +167,13 @@ test('direct Bluetooth survives a pause and leg change, then closes on cancellat
   await emit('4.0@');
   await arm(page).click();
   await emit('3.4@', '3.4@', '3.4@', '4.0@');
+  await expect(page.getByRole('heading', { name: 'Volée terminée · Alice' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Enregistrer la fléchette' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Au tour de Bob', exact: true })).toHaveCount(0);
+  await emit('BTN@');
   await expect(page.getByRole('heading', { name: 'Au tour de Bob', exact: true })).toBeVisible();
   await expect(scores).toContainText('Alice121');
   await expect(scores).toContainText('Bob301');
-  await arm(page).click();
   await emit('4.0@');
   await expect(scores).toContainText('Bob251');
   await page.getByRole('button', { name: 'Annuler la dernière saisie' }).click();
@@ -190,8 +195,9 @@ test('direct Bluetooth survives a pause and leg change, then closes on cancellat
   await expect(browserState).toHaveAttribute('data-board-connections', '1');
   await arm(page).click();
   await emit('3.4@', '3.4@', '3.4@');
+  await expect(page.getByRole('heading', { name: 'Volée terminée · Bob' })).toBeVisible();
+  await page.getByRole('button', { name: 'Joueur suivant', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Au tour de Alice', exact: true })).toBeVisible();
-  await arm(page).click();
   await emit('3.4@', '3.1@', '6.6@');
   const nextLeg = page.getByRole('button', { name: 'Démarrer le leg 2', exact: true });
   await expect(nextLeg).toBeVisible();
@@ -282,6 +288,15 @@ test('relay restores the connection without replaying hits or rearming the visit
             options?.method === 'POST' && options.body === '{"code":"test-pairing"}' ? 204 : 403,
         });
       }
+      if (resource === '/api/granboard/lights') {
+        if (options?.method !== 'POST' || !(options.body instanceof Uint8Array))
+          return new Response(null, { status: 400 });
+        const element = document.documentElement;
+        element.dataset.relayLights = [element.dataset.relayLights, options.body[0]]
+          .filter(Boolean)
+          .join(',');
+        return new Response(null, { status: 204 });
+      }
       return fetch(resource, options);
     };
     class BoardStream extends EventTarget {
@@ -291,7 +306,7 @@ test('relay restores the connection without replaying hits or rearming the visit
         if (url !== '/api/granboard/events') throw new Error('Events path');
         document.documentElement.dataset.boardStreams = String(++streams);
         window.addEventListener('test-relay', this.relay);
-        queueMicrotask(() => this.send({ type: 'ready' }));
+        queueMicrotask(() => this.send({ type: 'ready', lights: true }));
       }
       send(data: unknown) {
         this.dispatchEvent(new MessageEvent('board', { data: JSON.stringify(data) }));
@@ -322,6 +337,7 @@ test('relay restores the connection without replaying hits or rearming the visit
   await emit(1);
   await emit(1);
   await expect(grid.getByLabel('Alice · bull : 2 marque(s) sur 3', { exact: true })).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('data-relay-lights', /(?:^|,)20(?:,|$)/);
   await emit(3);
   await expect(page.getByText(/Reconnexion en cours/)).toBeVisible();
   await expect(arm(page)).toBeEnabled();

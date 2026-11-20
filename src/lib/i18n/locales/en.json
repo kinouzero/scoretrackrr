@@ -464,6 +464,15 @@
   "granboard.ready": {
     "defaultMessage": "Enable board for this turn"
   },
+  "granboard.visitComplete": {
+    "defaultMessage": "Visit complete · {name}"
+  },
+  "granboard.waitForButton": {
+    "defaultMessage": "Remove the darts, then press the button on the board."
+  },
+  "granboard.nextPlayer": {
+    "defaultMessage": "Next player"
+  },
   "granboard.armed": {
     "defaultMessage": "Recording hits for this turn"
   },

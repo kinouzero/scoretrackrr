@@ -13,11 +13,12 @@ FROM nginx:1.30.6-alpine AS runtime
 LABEL org.opencontainers.image.licenses="MIT"
 COPY LICENSE /usr/share/licenses/scoretrackrr/LICENSE
 COPY docker/nginx.conf /etc/nginx/nginx.conf
-COPY docker/granboard-proxy.conf /etc/nginx/scoretrackrr.d/granboard.conf
+COPY docker/granboard-proxy.conf /etc/nginx/granboard-proxy.conf
+COPY --chmod=755 docker/start-nginx.sh /usr/local/bin/scoretrackrr-nginx
 COPY --from=build /app/build/ /usr/share/nginx/html/
 USER nginx
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
     CMD ["wget", "-q", "--spider", "http://127.0.0.1:8080/"]
-ENTRYPOINT ["nginx"]
+ENTRYPOINT ["/usr/local/bin/scoretrackrr-nginx"]
 CMD ["-g", "daemon off;"]

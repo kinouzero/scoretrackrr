@@ -14,16 +14,23 @@ function ledFrame(animation: number, color: Color, speed: number) {
 
 export const readyLight = () => ledFrame(0x15, [0, 200, 95], 10);
 
-export function impactLight(hit: BoardHit, bust: boolean) {
-  const color: Color = bust
-    ? [240, 35, 35]
-    : hit.sector === 25
-      ? [225, 110, 10]
-      : hit.multiplier === 3
-        ? [185, 55, 240]
-        : hit.multiplier === 2
-          ? [25, 110, 250]
-          : [10, 200, 135];
+export function impactLight(hit: BoardHit, outcome: ImpactOutcome) {
+  const color: Color =
+    outcome === 'win'
+      ? [255, 220, 95]
+      : outcome === 'bust'
+        ? [240, 35, 35]
+        : hit.sector === 0
+          ? [190, 85, 50]
+          : hit.sector === 25
+            ? hit.multiplier === 2
+              ? [250, 40, 110]
+              : [225, 110, 10]
+            : hit.multiplier === 3
+              ? [185, 55, 240]
+              : hit.multiplier === 2
+                ? [25, 110, 250]
+                : [10, 200, 135];
   const frame = ledFrame(0x14, color, 20);
   frame[4] = 125;
   return frame;
@@ -60,7 +67,7 @@ export function playImpact(audio: AudioContext, hit: BoardHit, outcome: ImpactOu
     const time = now + index * step;
     oscillator.frequency.setValueAtTime(frequency, time);
     gain.gain.setValueAtTime(0.001, time);
-    gain.gain.exponentialRampToValueAtTime(0.12, time + 0.009);
+    gain.gain.exponentialRampToValueAtTime(0.23, time + 0.009);
     gain.gain.exponentialRampToValueAtTime(0.001, time + step * 0.9);
   });
   oscillator.connect(gain).connect(audio.destination);

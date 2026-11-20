@@ -97,7 +97,9 @@
     if (!matchId || !database || !watch) return;
     const subscription = watch(() => database.matches.get(matchId)).subscribe({
       next(match) {
-        if (!match || match.status === 'finished' || match.status === 'cancelled') {
+        if (match?.status === 'finished') {
+          granBoard.finish(matchId);
+        } else if (!match || match.status === 'cancelled') {
           granBoard.stop(matchId);
         }
       },

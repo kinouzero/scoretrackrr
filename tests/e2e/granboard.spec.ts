@@ -141,7 +141,19 @@ test('direct Bluetooth survives a pause and leg change, then closes on cancellat
   page,
 }) => {
   await mockBluetooth(page);
+  await page.addInitScript(() => {
+    const fetch = window.fetch.bind(window);
+    window.fetch = (resource, options) => {
+      if (resource === '/api/granboard/status') {
+        document.documentElement.dataset.relayProbed = 'true';
+        return Promise.resolve(Response.json({ protocol: 'granboard-v1' }));
+      }
+      return fetch(resource, options);
+    };
+  });
   await createMatch(page, '301 · sortie double', true);
+  await expect(page.getByLabel('Code de connexion au relais')).toHaveCount(0);
+  await expect(page.locator('html')).not.toHaveAttribute('data-relay-probed', 'true');
   const emit = (...frames: string[]) =>
     page.evaluate(
       (detail) => window.dispatchEvent(new CustomEvent('test-board', { detail })),
@@ -259,6 +271,7 @@ test('relay restores the connection without replaying hits or rearming the visit
   page,
 }) => {
   await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'bluetooth', { value: undefined });
     const fetch = window.fetch.bind(window);
     let streams = 0;
     window.fetch = async (resource, options) => {
@@ -294,6 +307,9 @@ test('relay restores the connection without replaying hits or rearming the visit
     Object.defineProperty(window, 'EventSource', { value: BoardStream });
   });
   await createMatch(page, 'Cricket · points classiques');
+  await expect(
+    page.getByRole('button', { name: 'Connecter en Bluetooth', exact: true }),
+  ).toHaveCount(0);
   await page.getByLabel('Code de connexion au relais').fill('test-pairing');
   await page.getByRole('button', { name: 'Connecter via le relais', exact: true }).click();
   await arm(page).click();

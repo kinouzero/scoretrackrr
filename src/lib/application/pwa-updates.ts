@@ -187,7 +187,8 @@ export class PwaUpdates {
     if (this.value.applying) return;
     const container = this.container;
     const worker = this.registration?.waiting;
-    if (!container || !worker || window.location.pathname.replace(/\/$/, '') !== '/settings') {
+    const pathname = window.location.pathname;
+    if (!container || !worker || pathname.replace(/\/$/, '') !== '/settings') {
       this.syncWaiting();
       this.set({ error: 'activationFailed' });
       return;
@@ -234,7 +235,7 @@ export class PwaUpdates {
     this.set({ applying: true, error: '' });
     if (this.cancelActivation !== cleanup) return;
     try {
-      worker.postMessage({ type: 'SCORETRACKRR_APPLY_UPDATE' }, [channel.port2]);
+      worker.postMessage({ type: 'SCORETRACKRR_APPLY_UPDATE', pathname }, [channel.port2]);
     } catch {
       fail('activationFailed');
     }

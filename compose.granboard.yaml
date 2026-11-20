@@ -1,10 +1,5 @@
 services:
-  app:
-    volumes:
-      - ./docker/granboard-proxy.conf:/etc/nginx/scoretrackrr.d/granboard.conf:ro
-
   granboard:
-    profiles: [granboard]
     image: '${GRANBOARD_IMAGE:-ghcr.io/kinouzero/scoretrackrr:granboard-0.2.0}'
     build:
       context: .

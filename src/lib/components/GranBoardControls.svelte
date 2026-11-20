@@ -1,12 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { messages } from '#lib/i18n/index';
-  import {
-    bluetooth,
-    bluetoothConnector,
-    connectRelay,
-    relayAvailable,
-  } from '#lib/application/granboard/connection';
+  import { bluetooth, bluetoothConnector } from '#lib/application/granboard/bluetooth';
+  import { connectRelay, relayAvailable } from '#lib/application/granboard/relay';
   import type { BoardHit } from '#lib/application/granboard/protocol';
   import { granBoard } from '../application/granboard/session.svelte';
   import Icon from './Icon.svelte';
@@ -62,8 +58,8 @@
     const discovery = new AbortController();
     const detach = granBoard.listen(matchId, onhit, onnext);
     secureContext = window.isSecureContext;
-    if (secureContext) {
-      direct = Boolean(bluetooth());
+    direct = secureContext && typeof bluetooth()?.requestDevice === 'function';
+    if (secureContext && !direct) {
       void relayAvailable(discovery.signal)
         .then((available) => {
           relay = available;

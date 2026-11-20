@@ -15,8 +15,10 @@ CODE = "test_code_for_the_fake_board_only"
 class RelayTest(unittest.TestCase):
     def setUp(self):
         self.release = threading.Event()
+        self.board_requested = threading.Event()
 
         async def simulated_board(send, heartbeat):
+            self.board_requested.set()
             send({"type": "ready"})
             send({"type": "hit", "sequence": 1, "frame": "3.4@"})
             send({"type": "hit", "sequence": 2, "frame": "3.4@"})
@@ -48,8 +50,10 @@ class RelayTest(unittest.TestCase):
         self.assertEqual(status.status, 200)
         self.assertEqual(json.load(status), {"protocol": "granboard-v1"})
         self.assertEqual(self.request("GET", "events").status, 401)
+        self.assertFalse(self.board_requested.is_set())
         response = self.pair()
         self.assertEqual(response.status, 204)
+        self.assertFalse(self.board_requested.is_set())
         cookie = response.getheader("Set-Cookie")
         self.assertIn("HttpOnly; Secure; SameSite=Strict", cookie)
         self.assertIn("Path=" + PREFIX, cookie)
@@ -73,6 +77,7 @@ class RelayTest(unittest.TestCase):
             self.assertEqual(json.loads(stream.readline().removeprefix(b"data: ")), event)
             self.assertEqual(stream.readline().strip(), b"")
         self.assertEqual(stream.readline().strip(), b": heartbeat")
+        self.assertTrue(self.board_requested.is_set())
         self.release.set()
         stream.read()
         self.assertEqual(self.request("GET", "events", headers={"Cookie": token}).status, 401)

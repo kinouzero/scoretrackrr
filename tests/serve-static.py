@@ -71,7 +71,7 @@ class StaticHandler(SimpleHTTPRequestHandler):
 
     def send_head(self):
         if self.headers.get("X-Scoretrackrr-Test-Offline") == "1":
-            self.send_error(503, "HTTP disabled for cached-PWA peer tests")
+            self.send_error(503, "HTTP disabled for cached PWA tests")
             return None
         return super().send_head()
 

@@ -141,6 +141,10 @@ it('reloads exactly once after accepting the expected new controller', async () 
   updates.apply();
   updates.apply();
   expect(worker.postMessage).toHaveBeenCalledTimes(1);
+  expect(worker.postMessage).toHaveBeenCalledWith(
+    { type: 'SCORETRACKRR_APPLY_UPDATE', pathname: '/settings/' },
+    [expect.any(MessagePort)],
+  );
   await vi.waitFor(() => expect(get(updates).applying).toBe(true));
   container.controller = new Worker();
   container.dispatchEvent(new Event('controllerchange'));

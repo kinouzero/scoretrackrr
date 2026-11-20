@@ -13,6 +13,7 @@ FROM nginx:1.30.6-alpine AS runtime
 LABEL org.opencontainers.image.licenses="MIT"
 COPY LICENSE /usr/share/licenses/scoretrackrr/LICENSE
 COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/granboard-proxy.conf /etc/nginx/scoretrackrr.d/granboard.conf
 COPY --from=build /app/build/ /usr/share/nginx/html/
 USER nginx
 EXPOSE 8080

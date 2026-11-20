@@ -63,7 +63,7 @@ self.addEventListener('fetch', (event) => {
 });
 
 self.addEventListener('message', (event) => {
-  const message = event.data as { type?: unknown } | null;
+  const message = event.data as { type?: unknown; pathname?: unknown } | null;
   const port = event.ports[0];
   if (!message || message.type !== 'SCORETRACKRR_APPLY_UPDATE' || !port) return;
   event.waitUntil(
@@ -77,9 +77,12 @@ self.addEventListener('message', (event) => {
           return;
         }
         const url = new URL(source.url);
+        // Client.url can still be the document's entry URL after client-side navigation.
+        const pathname = message.pathname === undefined ? url.pathname : message.pathname;
         if (
           url.origin !== self.location.origin ||
-          url.pathname.replace(/\/$/, '') !== '/settings' ||
+          typeof pathname !== 'string' ||
+          pathname.replace(/\/$/, '') !== '/settings' ||
           !self.registration.waiting
         ) {
           reply('unavailable');

@@ -56,6 +56,18 @@ async function createPlayer(page: Page, name: string) {
   await page.getByRole('button', { name: 'Enregistrer le profil', exact: true }).click();
   await expect(page.getByRole('dialog')).not.toBeVisible();
 }
+test('applies an update after opening Settings from the app home', async ({ page, context }) => {
+  await installed(page, context, 'settings-link');
+  await page.goto('/');
+  await page.evaluate(() => {
+    document.documentElement.dataset.settingsNavigation = 'same-document';
+  });
+  await page.getByRole('link', { name: 'Réglages', exact: true }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-settings-navigation', 'same-document');
+  await prepare(page, context, 'settings-link-b');
+  await apply(page);
+  await expect(panel(page).getByRole('alert')).toHaveCount(0);
+});
 test('detects a real waiting worker, defers without losing a draft and applies offline preserving saved profiles', async ({
   page,
   context,

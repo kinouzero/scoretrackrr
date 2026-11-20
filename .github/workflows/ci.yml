@@ -159,17 +159,28 @@ jobs:
             echo "ghcr=ghcr.io/${REPOSITORY,,}"
             echo "dockerhub=docker.io/$DOCKERHUB_USERNAME/scoretrackrr"
           } >> "$GITHUB_OUTPUT"
-      - name: Verify the published Compose image versions
+      - name: Package and verify the release Compose files
+        id: compose_bundle
         if: ${{ !inputs.granboard_release_tag }}
         env:
           GHCR_IMAGE: ${{ steps.images.outputs.ghcr }}
           VERSION: ${{ steps.source.outputs.version }}
         run: |
-          web=$(docker compose --env-file /dev/null config --images)
-          images=$(docker compose --env-file /dev/null -f compose.yaml -f compose.granboard.yaml --profile granboard config --images)
+          compose_archive="$RUNNER_TEMP/scoretrackrr-compose-$GITHUB_REF_NAME.tar.gz"
+          git archive --format=tar.gz --output="$compose_archive" HEAD \
+            compose.yaml compose.granboard.yaml docker/granboard/.env.example
+          bundle=$(mktemp -d "$RUNNER_TEMP/scoretrackrr-compose.XXXXXXXX")
+          tar -xzf "$compose_archive" -C "$bundle"
+          compose=(docker compose --env-file /dev/null -f "$bundle/compose.yaml")
+          web=$("${compose[@]}" config --images)
+          test "$("${compose[@]}" config --services)" = app
+          compose+=(-f "$bundle/compose.granboard.yaml")
+          test "$("${compose[@]}" config --services | sort)" = $'app\ngranboard'
+          images=$("${compose[@]}" config --images)
           test "$web" = "$GHCR_IMAGE:$VERSION"
           grep -Fxq "$web" <<< "$images"
           grep -Fxq "$GHCR_IMAGE:granboard-$VERSION" <<< "$images"
+          echo "archive=$compose_archive" >> "$GITHUB_OUTPUT"
       - name: Set up ARM emulation
         uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4
@@ -237,6 +248,7 @@ jobs:
           REPO_URL: ${{ github.server_url }}/${{ github.repository }}
           WEB_DIGEST: ${{ steps.web.outputs.digest }}
           RELAY_DIGEST: ${{ steps.relay.outputs.digest }}
+          COMPOSE_ARCHIVE: ${{ steps.compose_bundle.outputs.archive }}
         run: |
           notes="$RUNNER_TEMP/release-notes.md"
           cat > "$notes" <<EOF
@@ -259,7 +271,5 @@ jobs:
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
             echo 'Release already exists; leaving its notes and assets unchanged.'
           else
-            compose_archive="$RUNNER_TEMP/scoretrackrr-compose-$GITHUB_REF_NAME.tar.gz"
-            git archive --format=tar.gz --output="$compose_archive" HEAD compose.yaml compose.granboard.yaml docker/granboard-proxy.conf
-            gh release create "$GITHUB_REF_NAME" --verify-tag --title "$GITHUB_REF_NAME" --generate-notes --notes-file "$notes" "$compose_archive"
+            gh release create "$GITHUB_REF_NAME" --verify-tag --title "$GITHUB_REF_NAME" --generate-notes --notes-file "$notes" "$COMPOSE_ARCHIVE"
           fi

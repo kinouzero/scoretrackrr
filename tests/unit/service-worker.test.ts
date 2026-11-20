@@ -66,11 +66,14 @@ function request(path: string, method = 'GET') {
   });
   return response;
 }
-function update(source: unknown = { id: 'settings-client', url: origin + '/settings/' }) {
+function update(
+  source: unknown = { id: 'settings-client', url: origin + '/settings/' },
+  pathname?: unknown,
+) {
   const postMessage = vi.fn();
   const close = vi.fn();
   const result = lifetime('message', {
-    data: { type: 'SCORETRACKRR_APPLY_UPDATE' },
+    data: { type: 'SCORETRACKRR_APPLY_UPDATE', pathname },
     source,
     ports: [{ postMessage, close }],
   });
@@ -181,8 +184,11 @@ it.each([[{ id: 'settings-client' }, { id: 'other-client' }], [{ id: 'other-clie
     expect(skipWaiting).not.toHaveBeenCalled();
   },
 );
-it('acknowledges an explicit sole Settings client before activation', async () => {
-  const action = update({ id: 'settings-client', url: origin + '/settings' });
+it.each([
+  ['/settings', undefined],
+  ['/', '/settings/'],
+])('acknowledges an explicit sole Settings client (entry=%s, route=%s)', async (entry, route) => {
+  const action = update({ id: 'settings-client', url: origin + entry }, route);
   await action.result;
   expect(action.postMessage).toHaveBeenCalledWith({
     type: 'SCORETRACKRR_UPDATE_RESULT',
@@ -190,6 +196,18 @@ it('acknowledges an explicit sole Settings client before activation', async () =
   });
   expect(skipWaiting).toHaveBeenCalledOnce();
   expect(action.close).toHaveBeenCalledOnce();
+});
+it.each([
+  [origin + '/settings/', '/games/'],
+  [origin + '/settings/', null],
+  ['https://other.example/', '/settings/'],
+])('refuses an invalid sender or current route (entry=%s, route=%s)', async (url, route) => {
+  const action = update({ id: 'settings-client', url }, route);
+  await action.result;
+  expect(action.postMessage).toHaveBeenCalledWith(
+    expect.objectContaining({ status: 'unavailable' }),
+  );
+  expect(skipWaiting).not.toHaveBeenCalled();
 });
 it('reports an unavailable update after a browser client-query failure', async () => {
   matchAll.mockRejectedValue(new Error('browser unavailable'));

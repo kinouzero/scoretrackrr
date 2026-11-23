@@ -2,7 +2,6 @@
   import EntrySituation from './EntrySituation.svelte';
   import ScorePreview from './ScorePreview.svelte';
   import { entryDraft } from '../application/entry-draft.svelte';
-  import GameRules from './GameRules.svelte';
   import Icon from './Icon.svelte';
   import GameHeader, { type HeaderRenderer } from './GameHeader.svelte';
   import { onMount } from 'svelte';
@@ -220,11 +219,7 @@
   {/if}
 {/snippet}
 
-{#snippet rules()}
-  <GameRules {match} />
-{/snippet}
-
-<GameHeader renderer={header} {actions} {rules} />
+<GameHeader renderer={header} {actions} />
 
 <section class="game-play-area times-up-controls" aria-labelledby="times-up-title">
   <h2 id="times-up-title">{header ? messages.matches.scoreEntry : messages.timesUp.title}</h2>

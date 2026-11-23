@@ -5,8 +5,7 @@ export function initialX01Start(value: unknown): number {
   return typeof value === 'number' && x01StartingScores.includes(value) ? value : 301;
 }
 
-export type GameSetting =
-  'upperBonus' | 'target10000' | 'entry500' | 'cricket' | 'doubleOut' | 'cricketPoints';
+export type GameSetting = 'upperBonus' | 'target10000' | 'entry500' | 'doubleOut' | 'cricketPoints';
 export function gameSettings(
   version: GameVersionRecord,
 ): readonly { key: GameSetting; enabled: boolean }[] {
@@ -19,14 +18,8 @@ export function gameSettings(
     ];
   if (version.gameId === 'darts')
     return rules.engine === 'cricket'
-      ? [
-          { key: 'cricket', enabled: true },
-          { key: 'cricketPoints', enabled: rules.points === true },
-        ]
-      : [
-          { key: 'cricket', enabled: false },
-          { key: 'doubleOut', enabled: rules.doubleOut === true },
-        ];
+      ? [{ key: 'cricketPoints', enabled: rules.points === true }]
+      : [{ key: 'doubleOut', enabled: rules.doubleOut === true }];
   return [];
 }
 export function versionForSetting(
@@ -44,10 +37,6 @@ export function versionForSetting(
       target: key === 'target10000' ? (enabled ? 10000 : 5000) : rules.target!,
       entry: key === 'entry500' ? (enabled ? 500 : 0) : rules.entry!,
     };
-  else if (key === 'cricket')
-    desired = enabled
-      ? { engine: 'cricket', points: true }
-      : { engine: 'x01', start: 301, doubleOut: true };
   else if (rules.engine === 'cricket') desired = { engine: 'cricket', points: enabled };
   else
     desired = {

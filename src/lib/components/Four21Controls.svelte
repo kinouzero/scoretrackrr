@@ -2,7 +2,6 @@
   import EntrySituation from './EntrySituation.svelte';
   import ScorePreview from './ScorePreview.svelte';
   import { entryDraft } from '../application/entry-draft.svelte';
-  import GameRules from './GameRules.svelte';
   import Icon from './Icon.svelte';
   import GameHeader, { type HeaderRenderer } from './GameHeader.svelte';
   import type { MatchRecord } from '#lib/domain/records';
@@ -161,11 +160,7 @@
   {/if}
 {/snippet}
 
-{#snippet rules()}
-  <GameRules {match} />
-{/snippet}
-
-<GameHeader renderer={header} {actions} {rules} />
+<GameHeader renderer={header} {actions} />
 
 <section class="game-play-area stack" aria-labelledby="four21-title">
   <h2 id="four21-title">{header ? messages.matches.scoreEntry : messages.four21.title}</h2>

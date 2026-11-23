@@ -98,6 +98,17 @@ describe('saved match option presentation', () => {
     ]);
     expect(labels(saved, 'en').join(' ')).not.toContain(saved.rulesSnapshot.rulesetVersion);
   });
+  it('keeps the saved best-of totals distinct from the win targets in mixed formats', () => {
+    const saved = match(cricketVersion(true, ''), {
+      settingsSnapshot: {
+        dartsMatch: { legsToWin: 3, legsFormat: 'bestOf', setsToWin: 2 },
+      },
+    });
+    expect(labels(saved)).toEqual(
+      expect.arrayContaining(['Premier à 2 sets', 'Au meilleur de 5 legs par set']),
+    );
+    expect(labels(saved, 'en')).toContain('Best of 5 legs per set');
+  });
   it.each([false, true])('distinguishes Cricket scoring from X01: %s', (points) => {
     const options = labels(match(cricketVersion(points, '')));
     expect(options).toContain('Cricket');

@@ -2,7 +2,6 @@
   import EntrySituation from './EntrySituation.svelte';
   import ScorePreview from './ScorePreview.svelte';
   import { entryDraft } from '../application/entry-draft.svelte';
-  import GameRules from './GameRules.svelte';
   import Icon from './Icon.svelte';
   import GameHeader, { type HeaderRenderer } from './GameHeader.svelte';
   import { tick } from 'svelte';
@@ -250,11 +249,7 @@
   {/if}
 {/snippet}
 
-{#snippet rules()}
-  <GameRules {match} />
-{/snippet}
-
-<GameHeader renderer={header} {actions} {rules} />
+<GameHeader renderer={header} {actions} />
 
 <section class="game-play-area generic-controls" aria-labelledby="generic-controls-title">
   <h2 id="generic-controls-title" bind:this={heading} tabindex="-1">

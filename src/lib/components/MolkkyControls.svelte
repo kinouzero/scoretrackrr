@@ -2,7 +2,6 @@
   import EntrySituation from './EntrySituation.svelte';
   import ScorePreview from './ScorePreview.svelte';
   import { entryDraft } from '../application/entry-draft.svelte';
-  import GameRules from './GameRules.svelte';
   import Icon from './Icon.svelte';
   import GameHeader, { type HeaderRenderer } from './GameHeader.svelte';
   import type { MatchRecord } from '#lib/domain/records';
@@ -163,11 +162,7 @@
   {/if}
 {/snippet}
 
-{#snippet rules()}
-  <GameRules {match} />
-{/snippet}
-
-<GameHeader renderer={header} {actions} {rules} />
+<GameHeader renderer={header} {actions} />
 
 <section class="game-play-area molkky-controls" aria-labelledby="molkky-title">
   <h2 id="molkky-title">{header ? messages.matches.scoreEntry : messages.molkky.title}</h2>

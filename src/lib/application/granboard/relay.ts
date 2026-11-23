@@ -28,7 +28,7 @@ export async function connectRelay(code: string, signal: AbortSignal, receiver: 
       if (value.type === 'ready' && !ready) {
         ready = true;
         receiver.ready(
-          value.lights === true
+          value.lights === true && value.lightPatterns === true
             ? (frame) => {
                 const write = pendingLight.then(async () => {
                   signal.throwIfAborted();

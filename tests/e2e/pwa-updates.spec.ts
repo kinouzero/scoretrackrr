@@ -207,8 +207,8 @@ test('blocks a running match, then updates a paused match without losing its sco
   for (const name of ['Alice', 'Bob']) await createPlayer(page, name);
   await page.goto('/games/');
   await page
-    .getByRole('article', { name: 'Darts X01 / Cricket', exact: true })
-    .getByRole('link', { name: 'Jouer aux fléchettes', exact: true })
+    .getByRole('article', { name: 'X01', exact: true })
+    .getByRole('link', { name: 'Jouer au X01', exact: true })
     .click();
   const setup = page.getByRole('dialog');
   for (const name of ['Alice', 'Bob'])

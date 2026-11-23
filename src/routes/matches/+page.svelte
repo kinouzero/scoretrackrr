@@ -6,8 +6,10 @@
   import { onMount, tick, untrack, type Snippet } from 'svelte';
   import { SvelteDate } from 'svelte/reactivity';
   import GameControls from '#lib/components/GameControls.svelte';
+  import GameRules from '#lib/components/GameRules.svelte';
   import JournalTimeline from '#lib/components/JournalTimeline.svelte';
   import GameIcon from '#lib/components/GameIcon.svelte';
+  import { catalogGameId } from '#lib/domain/games/catalog';
   import { browser } from '$app/env';
   import { page } from '$app/state';
   import { resolve } from '$app/paths';
@@ -433,15 +435,20 @@
         >{/if}
     </div>
   {:else}
-    <header class="match-page-heading">
+    <header
+      class="match-page-heading"
+      class:darts-heading={detail?.match.rulesSnapshot.gameId === 'darts' &&
+        detail.journal.projection.status === 'in_progress'}
+    >
       {#if !loading && (error || detail?.journal.projection.status !== 'in_progress')}
         <a class="button secondary match-back" href={resolve('/matches')}
           ><Icon name="arrow-left" />{messages.matches.back}</a
         >
       {/if}
       {#if detail && !error}
-        <div class="match-identity" data-game={detail.match.rulesSnapshot.gameId}>
-          <span class="game-art"><GameIcon game={detail.match.rulesSnapshot.gameId} /></span>
+        <div class="match-identity" data-game={catalogGameId(detail.match.rulesSnapshot)}>
+          <span class="game-art"><GameIcon game={catalogGameId(detail.match.rulesSnapshot)} /></span
+          >
           <div class="match-identity-copy">
             <h1>{historyGameName(detail.match)}</h1>
             <span class="badge match-status" data-status={detail.journal.projection.status}
@@ -490,8 +497,8 @@
     <ul class="match-list collection-list" aria-label={messages.matches.list}>
       {#each matches as match (match.id)}
         <li>
-          <article class="panel match-card" data-game={match.rulesSnapshot.gameId}>
-            <span class="game-art"><GameIcon game={match.rulesSnapshot.gameId} /></span>
+          <article class="panel match-card" data-game={catalogGameId(match.rulesSnapshot)}>
+            <span class="game-art"><GameIcon game={catalogGameId(match.rulesSnapshot)} /></span>
             <div class="match-card-body">
               <h2>{historyGameName(match)}</h2>
               <p>{matchParticipants(match)}</p>
@@ -619,7 +626,7 @@
   {@const currentDetail = detail}
   <div hidden={!selected}>
     <div class="match-detail">
-      {#snippet matchHeader(actions?: Snippet, rules?: Snippet)}
+      {#snippet matchHeader(actions?: Snippet, scoreboard?: Snippet)}
         <div class="match-header">
           <TableMode running={currentDetail.journal.projection.status === 'in_progress'} />
           <MatchOptions match={currentDetail.match} />
@@ -644,43 +651,38 @@
             {@render actions?.()}
             {#if rematchError}<p class="error" role="alert">{rematchError}</p>{/if}
           </div>
-          {#if rules}
-            {#key currentDetail.match.id}
-              <section class="game-rules" aria-label={messages.four21.ruleSummary}>
-                {@render rules()}
-              </section>
-            {/key}
-          {/if}
-          <section class="journal-summary" aria-label={messages.matches.scores}>
-            {#if currentDetail.authorityLock?.state === 'prepared'}<p role="status">
-                {messages.sharing.authorityPrepared}
+          {#if scoreboard}
+            {@render scoreboard()}
+          {:else}<section class="journal-summary" aria-label={messages.matches.scores}>
+              {#if currentDetail.authorityLock?.state === 'prepared'}<p role="status">
+                  {messages.sharing.authorityPrepared}
+                </p>
+              {:else if currentDetail.journal.authority.deviceId && currentDetail.journal.authority.deviceId !== currentDeviceId}<p
+                  role="status"
+                >
+                  {messages.sharing.authorityTransferred}
+                </p>{/if}
+              <ul class="journal-scores" aria-label={messages.matches.scores}>
+                {#each Object.entries(currentDetail.journal.projection.totals) as [id, total] (id)}
+                  {@const team = currentDetail.match.teamsSnapshot.find((team) => team.id === id)}
+                  {@const player = currentDetail.match.playersSnapshot.find(
+                    (player) => player.id === id,
+                  )}
+                  <li>
+                    <span class="score-owner"
+                      >{#if team}<TeamAvatar {team} />{:else if player}<PlayerAvatar
+                          profile={player}
+                        />{/if}{owner(id)}</span
+                    ><strong>{number.format(total)}</strong>
+                  </li>
+                {/each}
+              </ul>
+              <p role="status">
+                {#if currentDetail.journal.projection.winnerIds?.length}{messages.matches.winner(
+                    currentDetail.journal.projection.winnerIds.map(owner).join(', '),
+                  )}{/if}
               </p>
-            {:else if currentDetail.journal.authority.deviceId && currentDetail.journal.authority.deviceId !== currentDeviceId}<p
-                role="status"
-              >
-                {messages.sharing.authorityTransferred}
-              </p>{/if}
-            <ul class="journal-scores" aria-label={messages.matches.scores}>
-              {#each Object.entries(currentDetail.journal.projection.totals) as [id, total] (id)}
-                {@const team = currentDetail.match.teamsSnapshot.find((team) => team.id === id)}
-                {@const player = currentDetail.match.playersSnapshot.find(
-                  (player) => player.id === id,
-                )}
-                <li>
-                  <span class="score-owner"
-                    >{#if team}<TeamAvatar {team} />{:else if player}<PlayerAvatar
-                        profile={player}
-                      />{/if}{owner(id)}</span
-                  ><strong>{number.format(total)}</strong>
-                </li>
-              {/each}
-            </ul>
-            <p role="status">
-              {#if currentDetail.journal.projection.winnerIds?.length}{messages.matches.winner(
-                  currentDetail.journal.projection.winnerIds.map(owner).join(', '),
-                )}{/if}
-            </p>
-          </section>
+            </section>{/if}
         </div>
       {/snippet}
       {#if detail.authorityLock?.state !== 'prepared' && (!detail.journal.authority.deviceId || detail.journal.authority.deviceId === currentDeviceId) && journal && database}<GameControls
@@ -711,6 +713,11 @@
             >
           </div>{/if}
       </section>
+      {#key currentDetail.match.id}
+        <section class="game-rules" aria-label={messages.four21.ruleSummary}>
+          <GameRules match={currentDetail.match} />
+        </section>
+      {/key}
     </div>
   </div>
 {/if}
@@ -746,6 +753,29 @@
   .match-identity h1 {
     font-size: clamp(1.6rem, 4vw, 2.5rem);
     overflow-wrap: anywhere;
+  }
+  @media (max-width: 47.99rem) {
+    .darts-heading {
+      margin-block-end: var(--space-2);
+    }
+    .darts-heading .match-identity {
+      gap: var(--space-2);
+    }
+    .darts-heading .match-identity .game-art {
+      flex-basis: 36px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      padding: var(--space-2);
+    }
+    .darts-heading .match-identity-copy {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .darts-heading h1 {
+      font-size: 1.15rem;
+    }
   }
   .match-header {
     display: grid;

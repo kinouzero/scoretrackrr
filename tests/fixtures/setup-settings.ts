@@ -2,7 +2,7 @@ import { expect, type Locator } from '@playwright/test';
 
 export async function configureDarts(setup: Locator, name: string) {
   const cricket = name.startsWith('Cricket');
-  await setup.getByRole('switch', { name: /^Jouer au (X01|Cricket)$/ }).setChecked(cricket);
+  await expect(setup.getByRole('switch', { name: /^Jouer au (X01|Cricket)$/ })).toHaveCount(0);
   if (cricket)
     await setup
       .getByRole('switch', { name: 'Compter les points', exact: true })
@@ -15,11 +15,6 @@ export async function configureDarts(setup: Locator, name: string) {
       .getByRole('switch', { name: 'Sortie double', exact: true })
       .setChecked(name.endsWith('double'));
   }
-  await expect(
-    setup.getByRole('switch', { name: cricket ? 'Jouer au Cricket' : 'Jouer au X01', exact: true }),
-  ).toBeChecked({
-    checked: cricket,
-  });
   if (cricket)
     await expect(
       setup.getByRole('switch', { name: 'Compter les points', exact: true }),

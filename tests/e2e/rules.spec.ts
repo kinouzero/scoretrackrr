@@ -50,6 +50,27 @@ for (const locale of ['fr', 'en'] as const) {
         name: locale === 'fr' ? 'Règles du jeu' : 'Game rules',
         exact: true,
       });
+      await expect
+        .poll(() =>
+          rules.evaluate((section) => {
+            const layout = section.closest('.match-detail');
+            const regions = [
+              '.match-toolbar',
+              '.journal-summary, .board',
+              '.game-play-area',
+              '.journal-history',
+            ].map((selector) => layout?.querySelector(selector));
+            return [...regions.slice(1), section].every((element, index) => {
+              const previous = regions[index];
+              return !!(
+                previous &&
+                element &&
+                previous.compareDocumentPosition(element) & Node.DOCUMENT_POSITION_FOLLOWING
+              );
+            });
+          }),
+        )
+        .toBe(true);
       const disclosure = rules.locator('details');
       await expect(disclosure).not.toHaveAttribute('open');
       await rules.locator('summary').focus();

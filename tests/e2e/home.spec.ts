@@ -1,7 +1,7 @@
 import { waitForOfflineReady } from '../fixtures/offline';
 import { expect, test } from '../fixtures/browser';
 
-test('opens all twenty families and resumes an actual local match from the dashboard offline', async ({
+test('opens all twenty-one games and resumes an actual local match from the dashboard offline', async ({
   page,
   context,
 }) => {
@@ -17,7 +17,7 @@ test('opens all twenty families and resumes an actual local match from the dashb
     '6 qui prend !',
     '7 Wonders',
     'Belote / Coinche',
-    'Darts X01 / Cricket',
+    'Cricket',
     'Dominos',
     'Flip 7',
     'Mölkky',
@@ -31,6 +31,7 @@ test('opens all twenty families and resumes an actual local match from the dashb
     'Time’s Up!',
     'Très Futé !',
     'UNO / UNO Flip',
+    'X01',
     'Yams',
   ];
   await expect(games.locator('.quick-game > strong')).toHaveText(alphabeticalGames);
@@ -73,7 +74,7 @@ test('opens all twenty families and resumes an actual local match from the dashb
   await page.getByRole('button', { name: 'Mettre en pause', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Vos parties', exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'Nouvelle partie', exact: true }).click();
-  await expect(page.getByRole('article')).toHaveCount(20);
+  await expect(page.getByRole('article')).toHaveCount(21);
   await expect(page.getByRole('article').getByRole('heading', { level: 2 })).toHaveText(
     alphabeticalGames,
   );

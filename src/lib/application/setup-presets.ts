@@ -27,7 +27,14 @@ export function isSetupPresets(value: unknown): value is SetupPreset[] {
   );
 }
 export function readPresets(): SetupPreset[] {
-  return readPreference(key, isSetupPresets) ?? [];
+  return (readPreference(key, isSetupPresets) ?? []).map((preset) => {
+    const versionId = preset.options.versionId;
+    return preset.gameId === 'darts' &&
+      typeof versionId === 'string' &&
+      versionId.startsWith('cricket-')
+      ? { ...preset, gameId: 'cricket' }
+      : preset;
+  });
 }
 export function savePresets(items: SetupPreset[]): boolean {
   return isSetupPresets(items) && writePreference(key, items);

@@ -15,6 +15,7 @@
     '421': 'four-21',
     '5000-10000': 'farkle',
     darts: 'darts',
+    cricket: 'darts',
     'skull-king': 'skull-king',
     'flip-7': 'cards',
     molkky: 'molkky',

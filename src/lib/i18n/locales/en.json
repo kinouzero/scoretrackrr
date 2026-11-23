@@ -398,6 +398,30 @@
   "dartsMatch.legsPerSet": {
     "defaultMessage": "Legs to win per set"
   },
+  "dartsMatch.legsFormat": {
+    "defaultMessage": "Leg format"
+  },
+  "dartsMatch.setsFormat": {
+    "defaultMessage": "Set format"
+  },
+  "dartsMatch.legsPerSetFormat": {
+    "defaultMessage": "Leg format per set"
+  },
+  "dartsMatch.firstTo": {
+    "defaultMessage": "First to"
+  },
+  "dartsMatch.bestOf": {
+    "defaultMessage": "Best of"
+  },
+  "dartsMatch.legsBestOf": {
+    "defaultMessage": "Maximum legs"
+  },
+  "dartsMatch.setsBestOf": {
+    "defaultMessage": "Maximum sets"
+  },
+  "dartsMatch.legsPerSetBestOf": {
+    "defaultMessage": "Maximum legs per set"
+  },
   "dartsMatch.setupHint": {
     "defaultMessage": "Play with two players or two teams. Choose how the first thrower is determined for each leg."
   },
@@ -482,9 +506,6 @@
   "granboard.unavailable": {
     "defaultMessage": "GranBoard connection is unavailable here. Open Scoretrackrr in Chrome on Android for direct Bluetooth, or use an instance with the GranBoard relay."
   },
-  "granboard.impactSound": {
-    "defaultMessage": "Impact sounds"
-  },
   "granboard.help": {
     "defaultMessage": "Press the board button or enable input on screen before throwing. Press the board button to move on. It records remaining darts as misses."
   },
@@ -493,6 +514,72 @@
   },
   "granboard.reconnecting": {
     "defaultMessage": "Board connection lost. Reconnecting…"
+  },
+  "dartsBoard.round": {
+    "defaultMessage": "Visit {number}"
+  },
+  "dartsBoard.leg": {
+    "defaultMessage": "Leg {number}"
+  },
+  "dartsBoard.set": {
+    "defaultMessage": "Set {number}"
+  },
+  "dartsBoard.legsToWin": {
+    "defaultMessage": "{format, select, bestOf {Best of {count, number} legs} other {First to {count, number} legs}}"
+  },
+  "dartsBoard.setsToWin": {
+    "defaultMessage": "{format, select, bestOf {Best of {count, number} sets} other {First to {count, number} sets}}"
+  },
+  "dartsBoard.legsWon": {
+    "defaultMessage": "{count} {count, plural, one {leg} other {legs}}"
+  },
+  "dartsBoard.setsWon": {
+    "defaultMessage": "{count} {count, plural, one {set} other {sets}}"
+  },
+  "dartsBoard.visitNumber": {
+    "defaultMessage": "V{number}"
+  },
+  "dartsBoard.remaining": {
+    "defaultMessage": "Score remaining"
+  },
+  "dartsBoard.points": {
+    "defaultMessage": "Scoring"
+  },
+  "dartsBoard.noPoints": {
+    "defaultMessage": "No points"
+  },
+  "dartsBoard.straightIn": {
+    "defaultMessage": "Straight in"
+  },
+  "dartsBoard.doubleOut": {
+    "defaultMessage": "Double out"
+  },
+  "dartsBoard.straightOut": {
+    "defaultMessage": "Straight out"
+  },
+  "dartsBoard.active": {
+    "defaultMessage": "Throwing"
+  },
+  "dartsBoard.next": {
+    "defaultMessage": "Next"
+  },
+  "dartsBoard.average": {
+    "defaultMessage": "Avg / visit"
+  },
+  "dartsBoard.recent": {
+    "defaultMessage": "Recent visits"
+  },
+  "dartsBoard.bust": {
+    "defaultMessage": "Bust"
+  },
+  "dartsBoard.darts": {
+    "defaultMessage": "Darts"
+  },
+  "dartsBoard.suggested": {
+    "defaultMessage": "Suggested checkout"
+  },
+  "dartsBoard.miss": {
+    "defaultMessage": "Miss"
   },
   "dartsStats.title": {
     "defaultMessage": "Match statistics"
@@ -570,7 +657,13 @@
     "defaultMessage": "Outer bull (25)"
   },
   "darts.play": {
-    "defaultMessage": "Play darts"
+    "defaultMessage": "Play X01"
+  },
+  "darts.setup": {
+    "defaultMessage": "Prepare a match · {name}"
+  },
+  "cricket.play": {
+    "defaultMessage": "Play Cricket"
   },
   "darts.rules": {
     "defaultMessage": "One leg, straight-in from 301 or 501 according to settings. Up to three darts per turn, then the next side. Reach exactly zero. With double-out, finish on a double (50 bull allowed). Going below zero, leaving one point or finishing without a double cancels the entire visit with double-out. With straight-out, only going below zero cancels the visit. A miss scores zero and uses a dart. Side order fixed at setup; more than two sides is free play."
@@ -665,9 +758,6 @@
   "parameters.labels.entry500": {
     "defaultMessage": "500-point entry threshold"
   },
-  "parameters.labels.cricket": {
-    "defaultMessage": "Play Cricket"
-  },
   "parameters.labels.start501": {
     "defaultMessage": "Start at 501 points"
   },
@@ -685,9 +775,6 @@
   },
   "parameters.hints.entry500": {
     "defaultMessage": "Off: no threshold to start banking."
-  },
-  "parameters.hints.cricket": {
-    "defaultMessage": "Off: play X01 (301 or 501)."
   },
   "parameters.hints.start501": {
     "defaultMessage": "Off: start at 301 points."
@@ -1062,7 +1149,10 @@
     "defaultMessage": "Get your boules close to the jack and score points."
   },
   "games.descriptions.darts": {
-    "defaultMessage": "Aim for the board in X01 or Cricket."
+    "defaultMessage": "Count down to zero with your chosen starting score and finish rule."
+  },
+  "games.descriptions.cricket": {
+    "defaultMessage": "Close 15 through 20 and the bull, with or without points."
   },
   "games.descriptions.skull-king": {
     "defaultMessage": "Bid your tricks and make good on your bet."
@@ -1643,6 +1733,12 @@
   "petanque.scope": {
     "defaultMessage": "Enter scores on this device. Players decide measurements, penalties and disputes."
   },
+  "settings.soundTitle": {
+    "defaultMessage": "Sound"
+  },
+  "settings.dartsSound": {
+    "defaultMessage": "Darts sound effects"
+  },
   "settings.title": {
     "defaultMessage": "Make it yours"
   },
@@ -1916,10 +2012,10 @@
     "defaultMessage": "Starting round {nextRound}"
   },
   "dartsMatch.format": {
-    "defaultMessage": "First to {target} legs · Leg {leg}"
+    "defaultMessage": "{series} · Leg {leg}"
   },
   "dartsMatch.setFormat": {
-    "defaultMessage": "First to {target} sets · Set {set} · Leg {leg}"
+    "defaultMessage": "{series} · Set {set} · Leg {leg}"
   },
   "dartsMatch.setScore": {
     "defaultMessage": "{name} · {sets, plural, one {# set} other {# sets}} · {legs, plural, one {# leg} other {# legs}}"
@@ -2281,6 +2377,15 @@
   },
   "matchOptions.legsPerSet": {
     "defaultMessage": "{count, number} legs to win a set"
+  },
+  "matchOptions.bestOfLegs": {
+    "defaultMessage": "Best of {count, number} legs"
+  },
+  "matchOptions.bestOfSets": {
+    "defaultMessage": "Best of {count, number} sets"
+  },
+  "matchOptions.bestOfLegsPerSet": {
+    "defaultMessage": "Best of {count, number} legs per set"
   },
   "matchOptions.startingRule": {
     "defaultMessage": "{rule, select, alternate {Alternate starts} other {Previous loser starts}}"
@@ -2957,6 +3062,15 @@
   "ruleGuide.dartsSeries.sets": {
     "defaultMessage": "Win {legs} legs to take a set and {sets} sets to win the match. Both sides start each set with zero legs won."
   },
+  "ruleGuide.dartsSeries.bestOfLegs": {
+    "defaultMessage": "The match is played as best of {count} legs."
+  },
+  "ruleGuide.dartsSeries.bestOfSets": {
+    "defaultMessage": "The match is played as best of {count} sets."
+  },
+  "ruleGuide.dartsSeries.bestOfLegsPerSet": {
+    "defaultMessage": "Each set is played as best of {count} legs."
+  },
   "ruleGuide.dartsSeries.alternate": {
     "defaultMessage": "Leg starts alternate between the two sides from the saved first starter."
   },
@@ -3461,9 +3575,6 @@
   },
   "parameters.labels.target5000": {
     "defaultMessage": "5,000-point target"
-  },
-  "parameters.labels.x01": {
-    "defaultMessage": "Play X01"
   },
   "parameters.x01Start": {
     "defaultMessage": "Starting score"

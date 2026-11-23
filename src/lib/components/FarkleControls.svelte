@@ -1,7 +1,6 @@
 <script lang="ts">
   import EntrySituation from './EntrySituation.svelte';
   import { entryDraft } from '../application/entry-draft.svelte';
-  import GameRules from './GameRules.svelte';
   import Icon from '#lib/components/Icon.svelte';
   import GameHeader, { type HeaderRenderer } from './GameHeader.svelte';
   import type { MatchRecord } from '#lib/domain/records';
@@ -179,11 +178,7 @@
   {/if}
 {/snippet}
 
-{#snippet rules()}
-  <GameRules {match} />
-{/snippet}
-
-<GameHeader renderer={header} {actions} {rules} />
+<GameHeader renderer={header} {actions} />
 
 <section class="game-play-area stack" aria-labelledby="farkle-title">
   <h2 id="farkle-title">{header ? messages.matches.scoreEntry : messages.farkle.title}</h2>

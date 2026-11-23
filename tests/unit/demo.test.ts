@@ -5,7 +5,7 @@ import { LocalDatabase } from '../../src/lib/storage/database';
 import { MatchJournal } from '../../src/lib/storage/journal';
 import { LocalRepository } from '../../src/lib/storage/repository';
 import { BackupRepository } from '../../src/lib/storage/backup';
-import { gameCatalog } from '../../src/lib/domain/games/catalog';
+import { catalogGameId, gameCatalog } from '../../src/lib/domain/games/catalog';
 
 describe('explicit local demo fixtures', () => {
   it('creates playable scored histories for every game and preserves existing data on repeat', async () => {
@@ -30,7 +30,7 @@ describe('explicit local demo fixtures', () => {
         matches: demoMatchIds.length,
       });
       const matches = await database.matches.toArray();
-      expect(new Set(matches.map((match) => match.rulesSnapshot.gameId))).toEqual(
+      expect(new Set(matches.map((match) => catalogGameId(match.rulesSnapshot)))).toEqual(
         new Set(gameCatalog.map((game) => game.id)),
       );
       for (const id of demoMatchIds) {

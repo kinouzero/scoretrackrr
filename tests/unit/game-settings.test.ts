@@ -45,27 +45,25 @@ describe('setup settings select immutable game rules', () => {
           doubleOut: enabled,
         });
       }
-      expect(versionForSetting(current, darts, 'cricket', true)?.id).toBe(
-        cricketVersion(true, '').id,
-      );
+      expect(gameSettings(current).map(({ key }) => key)).toEqual(['doubleOut']);
+      expect(versionForSetting(current, darts, 'cricketPoints', true)).toBeUndefined();
     },
   );
   it.each(darts.filter((version) => version.definition.engine === 'cricket'))(
-    'selects Cricket scoring and an X01 default for $id',
+    'selects only Cricket scoring for $id',
     (current) => {
       for (const enabled of [true, false])
         expect(versionForSetting(current, darts, 'cricketPoints', enabled)?.id).toBe(
           cricketVersion(enabled, '').id,
         );
-      expect(versionForSetting(current, darts, 'cricket', false)?.id).toBe(
-        x01Version(301, true, '').id,
-      );
+      expect(gameSettings(current).map(({ key }) => key)).toEqual(['cricketPoints']);
+      expect(versionForSetting(current, darts, 'doubleOut', false)).toBeUndefined();
     },
   );
   it('never creates unsupported switches for fixed rules or custom definitions', () => {
     expect(gameSettings(molkkyVersion(''))).toEqual([]);
     expect(gameSettings({ ...yams[0]!, gameId: 'custom-test' })).toEqual([]);
-    expect(versionForSetting(molkkyVersion(''), darts, 'cricket', true)).toBeUndefined();
+    expect(versionForSetting(molkkyVersion(''), darts, 'cricketPoints', true)).toBeUndefined();
   });
   it('rejects unavailable combinations, cross-family matches and unsupported settings', () => {
     const current = x01Version(301, true, '');

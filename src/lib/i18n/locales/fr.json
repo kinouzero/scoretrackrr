@@ -398,6 +398,30 @@
   "dartsMatch.legsPerSet": {
     "defaultMessage": "Nombre de legs à gagner par set"
   },
+  "dartsMatch.legsFormat": {
+    "defaultMessage": "Format des legs"
+  },
+  "dartsMatch.setsFormat": {
+    "defaultMessage": "Format des sets"
+  },
+  "dartsMatch.legsPerSetFormat": {
+    "defaultMessage": "Format des legs par set"
+  },
+  "dartsMatch.firstTo": {
+    "defaultMessage": "Premier à"
+  },
+  "dartsMatch.bestOf": {
+    "defaultMessage": "Au meilleur de"
+  },
+  "dartsMatch.legsBestOf": {
+    "defaultMessage": "Nombre maximal de legs"
+  },
+  "dartsMatch.setsBestOf": {
+    "defaultMessage": "Nombre maximal de sets"
+  },
+  "dartsMatch.legsPerSetBestOf": {
+    "defaultMessage": "Nombre maximal de legs par set"
+  },
   "dartsMatch.setupHint": {
     "defaultMessage": "Duel entre deux joueurs ou deux équipes. Choisissez comment déterminer le premier lanceur de chaque leg."
   },
@@ -482,9 +506,6 @@
   "granboard.unavailable": {
     "defaultMessage": "La connexion GranBoard est indisponible ici. Ouvre Scoretrackrr dans Chrome sur Android pour le Bluetooth direct, ou utilise une instance avec le relais GranBoard."
   },
-  "granboard.impactSound": {
-    "defaultMessage": "Sons des impacts"
-  },
   "granboard.help": {
     "defaultMessage": "Avant de lancer, appuie sur le bouton de la cible ou active la saisie à l’écran. Appuie sur le bouton de la cible pour passer au joueur suivant. Les fléchettes restantes comptent comme des ratés."
   },
@@ -493,6 +514,72 @@
   },
   "granboard.reconnecting": {
     "defaultMessage": "Connexion à la cible perdue. Reconnexion en cours…"
+  },
+  "dartsBoard.round": {
+    "defaultMessage": "Volée {number}"
+  },
+  "dartsBoard.leg": {
+    "defaultMessage": "Leg {number}"
+  },
+  "dartsBoard.set": {
+    "defaultMessage": "Set {number}"
+  },
+  "dartsBoard.legsToWin": {
+    "defaultMessage": "{format, select, bestOf {Au meilleur de {count, number} legs} other {Premier à {count, number} legs}}"
+  },
+  "dartsBoard.setsToWin": {
+    "defaultMessage": "{format, select, bestOf {Au meilleur de {count, number} sets} other {Premier à {count, number} sets}}"
+  },
+  "dartsBoard.legsWon": {
+    "defaultMessage": "{count} {count, plural, one {leg} other {legs}}"
+  },
+  "dartsBoard.setsWon": {
+    "defaultMessage": "{count} {count, plural, one {set} other {sets}}"
+  },
+  "dartsBoard.visitNumber": {
+    "defaultMessage": "V{number}"
+  },
+  "dartsBoard.remaining": {
+    "defaultMessage": "Score restant"
+  },
+  "dartsBoard.points": {
+    "defaultMessage": "Avec points"
+  },
+  "dartsBoard.noPoints": {
+    "defaultMessage": "Sans points"
+  },
+  "dartsBoard.straightIn": {
+    "defaultMessage": "Entrée simple"
+  },
+  "dartsBoard.doubleOut": {
+    "defaultMessage": "Sortie double"
+  },
+  "dartsBoard.straightOut": {
+    "defaultMessage": "Sortie simple"
+  },
+  "dartsBoard.active": {
+    "defaultMessage": "À jouer"
+  },
+  "dartsBoard.next": {
+    "defaultMessage": "Suivant"
+  },
+  "dartsBoard.average": {
+    "defaultMessage": "Moy. / volée"
+  },
+  "dartsBoard.recent": {
+    "defaultMessage": "Dernières volées"
+  },
+  "dartsBoard.bust": {
+    "defaultMessage": "Bust"
+  },
+  "dartsBoard.darts": {
+    "defaultMessage": "Fléchettes"
+  },
+  "dartsBoard.suggested": {
+    "defaultMessage": "Sortie conseillée"
+  },
+  "dartsBoard.miss": {
+    "defaultMessage": "Raté"
   },
   "dartsStats.title": {
     "defaultMessage": "Statistiques de la partie"
@@ -570,7 +657,13 @@
     "defaultMessage": "Bull extérieur (25)"
   },
   "darts.play": {
-    "defaultMessage": "Jouer aux fléchettes"
+    "defaultMessage": "Jouer au X01"
+  },
+  "darts.setup": {
+    "defaultMessage": "Préparer la partie · {name}"
+  },
+  "cricket.play": {
+    "defaultMessage": "Jouer au Cricket"
   },
   "darts.rules": {
     "defaultMessage": "Une manche, départ direct à 301 ou 501 selon les paramètres. Jusqu’à trois fléchettes par tour, puis le camp suivant. Il faut atteindre exactement zéro. En sortie double, le dernier impact doit être un double (bull à 50 accepté). Dépasser zéro, laisser un point ou finir sans double annule toute la volée en sortie double. En sortie simple, seul le dépassement annule la volée. Un raté vaut zéro et consomme une fléchette. Ordre des camps fixé à la création ; jeu libre pour plus de deux camps."
@@ -665,9 +758,6 @@
   "parameters.labels.entry500": {
     "defaultMessage": "Seuil d’entrée de 500 points"
   },
-  "parameters.labels.cricket": {
-    "defaultMessage": "Jouer au Cricket"
-  },
   "parameters.labels.start501": {
     "defaultMessage": "Départ à 501 points"
   },
@@ -685,9 +775,6 @@
   },
   "parameters.hints.entry500": {
     "defaultMessage": "Désactivé : aucun seuil pour commencer à encaisser."
-  },
-  "parameters.hints.cricket": {
-    "defaultMessage": "Désactivé : jouer au X01 (301 ou 501)."
   },
   "parameters.hints.start501": {
     "defaultMessage": "Désactivé : départ à 301 points."
@@ -1062,7 +1149,10 @@
     "defaultMessage": "Rapprochez vos boules du but et marquez les points."
   },
   "games.descriptions.darts": {
-    "defaultMessage": "Visez la cible en X01 ou au Cricket."
+    "defaultMessage": "Descendez à zéro avec le score de départ et la règle de sortie de votre choix."
+  },
+  "games.descriptions.cricket": {
+    "defaultMessage": "Fermez les numéros de 15 à 20 et le bull, avec ou sans points."
   },
   "games.descriptions.skull-king": {
     "defaultMessage": "Annoncez vos plis et respectez votre pari."
@@ -1643,6 +1733,12 @@
   "petanque.scope": {
     "defaultMessage": "Saisie sur cet appareil. Les mesures, sanctions et litiges restent à décider entre joueurs."
   },
+  "settings.soundTitle": {
+    "defaultMessage": "Son"
+  },
+  "settings.dartsSound": {
+    "defaultMessage": "Sons des fléchettes"
+  },
   "settings.title": {
     "defaultMessage": "À votre façon"
   },
@@ -1914,10 +2010,10 @@
     "defaultMessage": "Démarrage de la manche {nextRound}"
   },
   "dartsMatch.format": {
-    "defaultMessage": "Premier à {target} legs · Leg {leg}"
+    "defaultMessage": "{series} · Leg {leg}"
   },
   "dartsMatch.setFormat": {
-    "defaultMessage": "Premier à {target} sets · Set {set} · Leg {leg}"
+    "defaultMessage": "{series} · Set {set} · Leg {leg}"
   },
   "dartsMatch.setScore": {
     "defaultMessage": "{name} · {sets, plural, one {# set} other {# sets}} · {legs, plural, one {# leg} other {# legs}}"
@@ -2269,6 +2365,15 @@
   },
   "matchOptions.legsPerSet": {
     "defaultMessage": "{count, number} legs pour gagner un set"
+  },
+  "matchOptions.bestOfLegs": {
+    "defaultMessage": "Au meilleur de {count, number} legs"
+  },
+  "matchOptions.bestOfSets": {
+    "defaultMessage": "Au meilleur de {count, number} sets"
+  },
+  "matchOptions.bestOfLegsPerSet": {
+    "defaultMessage": "Au meilleur de {count, number} legs par set"
   },
   "matchOptions.startingRule": {
     "defaultMessage": "{rule, select, alternate {Départs alternés} other {Le perdant commence}}"
@@ -2945,6 +3050,15 @@
   "ruleGuide.dartsSeries.sets": {
     "defaultMessage": "Gagnez {legs} legs pour remporter un set et {sets} sets pour gagner le match. Les deux camps repartent de zéro leg à chaque set."
   },
+  "ruleGuide.dartsSeries.bestOfLegs": {
+    "defaultMessage": "Le match se joue au meilleur de {count} legs."
+  },
+  "ruleGuide.dartsSeries.bestOfSets": {
+    "defaultMessage": "Le match se joue au meilleur de {count} sets."
+  },
+  "ruleGuide.dartsSeries.bestOfLegsPerSet": {
+    "defaultMessage": "Chaque set se joue au meilleur de {count} legs."
+  },
   "ruleGuide.dartsSeries.alternate": {
     "defaultMessage": "Le départ des legs alterne entre les deux camps, à partir du premier lanceur enregistré."
   },
@@ -3449,9 +3563,6 @@
   },
   "parameters.labels.target5000": {
     "defaultMessage": "Objectif de 5 000 points"
-  },
-  "parameters.labels.x01": {
-    "defaultMessage": "Jouer au X01"
   },
   "parameters.x01Start": {
     "defaultMessage": "Score de départ"

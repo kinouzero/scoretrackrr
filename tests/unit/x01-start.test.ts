@@ -140,7 +140,7 @@ it('keeps setup bounded after more than100 configured scores and supports a chec
   const selected = x01Version(220, true, timestamp);
   const result = await new CatalogRepository(db).readSetupVersions(selected.id);
   expect(result.selected.id).toBe(selected.id);
-  expect(result.versions).toHaveLength(7);
+  expect(result.versions).toHaveLength(5);
   const next = versionForSetting(selected, result.versions, 'doubleOut', false);
   expect(next?.definition.doubleOut).toBe(false);
 });

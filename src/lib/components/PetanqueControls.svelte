@@ -2,7 +2,6 @@
   import EntrySituation from './EntrySituation.svelte';
   import ScorePreview from './ScorePreview.svelte';
   import { entryDraft } from '../application/entry-draft.svelte';
-  import GameRules from './GameRules.svelte';
   import Icon from './Icon.svelte';
   import GameHeader, { type HeaderRenderer } from './GameHeader.svelte';
   import { tick } from 'svelte';
@@ -249,24 +248,7 @@
   {/if}
 {/snippet}
 
-{#snippet rules()}
-  <GameRules {match}>
-    <h3>{messages.petanque.roster}</h3>
-    <ul class="team-members">
-      {#each sides as team (team.id)}<li>
-          <strong>{team.name}</strong><span
-            >{team.playerIds
-              .map(
-                (id) => match.playersSnapshot.find((player) => player.id === id)?.displayName ?? id,
-              )
-              .join(' · ')}</span
-          >
-        </li>{/each}
-    </ul>
-  </GameRules>
-{/snippet}
-
-<GameHeader renderer={header} {actions} {rules} />
+<GameHeader renderer={header} {actions} />
 
 <section class="game-play-area match-controls" aria-labelledby="petanque-controls-title">
   <h2 id="petanque-controls-title" bind:this={controlHeading} tabindex="-1">

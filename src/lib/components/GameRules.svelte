@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
+  import { petanqueSides } from '#lib/domain/games/petanque';
   import type { MatchRecord } from '#lib/domain/records';
   import { ruleGuide, RULES_REVIEWED_AT, type RuleText } from '#lib/application/rule-guide';
   import { translate } from '#lib/i18n/catalog';
   import { messages, getLocale } from '#lib/i18n/index';
-  let { match, children }: { match: MatchRecord; children?: Snippet } = $props();
+  let { match }: { match: MatchRecord } = $props();
   const guide = $derived(ruleGuide(match));
   const t = (message: RuleText) => translate(getLocale(), message.key, message.values);
 </script>
@@ -56,7 +56,23 @@
         {#each guide.ending as item (item.key)}<li>{t(item)}</li>{/each}
       </ul>
     </section>
-    {@render children?.()}
+    {#if match.rulesSnapshot.gameId === 'petanque'}
+      <section>
+        <h3>{messages.petanque.roster}</h3>
+        <ul class="team-members">
+          {#each petanqueSides(match) as team (team.id)}<li>
+              <strong>{team.name}</strong><span
+                >{team.playerIds
+                  .map(
+                    (id) =>
+                      match.playersSnapshot.find((player) => player.id === id)?.displayName ?? id,
+                  )
+                  .join(' · ')}</span
+              >
+            </li>{/each}
+        </ul>
+      </section>
+    {/if}
     <footer class="rule-sources">
       <h3>{translate(getLocale(), 'ruleGuide.headings.sources')}</h3>
       {#if guide.sources.length}

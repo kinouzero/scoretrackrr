@@ -19,7 +19,6 @@
   import { getLocale, messages } from '#lib/i18n/index';
   import { translate } from '#lib/i18n/catalog';
   import Icon from './Icon.svelte';
-  import GameRules from './GameRules.svelte';
   import EntrySituation from './EntrySituation.svelte';
   import GameHeader, { type HeaderRenderer } from './GameHeader.svelte';
 
@@ -269,9 +268,7 @@
   {/if}
 {/snippet}
 
-{#snippet rules()}<GameRules {match} />{/snippet}
-
-<GameHeader renderer={header} {actions} {rules} />
+<GameHeader renderer={header} {actions} />
 
 <section class="game-play-area stack" aria-labelledby="score-sheet-title">
   <h2 id="score-sheet-title">{messages.matches.scoreEntry}</h2>

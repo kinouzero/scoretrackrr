@@ -4,7 +4,7 @@ import { waitForOfflineReady } from '../fixtures/offline';
 async function profiles(page: Page) {
   await seedPlayers(page, ['Alice', 'Bob']);
 }
-async function setup(page: Page, name = 'Jouer aux fléchettes') {
+async function setup(page: Page, name = 'Jouer au X01') {
   await page.goto('/games/');
   await page.getByRole('link', { name, exact: true }).click();
   const dialog = page.getByRole('dialog');
@@ -22,7 +22,8 @@ test('offers favorite configurations only for games with setup options', async (
     ['421', false],
     ['5000 / 10000', true],
     ['6 qui prend !', true],
-    ['Darts X01 / Cricket', true],
+    ['X01', true],
+    ['Cricket', true],
     ['Flip 7', false],
     ['Mölkky', true],
     ['Pétanque', true],
@@ -54,6 +55,11 @@ test('saves, reapplies and deletes an offline preset with ordered participants',
   await profiles(page);
   let dialog = await setup(page);
   await dialog.getByLabel('Score de départ', { exact: true }).selectOption('601');
+  await dialog.getByRole('switch', { name: 'Match en plusieurs legs', exact: true }).check();
+  await dialog.getByRole('switch', { name: 'Jouer en sets', exact: true }).check();
+  await dialog.getByLabel('Format des sets', { exact: true }).selectOption('bestOf');
+  await dialog.getByLabel('Nombre maximal de sets', { exact: true }).selectOption({ label: '5' });
+  await dialog.getByLabel('Nombre de legs à gagner par set', { exact: true }).fill('2');
   await dialog.getByRole('button', { name: 'Monter Bob', exact: true }).click();
   await expect(dialog.locator('.participant-order li')).toHaveText([/Bob/, /Alice/]);
   await dialog.getByText('Configurations favorites', { exact: true }).click();
@@ -68,6 +74,19 @@ test('saves, reapplies and deletes an offline preset with ordered participants',
     .selectOption({ label: 'Soirée 601' });
   await dialog.getByRole('button', { name: 'Appliquer', exact: true }).click();
   await expect(dialog.getByLabel('Score de départ', { exact: true })).toHaveValue('601');
+  await expect(dialog.getByLabel('Format des sets', { exact: true })).toHaveValue('bestOf');
+  await expect(
+    dialog.getByLabel('Nombre maximal de sets', { exact: true }).locator('option:checked'),
+  ).toHaveText('5');
+  await expect(dialog.getByLabel('Format des legs par set', { exact: true })).toHaveValue(
+    'firstTo',
+  );
+  await expect(dialog.getByLabel('Nombre de legs à gagner par set', { exact: true })).toHaveValue(
+    '2',
+  );
+  await dialog
+    .getByLabel('Premier lanceur du premier leg', { exact: true })
+    .selectOption({ label: 'Bob' });
   await expect(dialog.locator('.participant-order li')).toHaveText([/Bob/, /Alice/]);
   await dialog.getByRole('button', { name: 'Supprimer', exact: true }).click();
   await expect(dialog.getByLabel('Configuration enregistrée', { exact: true })).toHaveCount(0);
@@ -94,10 +113,14 @@ test('recovers unsubmitted darts input, previews it without scoring, and never r
   await expect(page.getByText(/Saisie récupérée/)).toBeVisible();
   await expect(page.locator('.journal-entries > li')).toHaveCount(1);
   await page.getByRole('button', { name: 'Enregistrer la fléchette', exact: true }).click();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Alice244');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Alice\s*244/,
+  );
   await expect(page.getByText(/Saisie récupérée/)).not.toBeVisible();
   await page.reload();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Alice244');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Alice\s*244/,
+  );
   await expect(page.locator('.journal-entries > li')).toHaveCount(2);
 });
 test('recovers Flip7 card buttons and bonuses without recording the hand', async ({
@@ -266,7 +289,9 @@ test('a system refusal to keep the screen awake never blocks tabletop play', asy
   ).toBeVisible();
   await page.getByRole('button', { name: 'Mode table', exact: true }).click();
   await page.getByRole('button', { name: 'Enregistrer la fléchette', exact: true }).click();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Alice281');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Alice\s*281/,
+  );
 });
 
 test('restores expansion switches and Rascal scoring from a saved Skull King setup', async ({

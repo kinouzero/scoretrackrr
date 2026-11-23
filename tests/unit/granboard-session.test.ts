@@ -1,5 +1,6 @@
 import { afterEach, beforeAll, beforeEach, expect, test, vi } from 'vitest';
 import type { BoardConnector } from '#lib/application/granboard/connection';
+import { checkoutLight } from '#lib/application/granboard/feedback';
 let granBoard: (typeof import('../../src/lib/application/granboard/session.svelte'))['granBoard'];
 
 beforeAll(async () => {
@@ -66,4 +67,31 @@ test('retries a lost session, rejects its stale hits and stops pending attempts 
   await vi.advanceTimersByTimeAsync(3000);
   expect(granBoard.status).toBeUndefined();
   expect(attempts).toHaveLength(2);
+});
+
+test('accepted hits replace older lighting and guide the next checkout dart', async () => {
+  const { connect, attempts } = transport();
+  const frames: number[][] = [];
+  granBoard.start('match', connect, 20);
+  attempts[0]!.receiver.ready(async (frame) => {
+    frames.push([...frame]);
+  });
+  granBoard.signalReady(checkoutLight(12));
+  await vi.advanceTimersByTimeAsync(450);
+  expect(frames).toEqual([Array(20).fill(4)]);
+
+  const light = granBoard.captureLight();
+  light({ sector: 20, multiplier: 1 }, 'hit', checkoutLight(25));
+  const single20 = Array(20).fill(0);
+  single20[19] = 4;
+  await vi.advanceTimersByTimeAsync(599);
+  expect(frames).toEqual([Array(20).fill(4), single20]);
+  await vi.advanceTimersByTimeAsync(1);
+  expect(frames.at(-1)).toEqual(Array(20).fill(3));
+
+  light({ sector: 18, multiplier: 3 }, 'hit', checkoutLight(12));
+  granBoard.stop('match');
+  const countAtStop = frames.length;
+  await vi.advanceTimersByTimeAsync(2000);
+  expect(frames).toHaveLength(countAtStop);
 });

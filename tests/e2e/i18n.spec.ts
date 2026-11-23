@@ -73,7 +73,7 @@ test('plays darts in English offline and localizes an existing match without cha
     await expect(page.getByRole('dialog')).not.toBeVisible();
   }
   await page.goto('/games/');
-  await page.getByRole('link', { name: 'Play darts', exact: true }).click();
+  await page.getByRole('link', { name: 'Play X01', exact: true }).click();
   const setup = page.getByRole('dialog');
   await expect(setup.getByLabel('Starting score', { exact: true })).toHaveValue('301');
   await expect(setup.getByRole('switch', { name: 'Double-out', exact: true })).toBeChecked();
@@ -95,7 +95,9 @@ test('plays darts in English offline and localizes an existing match without cha
   await page.getByLabel('Sector hit', { exact: true }).selectOption('20');
   await page.getByLabel('Multiplier', { exact: true }).selectOption('3');
   await page.getByRole('button', { name: 'Record dart', exact: true }).click();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Zoé241');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Zoé\s*241/,
+  );
   const url = page.url();
   const settings = await context.newPage();
   await settings.goto('/settings/');
@@ -103,7 +105,9 @@ test('plays darts in English offline and localizes an existing match without cha
   await expect(
     page.getByRole('button', { name: 'Enregistrer la fléchette', exact: true }),
   ).toBeVisible();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Zoé241');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Zoé\s*241/,
+  );
   await expect(page.getByRole('heading', { name: 'Action n°2', exact: true })).toBeVisible();
   await expect(
     page.getByRole('list', { name: 'Paramètres de la partie', exact: true }).getByRole('listitem'),
@@ -111,7 +115,9 @@ test('plays darts in English offline and localizes an existing match without cha
   await expect(page.getByText(/Règles conservées/)).toHaveCount(0);
   expect(page.url()).toBe(url);
   await page.reload();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Zoé241');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Zoé\s*241/,
+  );
   await page.getByRole('button', { name: 'Mettre en pause', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Vos parties', exact: true })).toBeVisible();
   const card = page.locator('.match-card[data-game="darts"]');

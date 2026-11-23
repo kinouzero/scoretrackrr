@@ -30,7 +30,7 @@ Use your own dice, cards, darts or outdoor equipment. The app records results; i
 
 ## Supported games
 
-421 · 5000 / 10000 · 6 qui prend! · Darts X01 / Cricket · Flip 7 · Mölkky · Pétanque · Skull King · Time's Up! · Yams
+421 · 5000 / 10000 · 6 qui prend! · Cricket · Flip 7 · Mölkky · Pétanque · Skull King · Time's Up! · X01 · Yams
 
 Skyjo · Belote / Coinche · Tarot · Rummy · UNO / UNO Flip · Scrabble · 7 Wonders · Qwixx · Très Futé ! · Dominoes
 

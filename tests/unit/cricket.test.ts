@@ -143,7 +143,15 @@ describe('Cricket classic and no-score variants', () => {
       await seedJournal(db);
       const catalog = new CatalogRepository(db);
       await catalog.initialize(timestamp);
-      expect((await catalog.list({ search: 'Darts' })).items[0]!.versions).toHaveLength(6);
+      expect(
+        (await catalog.list({ search: 'Darts' })).items.map(({ id, versions }) => [
+          id,
+          versions.length,
+        ]),
+      ).toEqual([
+        ['cricket', 2],
+        ['darts', 4],
+      ]);
       const match = await new DeclarativeRepository(db).create({
         id: 'cricket-match',
         versionId: cricketVersion(true, '').id,

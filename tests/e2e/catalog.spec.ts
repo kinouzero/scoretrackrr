@@ -48,7 +48,7 @@ test('searches, filters, favorites and opens pinned Pétanque presets offline', 
   await expect(page.getByRole('article')).toHaveCount(1);
   await favorites.click();
   await expect(favorites).not.toBeChecked();
-  await expect(page.getByRole('article')).toHaveCount(20);
+  await expect(page.getByRole('article')).toHaveCount(21);
   await favorites.check();
   await page.getByLabel('Rechercher un jeu', { exact: true }).fill('Yams');
   await expect(page.getByRole('article')).toHaveCount(0);
@@ -72,12 +72,86 @@ test('searches, filters, favorites and opens pinned Pétanque presets offline', 
   await setup.getByRole('button', { name: 'Annuler', exact: true }).click();
   await page.goto('/games/');
   await page.getByLabel('Rechercher un jeu', { exact: true }).fill('');
-  await expect(page.getByRole('article')).toHaveCount(20);
+  await expect(page.getByRole('article')).toHaveCount(21);
   await expect(page.getByText('Bientôt disponible', { exact: true })).toHaveCount(0);
   await page.screenshot({
     path: test.info().outputPath('catalog-filters-mobile.png'),
     fullPage: true,
   });
+});
+
+test('opens separate X01 and Cricket settings, favorites and existing presets', async ({
+  page,
+}) => {
+  await page.goto('/games/');
+  await page.evaluate(() => {
+    const options = {
+      mode: 'individual',
+      playerIds: [],
+      teamIds: [],
+      fourKindFixed: false,
+      straightPreset: '30/40',
+      smallStraight: 30,
+      largeStraight: 40,
+      extraYamsBonus: true,
+      joker: true,
+      x01Start: 401,
+      matchMode: false,
+      legsToWin: 3,
+      startingRule: 'alternate',
+      corkEnabled: false,
+    };
+    localStorage.setItem(
+      'scoretrackrr.setup-presets.v1',
+      JSON.stringify([
+        {
+          id: 'old-x01',
+          name: 'Saved X01',
+          gameId: 'darts',
+          options: { ...options, versionId: 'x01-301-double-v1' },
+        },
+        {
+          id: 'old-cricket',
+          name: 'Saved Cricket',
+          gameId: 'darts',
+          options: { ...options, versionId: 'cricket-no-score-v1' },
+        },
+      ]),
+    );
+  });
+  await page.getByLabel('Rechercher un jeu', { exact: true }).fill('fléchettes');
+  await expect(page.getByRole('article').getByRole('heading')).toHaveText(['Cricket', 'X01']);
+  const cricketFavorite = page.getByRole('button', { name: 'Favori : Cricket', exact: true });
+  await cricketFavorite.click();
+  await expect(cricketFavorite).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'Favori : X01', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'false',
+  );
+  for (const [game, other] of [
+    ['Cricket', 'X01'],
+    ['X01', 'Cricket'],
+  ] as const) {
+    await page.goto('/games/');
+    await page.getByRole('link', { name: `Jouer au ${game}`, exact: true }).click();
+    const setup = page.getByRole('dialog', { name: `Préparer la partie · ${game}`, exact: true });
+    await expect(setup.getByRole('switch', { name: /^Jouer au (Cricket|X01)$/ })).toHaveCount(0);
+    await expect(setup.getByRole('switch', { name: 'Compter les points' })).toHaveCount(
+      game === 'Cricket' ? 1 : 0,
+    );
+    await expect(setup.getByLabel('Score de départ')).toHaveCount(game === 'X01' ? 1 : 0);
+    await setup.getByText('Configurations favorites', { exact: true }).click();
+    const choices = setup.getByLabel('Configuration enregistrée', { exact: true });
+    await expect(choices.getByRole('option', { name: `Saved ${game}` })).toHaveCount(1);
+    await expect(choices.getByRole('option', { name: `Saved ${other}` })).toHaveCount(0);
+    await choices.selectOption({ label: `Saved ${game}` });
+    await setup.getByRole('button', { name: 'Appliquer', exact: true }).click();
+    if (game === 'Cricket')
+      await expect(setup.getByRole('switch', { name: 'Compter les points' })).not.toBeChecked();
+    else await expect(setup.getByLabel('Score de départ')).toHaveValue('401');
+    await setup.getByRole('button', { name: 'Annuler', exact: true }).click();
+    await expect(setup).toHaveCount(0);
+  }
 });
 
 test('preserves immutable saved custom versions and plays a cooperative pinned version offline', async ({
@@ -272,16 +346,14 @@ test('plays darts with saved teams offline', async ({ page, context }) => {
   }
   await page.goto('/games/');
   await page
-    .getByRole('article', { name: 'Darts X01 / Cricket', exact: true })
-    .getByRole('link', { name: 'Jouer aux fléchettes', exact: true })
+    .getByRole('article', { name: 'X01', exact: true })
+    .getByRole('link', { name: 'Jouer au X01', exact: true })
     .click();
   const setup = page.getByRole('dialog');
   await setup.getByRole('switch', { name: 'Jouer en équipe', exact: true }).check();
   for (const name of ['Duo', 'Solo'])
     await setup.getByRole('button', { name: `Choisir ${name}`, exact: true }).click();
-  await setup.getByRole('switch', { name: 'Jouer au X01', exact: true }).check();
   await expect(setup.getByRole('switch', { name: 'Jouer en équipe', exact: true })).toBeChecked();
-  await setup.getByRole('switch', { name: 'Jouer au Cricket', exact: true }).uncheck();
   await setup.getByRole('button', { name: 'Créer la partie', exact: true }).click();
   await page.getByRole('button', { name: 'Démarrer la partie', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Au tour de Duo', exact: true })).toBeVisible();
@@ -289,9 +361,13 @@ test('plays darts with saved teams offline', async ({ page, context }) => {
   await page.getByLabel('Secteur touché', { exact: true }).selectOption('20');
   await page.getByLabel('Multiplicateur', { exact: true }).selectOption('3');
   await page.getByRole('button', { name: 'Enregistrer la fléchette', exact: true }).click();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Duo241');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Duo\s*241/,
+  );
   await page.reload();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Duo241');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Duo\s*241/,
+  );
   await expect(page.getByText('À toi de jouer : Alice', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Enregistrer la fléchette', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Action n°3', exact: true })).toBeVisible();

@@ -1,5 +1,5 @@
 import type { MatchRecord } from './records';
-import { gameCatalog } from './games/catalog';
+import { catalogGameId, gameCatalog } from './games/catalog';
 export interface HistoryFilters {
   search?: string;
   game?: string;
@@ -46,11 +46,8 @@ export interface HistoryCursor {
   id: string;
 }
 export function historyGameName(match: MatchRecord) {
-  return (
-    gameCatalog.find((game) => game.id === match.rulesSnapshot.gameId)?.name ??
-    match.rulesSnapshot.name ??
-    match.rulesSnapshot.gameId
-  );
+  const id = catalogGameId(match.rulesSnapshot);
+  return gameCatalog.find((game) => game.id === id)?.name ?? match.rulesSnapshot.name ?? id;
 }
 export function matchesHistory(match: MatchRecord, filters: HistoryFilters) {
   const includes = (text: string, query?: string) =>

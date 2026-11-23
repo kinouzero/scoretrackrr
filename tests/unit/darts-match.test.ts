@@ -199,6 +199,9 @@ describe('pinned multi-leg darts matches', () => {
     { setsToWin: 2.5 },
     { setsToWin: 6 },
     { setsToWin: 2, legsToWin: 8 },
+    { legsFormat: 'firstTo' },
+    { setsFormat: 'bestOf' },
+    { setsToWin: 2, setsFormat: null },
     { startingRule: 'winner' },
     { firstStarterId: 'absent' },
     { extra: true },
@@ -254,7 +257,12 @@ describe('pinned multi-leg darts matches', () => {
     try {
       await seedJournal(db);
       await new CatalogRepository(db).initialize(timestamp);
-      const pinned = { legsToWin: 2, startingRule: 'loser' as const, firstStarterId: 'lucas' };
+      const pinned = {
+        legsToWin: 2,
+        legsFormat: 'bestOf' as const,
+        startingRule: 'loser' as const,
+        firstStarterId: 'lucas',
+      };
       const match = await new DeclarativeRepository(db).create({
         id: 'darts-series',
         versionId: x01Version(301, false, '').id,

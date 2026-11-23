@@ -28,6 +28,22 @@ export interface CricketState extends EngineState {
   turn: number;
   dartsUsed: number;
 }
+
+export function cricketTargetStatus(
+  marks: CricketState['marks'],
+  ownerId: string,
+  index: number,
+  points: boolean,
+) {
+  if (index < 0) return;
+  if (marks[ownerId]![index]! < 3) return 'close';
+  if (
+    points &&
+    Object.entries(marks).some(([id, targets]) => id !== ownerId && targets[index]! < 3)
+  )
+    return 'score';
+}
+
 export function createCricketGame(input: unknown) {
   const value = copyBoundedJson(input) as { points: boolean };
   if (
@@ -96,7 +112,7 @@ export function createCricketGame(input: unknown) {
         const previous = marks[action.ownerId]![index]!;
         const hits = previous + multiplier!;
         marks[action.ownerId]![index] = Math.min(3, hits);
-        if (points && config.ownerIds.some((id) => id !== action.ownerId && marks[id]![index]! < 3))
+        if (cricketTargetStatus(marks, action.ownerId, index, points) === 'score')
           totals[action.ownerId]! += Math.max(0, hits - 3) * sector!;
       }
       const finished =

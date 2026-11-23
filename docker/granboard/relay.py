@@ -18,6 +18,20 @@ PREFIX = "/api/granboard/"
 COOKIE = "scoretrackrr_granboard"
 
 
+def valid_light_frame(frame):
+    if len(frame) == 20:
+        return all(color <= 7 for color in frame)
+    if len(frame) != 16 or frame[12] > 35 or frame[15] != 1:
+        return False
+    if frame[0] == 0x1F:
+        return frame[10:12] == b"\x02\x00" and frame[13:15] == b"\x02\x00"
+    return (
+        frame[0] in (0x14, 0x15)
+        and frame[4] == (0x7D if frame[0] == 0x14 else 0)
+        and not any(frame[5:12]) and frame[13:15] == b"\x00\x00"
+    )
+
+
 class Sessions:
     def __init__(self, code):
         self.code = code.encode()
@@ -122,7 +136,7 @@ async def stream_board(address, send, heartbeat, take_light):
         output = next((item for item in service.characteristics if item.uuid == LIGHTS), None)
         properties = output.properties if output else []
         lights = "write-without-response" in properties or "write" in properties
-        send({"type": "ready", "lights": True} if lights else {"type": "ready"})
+        send({"type": "ready", "lights": True, "lightPatterns": True} if lights else {"type": "ready"})
         sequence = 0
         next_heartbeat = time.monotonic() + 3
         while not failed.is_set():
@@ -236,15 +250,11 @@ class RelayHandler(BaseHTTPRequestHandler):
             self.respond(401)
             return
         try:
-            if (int(self.headers.get("Content-Length", "0")) != 16 or
-                    self.headers.get_content_type() != "application/octet-stream"):
+            size = int(self.headers.get("Content-Length", "0"))
+            if size not in (16, 20) or self.headers.get_content_type() != "application/octet-stream":
                 raise ValueError
-            frame = self.rfile.read(16)
-            if (
-                len(frame) != 16 or frame[0] not in (0x14, 0x15)
-                or frame[4] != (0x7D if frame[0] == 0x14 else 0)
-                or any(frame[5:12]) or frame[12] > 35 or frame[13:] != b"\x00\x00\x01"
-            ):
+            frame = self.rfile.read(size)
+            if len(frame) != size or not valid_light_frame(frame):
                 raise ValueError
         except (ValueError, TimeoutError):
             self.respond(400)

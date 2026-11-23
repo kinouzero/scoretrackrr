@@ -1,76 +1,79 @@
+import type { DartsOutcome } from '../darts-audio';
+import { cricketTargetStatus, cricketTargets, type CricketState } from '#lib/domain/games/cricket';
 import type { BoardHit } from './protocol';
 
-type Color = readonly [red: number, green: number, blue: number];
+const off = 0;
+const red = 1;
+const yellow = 3;
+const green = 4;
+const violet = 6;
+const colorWheel = [red, 2, yellow, green, 5, violet] as const;
+// Wire slots are indexed by sector number. Physical neighbors follow the dartboard face.
+const clockwise = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5];
+export type LightPattern = Uint8Array<ArrayBuffer>;
+export type LightOutcome = DartsOutcome | 'inactive';
 
-function ledFrame(animation: number, color: Color, speed: number) {
-  // GranBoard ring commands use a 16-byte frame. See the linked protocol reference in Darts.md.
-  const frame = new Uint8Array(16);
-  frame[0] = animation;
-  frame.set(color, 1);
-  frame[12] = speed;
-  frame[15] = 1;
+function ring(color: number): LightPattern {
+  return new Uint8Array(20).fill(color);
+}
+
+function spot(sector: number, color: number): LightPattern {
+  const frame = ring(off);
+  frame[sector - 1] = color;
   return frame;
 }
 
-export const readyLight = () => ledFrame(0x15, [0, 200, 95], 10);
-
-export function impactLight(hit: BoardHit, outcome: ImpactOutcome) {
-  const color: Color =
-    outcome === 'win'
-      ? [255, 220, 95]
-      : outcome === 'bust'
-        ? [240, 35, 35]
-        : hit.sector === 0
-          ? [190, 85, 50]
-          : hit.sector === 25
-            ? hit.multiplier === 2
-              ? [250, 40, 110]
-              : [225, 110, 10]
-            : hit.multiplier === 3
-              ? [185, 55, 240]
-              : hit.multiplier === 2
-                ? [25, 110, 250]
-                : [10, 200, 135];
-  const frame = ledFrame(0x14, color, 20);
-  frame[4] = 125;
-  return frame;
-}
-
-export type ImpactOutcome = 'hit' | 'bust' | 'win';
-
-type Cue = readonly [wave: OscillatorType, notes: readonly number[], step: number];
-const singles: Cue = ['triangle', [440], 0.12];
-const doubles: Cue = ['triangle', [523, 659], 0.09];
-const triples: Cue = ['triangle', [587, 740, 880], 0.075];
-const outerBull: Cue = ['sine', [932, 698], 0.14];
-const innerBull: Cue = ['triangle', [784, 1175], 0.17];
-const miss: Cue = ['sine', [300, 246], 0.055];
-const bust: Cue = ['triangle', [392, 294, 196], 0.14];
-const win: Cue = ['triangle', [523, 659, 784, 1047], 0.16];
-
-function cueFor(hit: BoardHit, outcome: ImpactOutcome): Cue {
-  if (outcome === 'win') return win;
-  if (outcome === 'bust') return bust;
-  if (hit.sector === 0) return miss;
-  if (hit.sector === 25) return hit.multiplier === 2 ? innerBull : outerBull;
-  return hit.multiplier === 3 ? triples : hit.multiplier === 2 ? doubles : singles;
-}
-
-export function playImpact(audio: AudioContext, hit: BoardHit, outcome: ImpactOutcome) {
-  if (audio.state !== 'running') return;
-  const [wave, notes, step] = cueFor(hit, outcome);
-  const oscillator = audio.createOscillator();
-  const gain = audio.createGain();
-  const now = audio.currentTime;
-  oscillator.type = wave;
-  notes.forEach((frequency, index) => {
-    const time = now + index * step;
-    oscillator.frequency.setValueAtTime(frequency, time);
-    gain.gain.setValueAtTime(0.001, time);
-    gain.gain.exponentialRampToValueAtTime(0.23, time + 0.009);
-    gain.gain.exponentialRampToValueAtTime(0.001, time + step * 0.9);
+function cluster(sector: number): LightPattern[] {
+  const index = clockwise.indexOf(sector);
+  const neighbors = [clockwise.at(index - 1)!, sector, clockwise[(index + 1) % 20]!];
+  return [0, 1, 2].map((step) => {
+    const frame = ring(off);
+    const colors = [green, yellow, red];
+    neighbors.forEach((number, i) => {
+      frame[number - 1] = colors[(step + i) % colors.length]!;
+    });
+    return frame;
   });
-  oscillator.connect(gain).connect(audio.destination);
-  oscillator.start(now);
-  oscillator.stop(now + step * notes.length);
+}
+
+function doubleBull(): LightPattern {
+  // The native bull fade accepts RGB, including blue beyond the static palette.
+  return Uint8Array.of(0x1f, 0, 220, 0, 0, 60, 255, 0, 220, 0, 2, 0, 20, 2, 0, 1);
+}
+
+export const readyLight = () => ring(green);
+export const checkoutLight = (sector: number) =>
+  sector === 25 ? ring(yellow) : spot(sector, yellow);
+
+export function cricketLight(marks: CricketState['marks'], ownerId: string, points: boolean) {
+  const frame = ring(off);
+  let bull = off;
+  cricketTargets.forEach((sector, index) => {
+    const status = cricketTargetStatus(marks, ownerId, index, points);
+    const color = status === 'close' ? green : status === 'score' ? yellow : off;
+    if (sector === 25) bull = color;
+    else frame[sector - 1] = color;
+  });
+  if (bull !== off && !frame.some(Boolean)) return ring(bull);
+  return frame;
+}
+
+export function impactLights(hit: BoardHit, outcome: LightOutcome): LightPattern[] {
+  if (outcome === 'win' || outcome === 'legWin') {
+    return [
+      ...colorWheel.map((_, step) => {
+        const frame = ring(off);
+        clockwise.forEach((number, index) => {
+          frame[number - 1] = colorWheel[(index + step) % colorWheel.length]!;
+        });
+        return frame;
+      }),
+      ring(off),
+    ];
+  }
+  if (outcome === 'bust') return [ring(violet)];
+  if (hit.sector === 0) return [ring(red)];
+  if (outcome === 'inactive') return [hit.sector === 25 ? ring(red) : spot(hit.sector, red)];
+  if (hit.sector === 25) return [hit.multiplier === 2 ? doubleBull() : ring(green)];
+  return hit.multiplier > 1 ? cluster(hit.sector) : [spot(hit.sector, green)];
 }

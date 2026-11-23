@@ -4,27 +4,24 @@
 </script>
 
 <script lang="ts">
-  import { messages } from '#lib/i18n/index';
   let {
     renderer,
     actions,
-    rules,
+    scoreboard,
   }: {
     renderer?: HeaderRenderer;
     actions: Snippet;
-    rules: Snippet;
+    scoreboard?: Snippet;
   } = $props();
 </script>
 
 {#if renderer}
-  {@render renderer(actions, rules)}
+  {@render renderer(actions, scoreboard)}
 {:else}
   <div class="button-row">
     {@render actions()}
   </div>
-  <section class="game-rules" aria-label={messages.four21.ruleSummary}>
-    {@render rules()}
-  </section>
+  {@render scoreboard?.()}
 {/if}
 
 <style>

@@ -10,11 +10,11 @@ async function profiles(page: Page, names: string[]) {
     await expect(page.getByRole('dialog')).not.toBeVisible();
   }
 }
-async function openSetup(page: Page) {
+async function openSetup(page: Page, game = 'X01') {
   await page.goto('/games/');
   await page
-    .getByRole('article', { name: 'Darts X01 / Cricket', exact: true })
-    .getByRole('link', { name: 'Jouer aux fléchettes', exact: true })
+    .getByRole('article', { name: game, exact: true })
+    .getByRole('link', { name: `Jouer au ${game}`, exact: true })
     .click();
   return page.getByRole('dialog');
 }
@@ -120,7 +120,7 @@ test('starts a Cricket team with its first member after a cork and translates th
     await page.getByRole('button', { name: 'Enregistrer l’équipe', exact: true }).click();
     await expect(page.getByRole('dialog')).not.toBeVisible();
   }
-  const setup = await openSetup(page);
+  const setup = await openSetup(page, 'Cricket');
   await configureDarts(setup, 'Cricket · points classiques');
   await setup.getByRole('switch', { name: 'Jouer en équipe', exact: true }).check();
   for (const name of ['Bleus', 'Rouges'])

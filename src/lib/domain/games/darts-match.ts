@@ -6,11 +6,14 @@ import { createCricketGame } from './cricket';
 
 // Keep the longest possible set match within the engine's bounded history array.
 export const MAX_DARTS_LEGS_PER_SET = 7;
+export const MAX_DARTS_LEGS_TO_WIN = 15;
 export const MAX_DARTS_SETS_TO_WIN = 5;
 
 export interface DartsMatchOptions {
   legsToWin: number;
+  legsFormat?: 'bestOf';
   setsToWin?: number;
+  setsFormat?: 'bestOf';
   startingRule: 'alternate' | 'loser';
   firstStarterId: string;
 }
@@ -19,15 +22,31 @@ export interface DartsMatchState extends EngineState {
   legWinners: string[];
   starterId: string;
 }
+
+export const bestOfLength = (wins: number) => wins * 2 - 1;
+
 export function dartsMatchOptions(input: unknown): Readonly<DartsMatchOptions> {
   const value = copyBoundedJson(input) as DartsMatchOptions;
   if (
     !value ||
     typeof value !== 'object' ||
-    Object.keys(value).length !== (Object.hasOwn(value, 'setsToWin') ? 4 : 3) ||
+    Object.keys(value).some(
+      (key) =>
+        ![
+          'legsToWin',
+          'setsToWin',
+          'legsFormat',
+          'setsFormat',
+          'startingRule',
+          'firstStarterId',
+        ].includes(key),
+    ) ||
     !Number.isInteger(value.legsToWin) ||
     value.legsToWin < 2 ||
-    value.legsToWin > 15 ||
+    value.legsToWin > MAX_DARTS_LEGS_TO_WIN ||
+    (Object.hasOwn(value, 'legsFormat') && value.legsFormat !== 'bestOf') ||
+    (Object.hasOwn(value, 'setsFormat') &&
+      (value.setsFormat !== 'bestOf' || value.setsToWin === undefined)) ||
     (Object.hasOwn(value, 'setsToWin') &&
       (typeof value.setsToWin !== 'number' ||
         !Number.isInteger(value.setsToWin) ||
@@ -129,7 +148,7 @@ export function createDartsMatchGame(input: unknown, optionsInput: unknown) {
         Object.keys(state).length !== 7 ||
         !Array.isArray(state.legWinners) ||
         state.legWinners.length >
-          (options.legsToWin * 2 - 1) * ((options.setsToWin ?? 1) * 2 - 1) ||
+          bestOfLength(options.legsToWin) * bestOfLength(options.setsToWin ?? 1) ||
         state.legWinners.some((id) => !config.ownerIds.includes(id)) ||
         !config.ownerIds.includes(state.starterId)
       )

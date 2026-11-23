@@ -1,5 +1,6 @@
 import { isScoreSheet, scoreSheetSpec, type ScoreSheetId } from '#lib/domain/games/score-sheets';
 import { skullCards } from '#lib/domain/games/skull-king';
+import { bestOfLength } from '#lib/domain/games/darts-match';
 import type { JsonObject, JsonValue, MatchRecord } from '#lib/domain/records';
 
 export interface RuleText {
@@ -425,6 +426,21 @@ export function ruleGuide(match: MatchRecord): RuleGuide {
     }
     const series = object(match.settingsSnapshot.dartsMatch);
     if (typeof series.legsToWin === 'number') {
+      if (series.legsFormat === 'bestOf')
+        guide.ending.push(
+          text(
+            typeof series.setsToWin === 'number'
+              ? 'dartsSeries.bestOfLegsPerSet'
+              : 'dartsSeries.bestOfLegs',
+            {
+              count: bestOfLength(series.legsToWin),
+            },
+          ),
+        );
+      if (typeof series.setsToWin === 'number' && series.setsFormat === 'bestOf')
+        guide.ending.push(
+          text('dartsSeries.bestOfSets', { count: bestOfLength(series.setsToWin) }),
+        );
       guide.ending.push(
         typeof series.setsToWin === 'number'
           ? text('dartsSeries.sets', { legs: series.legsToWin, sets: series.setsToWin })

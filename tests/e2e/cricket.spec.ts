@@ -5,8 +5,8 @@ import { expect, test, type Page } from '../fixtures/browser';
 async function create(page: Page, variant = 'Cricket · points classiques', series = false) {
   await seedPlayers(page, ['Alice', 'Bob']);
   await page.goto('/games/');
-  const card = page.getByRole('article', { name: 'Darts X01 / Cricket', exact: true });
-  await card.getByRole('link', { name: 'Jouer aux fléchettes', exact: true }).click();
+  const card = page.getByRole('article', { name: 'Cricket', exact: true });
+  await card.getByRole('link', { name: 'Jouer au Cricket', exact: true }).click();
   const setup = page.getByRole('dialog');
   await configureDarts(setup, variant);
   for (const name of ['Alice', 'Bob'])
@@ -56,6 +56,11 @@ test('plays classic Cricket offline, shows marks, waits for score parity and und
   await dart(15, 3);
   await dart(25, 2);
   await expect(grid.getByLabel('Alice · bull : 2 marque(s) sur 3', { exact: true })).toBeVisible();
+  await expect(
+    page
+      .getByRole('region', { name: 'Scores', exact: true })
+      .getByLabel('Alice · bull : 2 marque(s) sur 3', { exact: true }),
+  ).toBeVisible();
   for (let i = 0; i < 3; i++) await dart(0);
   await dart(25);
   await expect(

@@ -8,14 +8,18 @@
   import BackupSettings from '#lib/components/BackupSettings.svelte';
   import LanguageSettings from '#lib/components/LanguageSettings.svelte';
   import ThemeSettings from '#lib/components/ThemeSettings.svelte';
+  import SettingToggle from '#lib/components/SettingToggle.svelte';
+  import { dartsSoundEnabled, setDartsSoundEnabled } from '#lib/application/darts-audio';
 
   let database = $state.raw<LocalDatabase>();
   let loading = $state(true);
   let transferBusy = $state(false);
   let error = $state('');
+  let dartsSound = $state(true);
 
   onMount(() => {
     let active = true;
+    dartsSound = dartsSoundEnabled();
     void (async () => {
       try {
         const { LocalDatabase } = await import('#lib/storage/database');
@@ -50,9 +54,19 @@
 >
   {#if loading}<p role="status">{messages.settings.loading}</p>{/if}
   {#if error}<p class="notice error" role="alert">{error}</p>{/if}
-  {#if database && !loading}<LanguageSettings {database} /><ThemeSettings
-      {database}
-    /><BackupSettings {database} bind:busy={transferBusy} />{/if}
+  {#if database && !loading}<LanguageSettings {database} /><ThemeSettings {database} />{/if}
+  <section class="panel settings-panel" aria-labelledby="sound-title">
+    <h2 id="sound-title">{messages.settings.soundTitle}</h2>
+    <SettingToggle
+      label={messages.settings.dartsSound}
+      checked={dartsSound}
+      onchange={(enabled) => {
+        dartsSound = enabled;
+        setDartsSoundEnabled(enabled);
+      }}
+    />
+  </section>
+  {#if database && !loading}<BackupSettings {database} bind:busy={transferBusy} />{/if}
   <section class="panel settings-panel">
     <h2>{messages.settings.installTitle}</h2>
     <p>{messages.settings.install}</p>

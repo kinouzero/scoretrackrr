@@ -103,17 +103,6 @@
           <Icon name="close" />{messages.granboard.disconnect}
         </button>
       </div>
-      <label class="impact-sound">
-        <input
-          type="checkbox"
-          checked={granBoard.sound}
-          onchange={(event) => {
-            granBoard.sound = event.currentTarget.checked;
-            granBoard.enableAudio();
-          }}
-        />
-        {messages.granboard.impactSound}
-      </label>
     {:else if connectionState === 'connecting' || connectionState === 'reconnecting'}
       <p role="status">
         {connectionState === 'connecting'
@@ -221,11 +210,5 @@
   .board-actions > button,
   .relay-form > button {
     flex: 1 1 auto;
-  }
-  .impact-sound {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    min-height: 44px;
   }
 </style>

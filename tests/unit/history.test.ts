@@ -115,7 +115,17 @@ describe('bounded snapshot-based match history', () => {
           ...match,
           rulesSnapshot: { ...match.rulesSnapshot, gameId: 'darts', name: '501 · sortie double' },
         }),
-      ).toBe('Darts X01 / Cricket');
+      ).toBe('X01');
+      expect(
+        historyGameName({
+          ...match,
+          rulesSnapshot: {
+            ...match.rulesSnapshot,
+            gameId: 'darts',
+            definition: { ...match.rulesSnapshot.definition, engine: 'cricket' },
+          },
+        }),
+      ).toBe('Cricket');
     } finally {
       db.close();
       await db.delete();

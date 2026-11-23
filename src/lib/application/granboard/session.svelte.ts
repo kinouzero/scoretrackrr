@@ -1,7 +1,8 @@
 import type { BoardConnector, LightWriter } from './connection';
 import { decodeHit, type BoardHit } from './protocol';
 
-import { impactLight, playImpact, readyLight, type ImpactOutcome } from './feedback';
+import { unlockDartsAudio } from '../darts-audio';
+import { impactLights, readyLight, type LightOutcome, type LightPattern } from './feedback';
 
 type Status = 'connecting' | 'connected' | 'reconnecting' | 'failed';
 
@@ -10,46 +11,37 @@ class GranBoardSession {
   status = $state<Status>();
   private connection?: AbortController;
   private receiver?: { matchId: string; hit: (hit: BoardHit) => void; next: () => void };
-  private audio?: AudioContext;
   private light?: LightWriter;
-  private lightReset?: ReturnType<typeof setTimeout>;
+  private lightTimer?: ReturnType<typeof setTimeout>;
   private finishTimer?: ReturnType<typeof setTimeout>;
   private nextButtonAt = -Infinity;
-  sound = $state(true);
 
-  enableAudio() {
-    if (!this.sound) return;
-    const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
-    if (session) {
-      try {
-        session.type = 'playback';
-      } catch {
-        // The browser can still play audio using its default session.
-      }
-    }
-    try {
-      this.audio ??= new AudioContext();
-      void this.audio.resume().catch(() => {});
-    } catch {
-      // Scoring remains available on devices without Web Audio.
-    }
-  }
-
-  captureFeedback() {
-    const audio = this.audio;
+  captureLight() {
     const light = this.light;
-    return (hit: BoardHit, outcome: ImpactOutcome) => {
-      if (this.sound && audio) playImpact(audio, hit, outcome);
+    return (hit: BoardHit, outcome: LightOutcome, guide?: LightPattern) => {
       if (!light || this.light !== light) return;
-      clearTimeout(this.lightReset);
-      void light(impactLight(hit, outcome)).catch(() => {});
-      if (outcome !== 'win') this.lightReset = setTimeout(() => this.signalReady(), 600);
+      this.playLights(light, impactLights(hit, outcome), guide);
     };
   }
 
-  signalReady() {
-    clearTimeout(this.lightReset);
-    void this.light?.(readyLight()).catch(() => {});
+  signalReady(guide?: LightPattern) {
+    if (this.light) this.playLights(this.light, [readyLight()], guide);
+  }
+
+  private playLights(light: LightWriter, frames: readonly LightPattern[], guide?: LightPattern) {
+    clearTimeout(this.lightTimer);
+    const send = (index: number) => {
+      if (this.light !== light) return;
+      void light(frames[index]!).catch(() => {});
+      if (index + 1 < frames.length) {
+        this.lightTimer = setTimeout(() => send(index + 1), 145);
+      } else if (guide) {
+        this.lightTimer = setTimeout(() => {
+          if (this.light === light) void light(guide).catch(() => {});
+        }, 600);
+      }
+    };
+    send(0);
   }
 
   listen(matchId: string, hit: (hit: BoardHit) => void, next = () => {}) {
@@ -63,7 +55,7 @@ class GranBoardSession {
   finish(matchId: string) {
     if (this.matchId !== matchId || this.finishTimer !== undefined) return;
     // Give the last accepted hit time to reach the board before disconnecting.
-    this.finishTimer = setTimeout(() => this.stop(matchId), 800);
+    this.finishTimer = setTimeout(() => this.stop(matchId), 1250);
   }
 
   stop(matchId = this.matchId) {
@@ -72,12 +64,8 @@ class GranBoardSession {
     this.finishTimer = undefined;
     this.connection?.abort();
     this.connection = undefined;
-    clearTimeout(this.lightReset);
+    clearTimeout(this.lightTimer);
     this.light = undefined;
-    const audio = this.audio;
-    this.audio = undefined;
-    // Let the last dart's victory cue finish when the match releases the board.
-    if (audio) setTimeout(() => void audio.close().catch(() => {}), 800);
     this.nextButtonAt = -Infinity;
     this.matchId = undefined;
     this.status = undefined;
@@ -85,7 +73,7 @@ class GranBoardSession {
 
   start(matchId: string, connect: BoardConnector, initialTimeout: number) {
     this.stop();
-    this.enableAudio();
+    unlockDartsAudio();
     const connection = new AbortController();
     this.connection = connection;
     this.matchId = matchId;
@@ -104,7 +92,7 @@ class GranBoardSession {
         if (signal.aborted) return;
         clearTimeout(timeout);
         attempt.abort();
-        clearTimeout(this.lightReset);
+        clearTimeout(this.lightTimer);
         this.light = undefined;
         if (!hasConnected) {
           this.status = 'failed';
@@ -140,7 +128,6 @@ class GranBoardSession {
           hasConnected = true;
           this.light = light;
           this.status = 'connected';
-          this.signalReady();
         },
         lost,
       }).catch(lost);

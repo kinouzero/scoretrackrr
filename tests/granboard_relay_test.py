@@ -12,7 +12,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "docker" / "granboa
 from relay import COOKIE, LIGHTS, NOTIFY, PREFIX, RelayServer, stream_board
 
 CODE = "test_code_for_the_fake_board_only"
-LIGHT = bytes([0x15, 0, 200, 95, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 1])
+LIGHT = bytes([4] * 20)
+DOUBLE_BULL = bytes([0x1F, 0, 220, 0, 0, 60, 255, 0, 220, 0, 2, 0, 20, 2, 0, 1])
 
 
 class RelayTest(unittest.TestCase):
@@ -24,7 +25,7 @@ class RelayTest(unittest.TestCase):
 
         async def simulated_board(send, heartbeat, take_light):
             self.board_requested.set()
-            send({"type": "ready", "lights": True})
+            send({"type": "ready", "lights": True, "lightPatterns": True})
             send({"type": "hit", "sequence": 1, "frame": "3.4@"})
             send({"type": "hit", "sequence": 2, "frame": "3.4@"})
             heartbeat()
@@ -86,7 +87,7 @@ class RelayTest(unittest.TestCase):
         self.assertEqual(stream.readline().strip(), b": connecting")
         self.assertEqual(stream.readline().strip(), b"")
         for event in [
-            {"type": "ready", "lights": True},
+            {"type": "ready", "lights": True, "lightPatterns": True},
             {"type": "hit", "sequence": 1, "frame": "3.4@"},
             {"type": "hit", "sequence": 2, "frame": "3.4@"},
         ]:
@@ -96,11 +97,16 @@ class RelayTest(unittest.TestCase):
         self.assertEqual(stream.readline().strip(), b": heartbeat")
         self.assertTrue(self.board_requested.is_set())
         self.assertEqual(light(**{"Sec-Fetch-Site": "cross-site"}).status, 403)
-        self.assertEqual(light(b"\x10" + LIGHT[1:]).status, 400)
+        self.assertEqual(light(b"\x08" + LIGHT[1:]).status, 400)
+        self.assertEqual(light(b"\x20" + DOUBLE_BULL[1:]).status, 400)
         self.assertEqual(light(Cookie="").status, 401)
         self.assertEqual(light().status, 204)
         self.assertTrue(self.light_received.wait(1))
         self.assertEqual(self.frame, LIGHT)
+        self.light_received.clear()
+        self.assertEqual(light(DOUBLE_BULL).status, 204)
+        self.assertTrue(self.light_received.wait(1))
+        self.assertEqual(self.frame, DOUBLE_BULL)
         self.release.set()
         stream.read()
         self.assertEqual(light().status, 401)
@@ -154,7 +160,7 @@ class BoardTransportTest(unittest.IsolatedAsyncioTestCase):
 
         self.assertEqual(subscriptions, [notify])
         self.assertEqual(events, [
-            {"type": "ready", "lights": True},
+            {"type": "ready", "lights": True, "lightPatterns": True},
             {"type": "hit", "sequence": 1, "frame": "3.4@"},
         ])
         self.assertEqual(writes, [(output, LIGHT, False)])

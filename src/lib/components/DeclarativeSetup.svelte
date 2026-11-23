@@ -28,7 +28,14 @@
   import { defaultYamsOptions, yamsScoring, createYamsGame } from '#lib/domain/games/yams';
   import { configuredTimesUpVersion, createTimesUpGame } from '#lib/domain/games/times-up';
   import { createGame } from '#lib/domain/games/engine';
-  import { MAX_DARTS_LEGS_PER_SET, MAX_DARTS_SETS_TO_WIN } from '#lib/domain/games/darts-match';
+  import { catalogGameId } from '#lib/domain/games/catalog';
+  import {
+    bestOfLength,
+    dartsMatchOptions,
+    MAX_DARTS_LEGS_PER_SET,
+    MAX_DARTS_LEGS_TO_WIN,
+    MAX_DARTS_SETS_TO_WIN,
+  } from '#lib/domain/games/darts-match';
   import { StorageError } from '#lib/storage/errors';
   import { TeamValidationError } from '#lib/domain/teams';
   import { EngineError } from '#lib/domain/engine/types';
@@ -51,6 +58,7 @@
     oncreated: (id: string) => void;
   } = $props();
   let version = $state.raw<GameVersionRecord>();
+  const gameId = $derived(version ? catalogGameId(version) : undefined);
   let fourKindFixed = $state(false);
   let straightPreset = $state<'30/40' | '25/30' | 'custom'>('30/40');
   let smallStraight = $state(30);
@@ -111,8 +119,12 @@
   let matchMode = $state(false);
   let x01Start = $state(301);
   let legsToWin = $state(3);
+  let legsFormat = $state<'firstTo' | 'bestOf'>('firstTo');
   let useSets = $state(false);
   let setsToWin = $state(2);
+  let setsFormat = $state<'firstTo' | 'bestOf'>('firstTo');
+  const maxLegWins = $derived(useSets ? MAX_DARTS_LEGS_PER_SET : MAX_DARTS_LEGS_TO_WIN);
+  const winChoices = (max: number) => Array.from({ length: max - 1 }, (_, index) => index + 2);
   let startingRule = $state<'alternate' | 'loser'>('alternate');
   let firstStarterId = $state('');
   let corkEnabled = $state(false);
@@ -228,7 +240,9 @@
       x01Start,
       matchMode,
       legsToWin,
+      ...(matchMode && legsFormat === 'bestOf' ? { legsFormat } : {}),
       ...(matchMode && useSets ? { setsToWin } : {}),
+      ...(matchMode && useSets && setsFormat === 'bestOf' ? { setsFormat } : {}),
       startingRule,
       corkEnabled,
       cooperativeName,
@@ -241,7 +255,7 @@
   async function applyPreset(options: Record<string, unknown>) {
     if (typeof options.versionId !== 'string') throw new Error('Invalid preset');
     const result = await new CatalogRepository(database).readSetupVersions(options.versionId);
-    if (result.selected.gameId !== version?.gameId) throw new Error('Invalid preset game');
+    if (catalogGameId(result.selected) !== gameId) throw new Error('Invalid preset game');
     const restored = await presetParticipants(database, options.playerIds, options.teamIds);
     const nextGame = createGame(result.selected);
     if (result.selected.gameId === '6-qui-prend')
@@ -273,17 +287,16 @@
         Number(options[name]) > 1000
       )
         throw new Error('Invalid preset number');
-    const presetSets = options.setsToWin;
-    if (
-      presetSets !== undefined &&
-      (typeof presetSets !== 'number' ||
-        !Number.isInteger(presetSets) ||
-        presetSets < 2 ||
-        presetSets > MAX_DARTS_SETS_TO_WIN ||
-        Number(options.legsToWin) < 2 ||
-        Number(options.legsToWin) > MAX_DARTS_LEGS_PER_SET)
-    )
-      throw new Error('Invalid preset number');
+    const presetSeries = options.matchMode
+      ? dartsMatchOptions({
+          legsToWin: options.legsToWin,
+          ...(options.setsToWin !== undefined ? { setsToWin: options.setsToWin } : {}),
+          ...(options.legsFormat !== undefined ? { legsFormat: options.legsFormat } : {}),
+          ...(options.setsFormat !== undefined ? { setsFormat: options.setsFormat } : {}),
+          startingRule: options.startingRule,
+          firstStarterId: '',
+        })
+      : undefined;
     variants = result.versions;
     version = result.selected;
     mode = options.mode as MatchMode;
@@ -298,8 +311,10 @@
     x01Start = options.x01Start as number;
     matchMode = options.matchMode as boolean;
     legsToWin = options.legsToWin as number;
-    useSets = presetSets !== undefined;
-    setsToWin = (presetSets as number | undefined) ?? 2;
+    legsFormat = presetSeries?.legsFormat ?? 'firstTo';
+    useSets = presetSeries?.setsToWin !== undefined;
+    setsToWin = presetSeries?.setsToWin ?? 2;
+    setsFormat = presetSeries?.setsFormat ?? 'firstTo';
     startingRule = options.startingRule as typeof startingRule;
     corkEnabled = options.corkEnabled as boolean;
     if (result.selected.gameId === '6-qui-prend')
@@ -382,7 +397,9 @@
           ? {
               dartsMatch: {
                 legsToWin,
+                ...(legsFormat === 'bestOf' ? { legsFormat } : {}),
                 ...(useSets ? { setsToWin } : {}),
+                ...(useSets && setsFormat === 'bestOf' ? { setsFormat } : {}),
                 startingRule,
                 firstStarterId: corkEnabled ? corkWinnerId : firstStarterId,
               },
@@ -413,14 +430,18 @@
   }}
 >
   <h2 id="declarative-setup-title">
-    {version?.gameId === 'yams' ? messages.yams.setup : messages.generic.setup}
+    {version?.gameId === 'darts'
+      ? messages.darts.setup(gameId === 'cricket' ? 'Cricket' : 'X01')
+      : version?.gameId === 'yams'
+        ? messages.yams.setup
+        : messages.generic.setup}
   </h2>
   {#if definition}<form onsubmit={create}>
       {#if hasSetupOptions}
         <SetupPresets
           disabled={saving}
           bind:busy={presetBusy}
-          gameId={version!.gameId}
+          gameId={gameId!}
           capture={capturePreset}
           apply={applyPreset}
         />
@@ -638,30 +659,72 @@
             <SettingToggle
               label={messages.dartsMatch.enableSets}
               checked={useSets}
-              onchange={(enabled) => (useSets = enabled)}
+              onchange={(enabled) => {
+                useSets = enabled;
+                if (enabled && legsToWin > MAX_DARTS_LEGS_PER_SET)
+                  legsToWin = MAX_DARTS_LEGS_PER_SET;
+              }}
             />
             {#if useSets}
-              <label for="sets-to-win">{messages.dartsMatch.setsToWin}</label><input
-                id="sets-to-win"
+              <label for="sets-format">{messages.dartsMatch.setsFormat}</label>
+              <select id="sets-format" bind:value={setsFormat}>
+                <option value="firstTo">{messages.dartsMatch.firstTo}</option>
+                <option value="bestOf">{messages.dartsMatch.bestOf}</option>
+              </select>
+              {#if setsFormat === 'bestOf'}
+                <label for="sets-best-of">{messages.dartsMatch.setsBestOf}</label>
+                <select id="sets-best-of" bind:value={setsToWin} required>
+                  {#each winChoices(MAX_DARTS_SETS_TO_WIN) as wins (wins)}
+                    <option value={wins}>{bestOfLength(wins)}</option>
+                  {/each}
+                </select>
+              {:else}
+                <label for="sets-to-win">{messages.dartsMatch.setsToWin}</label>
+                <input
+                  id="sets-to-win"
+                  type="number"
+                  min="2"
+                  max={MAX_DARTS_SETS_TO_WIN}
+                  step="1"
+                  bind:value={setsToWin}
+                  required
+                />
+              {/if}
+            {/if}
+            <label for="legs-format"
+              >{useSets
+                ? messages.dartsMatch.legsPerSetFormat
+                : messages.dartsMatch.legsFormat}</label
+            >
+            <select id="legs-format" bind:value={legsFormat}>
+              <option value="firstTo">{messages.dartsMatch.firstTo}</option>
+              <option value="bestOf">{messages.dartsMatch.bestOf}</option>
+            </select>
+            {#if legsFormat === 'bestOf'}
+              <label for="legs-best-of"
+                >{useSets
+                  ? messages.dartsMatch.legsPerSetBestOf
+                  : messages.dartsMatch.legsBestOf}</label
+              >
+              <select id="legs-best-of" bind:value={legsToWin} required>
+                {#each winChoices(maxLegWins) as wins (wins)}
+                  <option value={wins}>{bestOfLength(wins)}</option>
+                {/each}
+              </select>
+            {:else}
+              <label for="legs-to-win"
+                >{useSets ? messages.dartsMatch.legsPerSet : messages.dartsMatch.legsToWin}</label
+              >
+              <input
+                id="legs-to-win"
                 type="number"
                 min="2"
-                max={MAX_DARTS_SETS_TO_WIN}
+                max={maxLegWins}
                 step="1"
-                bind:value={setsToWin}
+                bind:value={legsToWin}
                 required
               />
             {/if}
-            <label for="legs-to-win"
-              >{useSets ? messages.dartsMatch.legsPerSet : messages.dartsMatch.legsToWin}</label
-            ><input
-              id="legs-to-win"
-              type="number"
-              min="2"
-              max={useSets ? MAX_DARTS_LEGS_PER_SET : 15}
-              step="1"
-              bind:value={legsToWin}
-              required
-            />
             <label for="leg-start-rule">{messages.dartsMatch.startRule}</label><select
               id="leg-start-rule"
               bind:value={startingRule}

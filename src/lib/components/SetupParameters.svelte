@@ -19,27 +19,12 @@
     onselect: (id: string) => void;
     x01Start?: number;
   } = $props();
-  let previousX01 = $state(''),
-    previousCricket = $state('');
-  $effect(() => {
-    if (version.gameId === 'darts') {
-      if (version.definition.engine === 'cricket') previousCricket = version.id;
-      else previousX01 = version.id;
-    }
-  });
   const settings = $derived(gameSettings(version));
   function settingLabel(key: GameSetting, enabled: boolean) {
     if (key === 'target10000' && !enabled) return messages.parameters.labels.target5000;
-    if (key === 'cricket' && !enabled) return messages.parameters.labels.x01;
     return messages.parameters.labels[key];
   }
   function candidate(key: GameSetting, enabled: boolean) {
-    if (key === 'cricket') {
-      const saved = versions.find(
-        (item) => item.id === (enabled ? previousCricket : previousX01) && item.gameId === 'darts',
-      );
-      if (saved) return saved;
-    }
     return versionForSetting(version, versions, key, enabled);
   }
 </script>
@@ -49,9 +34,7 @@
     {#each settings as setting (setting.key)}
       <SettingToggle
         label={settingLabel(setting.key, setting.enabled)}
-        hint={setting.key === 'target10000' || setting.key === 'cricket'
-          ? undefined
-          : messages.parameters.hints[setting.key]}
+        hint={setting.key === 'target10000' ? undefined : messages.parameters.hints[setting.key]}
         checked={setting.enabled}
         disabled={!candidate(setting.key, !setting.enabled)}
         onchange={(enabled) => {

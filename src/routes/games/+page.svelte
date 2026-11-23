@@ -172,7 +172,7 @@
             class="button"
             href={resolve('/matches?new=petanque')}><Icon name="play" />{messages.games.play}</a
           >
-        {:else if (isScoreSheet(game.id) || ['yams', '421', '5000-10000', 'darts', 'skull-king', 'flip-7', 'molkky', '6-qui-prend', 'times-up'].includes(game.id)) && game.versions[0]}<a
+        {:else if (isScoreSheet(game.id) || ['yams', '421', '5000-10000', 'darts', 'cricket', 'skull-king', 'flip-7', 'molkky', '6-qui-prend', 'times-up'].includes(game.id)) && game.versions[0]}<a
             class="button"
             href={resolve(
               `/matches?new=declarative&version=${encodeURIComponent(game.versions[0].id)}`,
@@ -191,11 +191,13 @@
                         ? messages.four21.play
                         : game.id === 'darts'
                           ? messages.darts.play
-                          : game.id === 'skull-king'
-                            ? messages.skull.play
-                            : game.id === 'flip-7'
-                              ? messages.flip.play
-                              : messages.farkle.play}</a
+                          : game.id === 'cricket'
+                            ? messages.cricket.play
+                            : game.id === 'skull-king'
+                              ? messages.skull.play
+                              : game.id === 'flip-7'
+                                ? messages.flip.play
+                                : messages.farkle.play}</a
           >
         {:else if game.origin === 'custom' && game.currentVersionId}<a
             class="button"

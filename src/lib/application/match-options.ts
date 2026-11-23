@@ -1,4 +1,5 @@
 import type { JsonObject, JsonValue, MatchRecord } from '#lib/domain/records';
+import { bestOfLength } from '#lib/domain/games/darts-match';
 
 export interface MatchOption {
   key: string;
@@ -63,12 +64,13 @@ export function matchOptions(match: MatchRecord): MatchOption[] {
         if (name) add('dartsCork', { name });
       }
       const series = object(match.settingsSnapshot.dartsMatch);
-      number('sets', 'count', series.setsToWin);
-      number(
-        typeof series.setsToWin === 'number' ? 'legsPerSet' : 'legs',
-        'count',
-        series.legsToWin,
-      );
+      const inSets = typeof series.setsToWin === 'number';
+      if (typeof series.setsToWin === 'number' && series.setsFormat === 'bestOf')
+        number('bestOfSets', 'count', bestOfLength(series.setsToWin));
+      else number('sets', 'count', series.setsToWin);
+      if (typeof series.legsToWin === 'number' && series.legsFormat === 'bestOf')
+        number(inSets ? 'bestOfLegsPerSet' : 'bestOfLegs', 'count', bestOfLength(series.legsToWin));
+      else number(inSets ? 'legsPerSet' : 'legs', 'count', series.legsToWin);
       if (series.startingRule === 'alternate' || series.startingRule === 'loser')
         add('startingRule', { rule: series.startingRule });
       if ((match.mode === 'teams' ? match.teamsSnapshot.length : match.playersSnapshot.length) > 2)

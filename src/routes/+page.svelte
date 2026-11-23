@@ -8,7 +8,7 @@
   import type { LocalDatabase } from '#lib/storage/database';
   import { resolve } from '$app/paths';
   import GameIcon from '#lib/components/GameIcon.svelte';
-  import { gameCatalog } from '#lib/domain/games/catalog';
+  import { catalogGameId, gameCatalog } from '#lib/domain/games/catalog';
   import { historyGameName, gameName } from '#lib/i18n/presentation';
   import type { MatchRecord } from '#lib/domain/records';
   import { messages, getLocale } from '#lib/i18n/index';
@@ -169,8 +169,8 @@
 </section>
 
 {#snippet recentMatchContent(match: MatchRecord)}
-  <span class="recent-game-icon" data-game={String(match.rulesSnapshot.definition.id)}
-    ><GameIcon game={String(match.rulesSnapshot.definition.id)} /></span
+  <span class="recent-game-icon" data-game={catalogGameId(match.rulesSnapshot)}
+    ><GameIcon game={catalogGameId(match.rulesSnapshot)} /></span
   >
   <span class="recent-match-info"
     ><strong>{historyGameName(match)}</strong><span

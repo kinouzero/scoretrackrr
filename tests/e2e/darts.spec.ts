@@ -5,12 +5,12 @@ import { expect, test, type Page } from '../fixtures/browser';
 async function create(
   page: Page,
   variant = '301 · sortie double',
-  series?: { target: number; rule: 'alternate' | 'loser'; sets?: number },
+  series?: { target: number; rule: 'alternate' | 'loser'; sets?: number; bestOf?: boolean },
 ) {
   await seedPlayers(page, ['Alice', 'Bob']);
   await page.goto('/games/');
-  const card = page.getByRole('article', { name: 'Darts X01 / Cricket', exact: true });
-  await card.getByRole('link', { name: 'Jouer aux fléchettes', exact: true }).click();
+  const card = page.getByRole('article', { name: 'X01', exact: true });
+  await card.getByRole('link', { name: 'Jouer au X01', exact: true }).click();
   const setup = page.getByRole('dialog');
   await configureDarts(setup, variant);
   for (const name of ['Alice', 'Bob'])
@@ -19,14 +19,36 @@ async function create(
     await setup.getByRole('switch', { name: 'Match en plusieurs legs', exact: true }).check();
     if (series.sets !== undefined) {
       await setup.getByRole('switch', { name: 'Jouer en sets', exact: true }).check();
-      await setup.getByLabel('Nombre de sets à gagner', { exact: true }).fill(String(series.sets));
+      if (series.bestOf) {
+        await setup.getByLabel('Format des sets', { exact: true }).selectOption('bestOf');
+        await setup
+          .getByLabel('Nombre maximal de sets', { exact: true })
+          .selectOption({ label: String(series.sets) });
+      } else {
+        await setup
+          .getByLabel('Nombre de sets à gagner', { exact: true })
+          .fill(String(series.sets));
+      }
     }
-    await setup
-      .getByLabel(
-        series.sets === undefined ? 'Nombre de legs à gagner' : 'Nombre de legs à gagner par set',
-        { exact: true },
-      )
-      .fill(String(series.target));
+    if (series.bestOf) {
+      await setup
+        .getByLabel(series.sets === undefined ? 'Format des legs' : 'Format des legs par set', {
+          exact: true,
+        })
+        .selectOption('bestOf');
+      await setup
+        .getByLabel(
+          series.sets === undefined ? 'Nombre maximal de legs' : 'Nombre maximal de legs par set',
+          { exact: true },
+        )
+        .selectOption({ label: String(series.target) });
+    } else
+      await setup
+        .getByLabel(
+          series.sets === undefined ? 'Nombre de legs à gagner' : 'Nombre de legs à gagner par set',
+          { exact: true },
+        )
+        .fill(String(series.target));
     await setup
       .getByLabel('Premier lanceur au leg suivant', { exact: true })
       .selectOption(series.rule);
@@ -67,7 +89,16 @@ test('plays 301 double-out offline with a whole-visit bust, reversal and persist
   await dart(20);
   await dart(1);
   for (let i = 0; i < 3; i++) await dart(0);
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Alice40');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Alice\s*40/,
+  );
+  const scoreboard = page.getByRole('region', { name: 'Scores', exact: true });
+  const alice = scoreboard.getByRole('article', { name: 'Alice', exact: true });
+  const recent = alice.getByRole('list', { name: 'Dernières volées', exact: true });
+  const slots = scoreboard.getByRole('list', { name: 'Fléchettes', exact: true });
+  await expect(recent.getByRole('listitem')).toHaveText(['V1 180', 'V2 81']);
+  await expect(alice).toContainText('130,5');
+  await expect(slots.getByRole('listitem').first()).toHaveText('D20');
   const suggestions = page.getByRole('complementary', { name: /Sorties possibles/ });
   await expect(suggestions).toContainText('D20');
   await expect(suggestions.getByRole('heading')).toHaveText(
@@ -80,13 +111,21 @@ test('plays 301 double-out offline with a whole-visit bust, reversal and persist
     'Sorties possibles · 2 fléchette(s) restante(s)',
   );
   await expect(suggestions.getByRole('listitem').first()).toHaveText('D10');
+  await expect(slots.getByRole('listitem').nth(0)).toHaveText('S20');
+  await expect(slots.getByRole('listitem').nth(1)).toHaveText('D10');
   await dart(20);
   await expect(page.getByText(/^Bust :/)).toBeVisible();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Alice40');
+  await expect(recent.getByRole('listitem').last()).toHaveText('V3 Bust');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Alice\s*40/,
+  );
   await expect(page.getByRole('heading', { name: 'Au tour de Bob', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Annuler la dernière saisie' }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'Confirmer', exact: true }).click();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Alice20');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Alice\s*20/,
+  );
+  await expect(recent.getByRole('listitem')).toHaveCount(2);
   await page.reload();
   await expect(
     page.getByText('Fléchette 2 sur 3 · début de volée : 40', { exact: true }),
@@ -115,7 +154,9 @@ test('completes the 501 straight-out preset', async ({ page }) => {
     for (let i = 0; i < 3; i++) await dart(20, visit === 2 && i === 2 ? 1 : 3);
     for (let i = 0; i < 3; i++) await dart(0);
   }
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Alice1');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Alice\s*1/,
+  );
   await expect(
     page
       .getByRole('complementary', { name: /Sorties possibles/ })
@@ -166,7 +207,9 @@ test('switches between per-dart and total-visit entry with bust, checkout and au
   await visit(0);
   await visit(40);
   await expect(page.getByText(/^Bust :/)).toBeVisible();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Alice40');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Alice\s*40/,
+  );
   await visit(0);
   await page.getByLabel('Mode de saisie', { exact: true }).selectOption('dart');
   await page.getByLabel('Secteur touché', { exact: true }).selectOption('20');
@@ -204,49 +247,59 @@ test('switches between per-dart and total-visit entry with bust, checkout and au
   await expect(page.getByText('Victoire : Alice', { exact: true })).toBeVisible();
 });
 
-test('plays a darts match in sets and resumes after a reload at the set boundary', async ({
-  page,
-}) => {
-  await create(page, '301 · sortie simple', { target: 2, sets: 2, rule: 'alternate' });
-  const summary = page.getByRole('region', { name: 'Score du match', exact: true });
-  async function visit(total: number) {
-    const newest = page.locator('.journal-entries > li').first().getByRole('heading');
-    const before = await newest.innerText();
-    await page.getByLabel('Mode de saisie', { exact: true }).selectOption('visit');
-    await page.getByLabel(/^Total des/).fill(String(total));
-    await page
-      .getByRole('button', { name: 'Enregistrer le total de la volée', exact: true })
-      .click();
-    await expect(newest).not.toHaveText(before);
-  }
-  async function winLeg(second: boolean) {
-    await expect(
-      page.getByRole('heading', {
-        name: second ? 'Au tour de Bob' : 'Au tour de Alice',
-        exact: true,
-      }),
-    ).toBeVisible();
-    if (second) await visit(0);
-    await visit(180);
-    await visit(0);
-    await visit(121);
-  }
-  await expect(summary).toContainText('Set 1 · Leg 1');
-  await winLeg(false);
-  await page.getByRole('button', { name: 'Démarrer le leg 2', exact: true }).click();
-  await winLeg(true);
-  await expect(summary).toContainText('Set remporté par Alice');
-  await expect(page.getByText('Victoire : Alice', { exact: true })).not.toBeVisible();
-  await page.reload();
-  await page.getByRole('button', { name: 'Démarrer le set 2', exact: true }).click();
-  await expect(summary).toContainText('Set 2 · Leg 1');
-  await expect(summary).toContainText('Alice · 1 set · 0 leg');
-  await winLeg(false);
-  await page.getByRole('button', { name: 'Démarrer le leg 2', exact: true }).click();
-  await winLeg(true);
-  await expect(page.getByText('Victoire : Alice', { exact: true })).toBeVisible();
-  await expect(summary).toContainText('Alice · 2 sets · 2 legs');
-});
+for (const bestOf of [false, true])
+  test(`plays a darts match in sets and resumes after a reload at the set boundary (best of: ${bestOf})`, async ({
+    page,
+  }) => {
+    await create(page, '301 · sortie simple', {
+      target: bestOf ? 3 : 2,
+      sets: bestOf ? 3 : 2,
+      rule: 'alternate',
+      bestOf,
+    });
+    const summary = page.getByRole('region', { name: 'Score du match', exact: true });
+    const scores = page.getByRole('region', { name: 'Scores', exact: true });
+    async function visit(total: number) {
+      const newest = page.locator('.journal-entries > li').first().getByRole('heading');
+      const before = await newest.innerText();
+      await page.getByLabel('Mode de saisie', { exact: true }).selectOption('visit');
+      await page.getByLabel(/^Total des/).fill(String(total));
+      await page
+        .getByRole('button', { name: 'Enregistrer le total de la volée', exact: true })
+        .click();
+      await expect(newest).not.toHaveText(before);
+    }
+    async function winLeg(second: boolean) {
+      await expect(
+        page.getByRole('heading', {
+          name: second ? 'Au tour de Bob' : 'Au tour de Alice',
+          exact: true,
+        }),
+      ).toBeVisible();
+      if (second) await visit(0);
+      await visit(180);
+      await visit(0);
+      await visit(121);
+    }
+    await expect(summary).toContainText('Set 1 · Leg 1');
+    await expect(scores).toContainText(bestOf ? 'Au meilleur de 3 legs' : 'Premier à 2 legs');
+    await expect(scores).toContainText(bestOf ? 'Au meilleur de 3 sets' : 'Premier à 2 sets');
+    await winLeg(false);
+    await page.getByRole('button', { name: 'Démarrer le leg 2', exact: true }).click();
+    await winLeg(true);
+    await expect(summary).toContainText('Set remporté par Alice');
+    await expect(page.getByText('Victoire : Alice', { exact: true })).not.toBeVisible();
+    await page.reload();
+    await expect(summary).toContainText(bestOf ? 'Au meilleur de 3 sets' : 'Premier à 2 sets');
+    await page.getByRole('button', { name: 'Démarrer le set 2', exact: true }).click();
+    await expect(summary).toContainText('Set 2 · Leg 1');
+    await expect(summary).toContainText('Alice · 1 set · 0 leg');
+    await winLeg(false);
+    await page.getByRole('button', { name: 'Démarrer le leg 2', exact: true }).click();
+    await winLeg(true);
+    await expect(page.getByText('Victoire : Alice', { exact: true })).toBeVisible();
+    await expect(summary).toContainText('Alice · 2 sets · 2 legs');
+  });
 
 for (const rule of ['alternate', 'loser'] as const)
   test(`plays a three-leg target offline with ${rule} starters and a reversible match win`, async ({
@@ -326,7 +379,7 @@ for (const rule of ['alternate', 'loser'] as const)
     expect(errors).toEqual([]);
   });
 
-test('uses keyboard toggles and retains participants and leg settings across rule changes offline', async ({
+test('uses keyboard toggles and retains participants and leg settings while changing checkout offline', async ({
   page,
   context,
 }) => {
@@ -341,7 +394,7 @@ test('uses keyboard toggles and retains participants and leg settings across rul
     await expect(page.getByRole('dialog')).not.toBeVisible();
   }
   await page.goto('/games/');
-  await page.getByRole('link', { name: 'Jouer aux fléchettes', exact: true }).click();
+  await page.getByRole('link', { name: 'Jouer au X01', exact: true }).click();
   const setup = page.getByRole('dialog');
   await expect(setup.getByLabel('Variante', { exact: true })).toHaveCount(0);
   for (const name of ['Alice', 'Bob'])
@@ -355,23 +408,17 @@ test('uses keyboard toggles and retains participants and leg settings across rul
   await start.selectOption('601');
   await expect(start).toHaveValue('601');
   await setup.getByRole('switch', { name: 'Sortie double', exact: true }).uncheck();
-  await setup.getByRole('switch', { name: 'Jouer au X01', exact: true }).check();
-  await setup.getByRole('switch', { name: 'Compter les points', exact: true }).uncheck();
-  await setup.getByRole('switch', { name: 'Jouer au Cricket', exact: true }).uncheck();
   await expect(start).toHaveValue('601');
   await expect(setup.getByRole('switch', { name: 'Sortie double', exact: true })).not.toBeChecked();
   await expect(
     setup.getByRole('switch', { name: 'Match en plusieurs legs', exact: true }),
   ).toBeChecked();
   await expect(setup.getByLabel('Nombre de legs à gagner', { exact: true })).toHaveValue('2');
-  await setup.getByRole('switch', { name: 'Jouer au X01', exact: true }).check();
-  await expect(
-    setup.getByRole('switch', { name: 'Compter les points', exact: true }),
-  ).not.toBeChecked();
-  await setup.getByRole('switch', { name: 'Jouer au Cricket', exact: true }).uncheck();
   await setup.getByRole('button', { name: 'Créer la partie', exact: true }).click();
   await page.getByRole('button', { name: 'Démarrer la partie', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Au tour de Bob', exact: true })).toBeVisible();
   await page.reload();
-  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText('Bob601');
+  await expect(page.getByRole('region', { name: 'Scores', exact: true })).toContainText(
+    /Bob\s*601/,
+  );
 });

@@ -823,7 +823,8 @@ input {
   --game-paper: light-dark(#eadfcf, #443927);
   --game-ink: light-dark(#735329, #edc68c);
 }
-[data-game='darts'] {
+[data-game='darts'],
+[data-game='cricket'] {
   --game-paper: light-dark(#f0dfd6, #4a322b);
   --game-ink: light-dark(#884b35, #f4bd9f);
 }

@@ -1,7 +1,7 @@
 import { isScoreSheet, scoreSheetVersion } from '#lib/domain/games/score-sheets';
 import type { GameRecord, GameVersionRecord, JsonObject } from '#lib/domain/records';
 import { decodeGameTransfer, encodeGameTransfer } from '#lib/domain/games/transfer';
-import { gameCatalog } from '#lib/domain/games/catalog';
+import { catalogGameId, gameCatalog } from '#lib/domain/games/catalog';
 import { petanqueVersion } from '#lib/domain/games/petanque';
 import { cricketVersion } from '#lib/domain/games/cricket';
 import { x01Version } from '#lib/domain/games/darts';
@@ -19,6 +19,11 @@ import { createDeclarativeGame } from '#lib/domain/engine/declarative';
 import { journalId, journalTimestamp } from '#lib/domain/journal';
 import type { LocalDatabase } from './database';
 import { requireRecord, StorageError, storageOperation, validateRecord } from './errors';
+
+const x01Ids = [301, 501].flatMap((start) =>
+  [true, false].map((doubleOut) => x01Version(start, doubleOut, '').id),
+);
+const cricketIds = [true, false].map((points) => cricketVersion(points, '').id);
 
 export class CatalogRepository {
   constructor(private readonly db: LocalDatabase) {}
@@ -148,9 +153,12 @@ export class CatalogRepository {
     const db = this.db;
     return storageOperation(() =>
       db.transaction('r', [db.games, db.gameVersions], async () => {
-        const query = search.trim()
-          ? db.games.where('name').startsWithIgnoreCase(search.trim())
-          : db.games.orderBy('name');
+        const term = search.trim();
+        const query = ['darts', 'fléchettes', 'flechettes'].includes(term.toLowerCase())
+          ? db.games.where('name').anyOf(['Cricket', 'X01'])
+          : term
+            ? db.games.where('name').startsWithIgnoreCase(term)
+            : db.games.orderBy('name');
         const rows = await query
           .filter(
             (game) =>
@@ -177,15 +185,10 @@ export class CatalogRepository {
                       ? [flip7Version('').id]
                       : game.id === 'skull-king'
                         ? [skullKingVersion('').id]
-                        : game.id === 'darts'
-                          ? [
-                              ...([301, 501] as const).flatMap((start) =>
-                                [true, false].map(
-                                  (doubleOut) => x01Version(start, doubleOut, '').id,
-                                ),
-                              ),
-                              ...[true, false].map((points) => cricketVersion(points, '').id),
-                            ]
+                        : game.id === 'darts' || game.id === 'cricket'
+                          ? game.id === 'cricket'
+                            ? cricketIds
+                            : x01Ids
                           : game.id === '5000-10000'
                             ? ([5000, 10000] as const).flatMap((target) =>
                                 ([500, 0] as const).map(
@@ -206,7 +209,7 @@ export class CatalogRepository {
         return {
           items: items.map((game) => ({
             ...game,
-            versions: versions.filter((version) => version.gameId === game.id),
+            versions: versions.filter((version) => catalogGameId(version) === game.id),
           })),
           hasMore: rows.length > 24,
         };
@@ -238,12 +241,9 @@ export class CatalogRepository {
           selected.gameId === 'yams'
             ? [yamsVersion(true, '').id, yamsVersion(false, '').id]
             : selected.gameId === 'darts'
-              ? [
-                  ...[301, 501].flatMap((start) =>
-                    [true, false].map((doubleOut) => x01Version(start, doubleOut, '').id),
-                  ),
-                  ...[true, false].map((points) => cricketVersion(points, '').id),
-                ]
+              ? catalogGameId(selected) === 'cricket'
+                ? cricketIds
+                : x01Ids
               : undefined;
         const versions = presetIds
           ? (await db.gameVersions.bulkGet(presetIds)).filter(

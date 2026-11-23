@@ -1,21 +1,35 @@
 <script lang="ts">
   import GranBoardControls from './GranBoardControls.svelte';
   import { granBoard } from '../application/granboard/session.svelte';
+  import {
+    playDartsSound,
+    unlockDartsAudio,
+    type DartsOutcome,
+  } from '#lib/application/darts-audio';
   import type { BoardHit } from '#lib/application/granboard/protocol';
+  import {
+    checkoutLight,
+    cricketLight,
+    type LightOutcome,
+  } from '#lib/application/granboard/feedback';
   import EntrySituation from './EntrySituation.svelte';
+  import DartsScoreboard from './DartsScoreboard.svelte';
   import ScorePreview from './ScorePreview.svelte';
   import { entryDraft } from '../application/entry-draft.svelte';
-  import GameRules from './GameRules.svelte';
   import Icon from './Icon.svelte';
   import GameHeader, { type HeaderRenderer } from './GameHeader.svelte';
   import type { MatchRecord } from '#lib/domain/records';
   import { MAX_JOURNAL_EVENTS, type JournalAction, type JournalView } from '#lib/domain/journal';
   import type { LocalDatabase } from '#lib/storage/database';
   import type { MatchJournal } from '#lib/storage/journal';
-  import { createDartsMatchGame } from '#lib/domain/games/darts-match';
-  import { createCricketGame, cricketTargets } from '#lib/domain/games/cricket';
+  import { bestOfLength, createDartsMatchGame } from '#lib/domain/games/darts-match';
+  import {
+    createCricketGame,
+    cricketTargets,
+    cricketTargetStatus,
+  } from '#lib/domain/games/cricket';
   import { x01Checkouts, type CheckoutDart } from '#lib/domain/games/checkouts';
-  import { dartsStats } from '#lib/domain/games/darts-stats';
+  import { dartsScorecard } from '#lib/domain/games/darts-stats';
   import { createX01Game, dartScore } from '#lib/domain/games/darts';
   import { activeTeamPlayer } from '#lib/domain/team-turn';
   import { scoreSlots } from '#lib/domain/score-slots';
@@ -56,29 +70,40 @@
     return game.inspect(series ? series.inspect(state, seriesConfig).legState : state, legConfig);
   }
   const position = $derived(inspectLeg(view.state));
-  function impactOutcome(result: JournalView, next: ReturnType<typeof inspectLeg>) {
+  function impactOutcome(result: JournalView, next: ReturnType<typeof inspectLeg>): DartsOutcome {
     if (result.projection.status === 'finished') return 'win';
+    if (next.status === 'finished') return 'legWin';
     return 'bust' in next && next.bust ? 'bust' : 'hit';
   }
   const progress = $derived(series?.getProgress(view.state, seriesConfig));
+  const seriesLabels = $derived.by(() => {
+    if (!series) return;
+    const { legsToWin, setsToWin, legsFormat, setsFormat } = series.options;
+    return {
+      legs: messages.dartsBoard.legsToWin(
+        legsFormat ? bestOfLength(legsToWin) : legsToWin,
+        legsFormat ?? 'firstTo',
+      ),
+      sets:
+        setsToWin === undefined
+          ? undefined
+          : messages.dartsBoard.setsToWin(
+              setsFormat ? bestOfLength(setsToWin) : setsToWin,
+              setsFormat ?? 'firstTo',
+            ),
+    };
+  });
   const current = $derived(config.ownerIds[position.turn]!);
   const activePlayer = $derived(activeTeamPlayer(match, view.audit, current));
   const checkoutPageSize = 6;
   let checkoutPage = $state(0);
-  const checkouts = $derived(
-    !isCricket
-      ? x01Checkouts(
-          position.totals[current]!,
-          3 - position.dartsUsed,
-          match.rulesSnapshot.definition.doubleOut === true,
-        )
-      : [],
-  );
+  const checkouts = $derived(checkoutRoutes(position, current));
   $effect(() => {
     void position.eventCount;
     checkoutPage = 0;
   });
   function checkoutLabel(dart: CheckoutDart) {
+    if (dart.sector === 0) return messages.dartsBoard.miss;
     return dart.sector === 25
       ? dart.multiplier === 2
         ? messages.darts.innerBull
@@ -91,8 +116,10 @@
       .at(-1),
   );
   const status = $derived(view.projection.status);
-  const stats = $derived(status === 'finished' ? dartsStats(match, view.audit) : []);
-  const statsWithPoints = $derived(!isCricket || match.rulesSnapshot.definition.points === true);
+  const scorecard = $derived(dartsScorecard(match, view.audit));
+  const stats = $derived(status === 'finished' ? scorecard.stats : []);
+  const cricketPoints = $derived(match.rulesSnapshot.definition.points === true);
+  const statsWithPoints = $derived(!isCricket || cricketPoints);
   const statsNumber = $derived(new Intl.NumberFormat(getLocale(), { maximumFractionDigits: 1 }));
   let entryMode = $state<'dart' | 'visit'>('dart');
   let visitTotal = $state(0);
@@ -117,6 +144,7 @@
   let boardVersion = 0;
   let boardMatchId = '';
   let boardOwner = '';
+  let boardPosition: ReturnType<typeof inspectLeg>;
   let boardPlayerName: string | undefined;
   let endingVisit = false;
   let remaining = 0;
@@ -135,25 +163,52 @@
     if (value) entryMode = 'dart';
     if (granBoard.matchId !== match.id) handoff = undefined;
   }
+  function checkoutRoutes(leg: ReturnType<typeof inspectLeg>, ownerId: string) {
+    return !isCricket
+      ? x01Checkouts(
+          leg.totals[ownerId]!,
+          3 - leg.dartsUsed,
+          match.rulesSnapshot.definition.doubleOut === true,
+        )
+      : [];
+  }
+  function boardGuide(leg: ReturnType<typeof inspectLeg>, ownerId: string) {
+    if ('marks' in leg) return cricketLight(leg.marks, ownerId, cricketPoints);
+    const dart = checkoutRoutes(leg, ownerId)[0]?.[0];
+    if (dart) return checkoutLight(dart.sector);
+  }
+  function boardOutcome(
+    hit: BoardHit,
+    outcome: DartsOutcome,
+    leg: ReturnType<typeof inspectLeg>,
+    ownerId: string,
+  ): LightOutcome {
+    if (outcome === 'hit' && hit.sector !== 0 && 'marks' in leg) {
+      const index = cricketTargets.findIndex((sector) => sector === hit.sector);
+      if (!cricketTargetStatus(leg.marks, ownerId, index, cricketPoints)) return 'inactive';
+    }
+    return outcome;
+  }
   function selectBoardVisit(
     ownerId: string,
     version: number,
-    dartsUsed: number,
+    leg: ReturnType<typeof inspectLeg>,
     audit = view.audit,
   ) {
     boardMatchId = match.id;
     boardOwner = ownerId;
+    boardPosition = leg;
     boardPlayerName = activeTeamPlayer(match, audit, ownerId)?.displayName;
     boardVersion = version;
-    remaining = 3 - dartsUsed;
+    remaining = 3 - leg.dartsUsed;
     armed = true;
-    granBoard.signalReady();
+    granBoard.signalReady(boardGuide(leg, ownerId));
   }
   function armBoard() {
     if (!canArm || document.hidden) return;
-    granBoard.enableAudio();
+    unlockDartsAudio();
     handoff = undefined;
-    selectBoardVisit(current, view.projection.lastEventSequence, position.dartsUsed);
+    selectBoardVisit(current, view.projection.lastEventSequence, position);
   }
   const canArm = $derived(
     connected &&
@@ -163,16 +218,54 @@
       status === 'in_progress' &&
       view.projection.lastEventSequence < MAX_JOURNAL_EVENTS,
   );
+  async function startNextLeg() {
+    const starter = progress?.nextStarterId;
+    if (
+      !starter ||
+      selfOnly ||
+      saving ||
+      draining ||
+      status !== 'in_progress' ||
+      view.projection.lastEventSequence >= MAX_JOURNAL_EVENTS
+    )
+      return;
+    const matchId = match.id;
+    const result = await act({ type: 'record', ownerId: starter, values: { nextLeg: 1 } });
+    if (result) armCommittedVisit(result, matchId);
+  }
+  function armCommittedVisit(result: JournalView, matchId: string) {
+    if (
+      result.projection.status !== 'in_progress' ||
+      result.projection.lastEventSequence >= MAX_JOURNAL_EVENTS ||
+      match.id !== matchId ||
+      granBoard.matchId !== matchId ||
+      granBoard.status !== 'connected' ||
+      document.hidden ||
+      series?.getProgress(result.state, seriesConfig).nextStarterId
+    )
+      return;
+    const legConfig = series?.getLegConfig(result.state, seriesConfig) ?? seriesConfig;
+    const next = inspectLeg(result.state, legConfig);
+    selectBoardVisit(
+      legConfig.ownerIds[next.turn]!,
+      result.projection.lastEventSequence,
+      next,
+      result.audit,
+    );
+  }
   function boardNext() {
     if (
       !connected ||
       document.hidden ||
-      prompt ||
+      dialog?.open ||
       status !== 'in_progress' ||
-      progress?.nextStarterId ||
       (saving && !draining)
     )
       return;
+    if (progress?.nextStarterId) {
+      void startNextLeg();
+      return;
+    }
     if (!armed) {
       armBoard();
       return;
@@ -184,6 +277,7 @@
     if (
       !armed ||
       endingVisit ||
+      dialog?.open ||
       status !== 'in_progress' ||
       document.hidden ||
       boardMatchId !== match.id ||
@@ -202,7 +296,7 @@
       while (armed && (pending.length > 0 || endingVisit)) {
         const hit = pending.shift();
         const playerName = boardPlayerName;
-        const feedback = hit ? granBoard.captureFeedback() : undefined;
+        const light = hit ? granBoard.captureLight() : undefined;
         const result = await act(
           { type: 'record', ownerId: boardOwner, values: hit ?? { sector: 0, multiplier: 1 } },
           boardVersion,
@@ -214,7 +308,16 @@
         }
         const legConfig = series?.getLegConfig(result.state, seriesConfig) ?? seriesConfig;
         const next = inspectLeg(result.state, legConfig);
-        if (hit) feedback?.(hit, impactOutcome(result, next));
+        if (hit) {
+          const outcome = impactOutcome(result, next);
+          playDartsSound(hit, outcome);
+          light?.(
+            hit,
+            boardOutcome(hit, outcome, boardPosition, boardOwner),
+            outcome === 'hit' && next.dartsUsed > 0 ? boardGuide(next, boardOwner) : undefined,
+          );
+        }
+        boardPosition = next;
         const version = result.projection.lastEventSequence;
         if (
           result.projection.status !== 'in_progress' ||
@@ -227,7 +330,8 @@
         if (next.dartsUsed === 0) {
           const readyNext = endingVisit;
           disarm();
-          if (readyNext) selectBoardVisit(legConfig.ownerIds[next.turn]!, version, 0, result.audit);
+          if (readyNext)
+            selectBoardVisit(legConfig.ownerIds[next.turn]!, version, next, result.audit);
           else handoff = { ownerId: boardOwner, playerName };
           break;
         }
@@ -254,11 +358,11 @@
     version = view.projection.lastEventSequence,
     fromBoard = false,
   ) {
-    if (!fromBoard) {
+    if (saving) return;
+    if (!fromBoard && action.type !== 'undo') {
       disarm();
       handoff = undefined;
     }
-    if (saving) return;
     saving = true;
     error = '';
     notice = '';
@@ -288,30 +392,51 @@
     }
   }
   function confirm(action: JournalAction) {
-    disarm();
+    if (saving || draining) return;
     prompt = action;
     promptVersion = view.projection.lastEventSequence;
     dialog.showModal();
+  }
+  async function submitConfirmation() {
+    const action = prompt;
+    if (!action || saving) return;
+    const matchId = match.id;
+    const restoreBoard =
+      action.type === 'undo' &&
+      connected &&
+      (armed || Boolean(handoff) || Boolean(progress?.nextStarterId));
+    const result = await act(action, promptVersion);
+    if (!result || action.type !== 'undo' || match.id !== matchId) return;
+    disarm();
+    handoff = undefined;
+    if (restoreBoard) armCommittedVisit(result, matchId);
   }
   async function record(event: SubmitEvent) {
     event.preventDefault();
     if (handoff) return;
     const ownerId = current;
+    const previous = position;
     const playerName = activePlayer?.displayName;
+    unlockDartsAudio();
+    const byVisit = !isCricket && !connected && entryMode === 'visit';
     const hit = { sector, multiplier };
-    const feedback = connected ? granBoard.captureFeedback() : undefined;
+    const soundHit = byVisit ? (visitTotal === 0 ? { sector: 0, multiplier: 1 } : undefined) : hit;
+    const light = connected ? granBoard.captureLight() : undefined;
     const result = await act({
       type: 'record',
       ownerId: current,
-      values:
-        !isCricket && !connected && entryMode === 'visit'
-          ? { total: visitTotal, checkout: needsDouble && doubleFinish ? 1 : 0 }
-          : hit,
+      values: byVisit ? { total: visitTotal, checkout: needsDouble && doubleFinish ? 1 : 0 } : hit,
     });
-    if (result && feedback) {
+    if (result) {
       const legConfig = series?.getLegConfig(result.state, seriesConfig) ?? seriesConfig;
       const next = inspectLeg(result.state, legConfig);
-      feedback(hit, impactOutcome(result, next));
+      const outcome = impactOutcome(result, next);
+      playDartsSound(soundHit, outcome);
+      light?.(
+        hit,
+        boardOutcome(hit, outcome, previous, ownerId),
+        outcome === 'hit' && next.dartsUsed > 0 ? boardGuide(next, ownerId) : undefined,
+      );
       if (
         connected &&
         result.projection.status === 'in_progress' &&
@@ -360,7 +485,7 @@
       >{/if}
     {#if last && status !== 'cancelled'}<button
         class="button secondary"
-        disabled={saving}
+        disabled={saving || draining}
         onclick={() => confirm({ type: 'undo', targetEventId: last!.revisionId })}
         ><Icon name="undo" />{messages.four21.undo}</button
       >{/if}
@@ -392,11 +517,98 @@
   {/if}
 {/snippet}
 
-{#snippet rules()}
-  <GameRules {match} />
+{#snippet seriesSummary()}
+  {#if progress && series && seriesLabels}<section
+      class="legs-summary"
+      aria-labelledby="legs-title"
+    >
+      <h3 id="legs-title">{messages.dartsMatch.title}</h3>
+      <p>
+        {seriesLabels.sets === undefined
+          ? messages.dartsMatch.format(seriesLabels.legs, progress.number)
+          : messages.dartsMatch.setFormat(seriesLabels.sets, progress.setNumber, progress.number)}
+      </p>
+      <p>
+        {series.options.startingRule === 'alternate'
+          ? messages.dartsMatch.alternate
+          : messages.dartsMatch.loser}
+      </p>
+      <ul>
+        {#each seriesConfig.ownerIds as id (id)}<li>
+            {progress.sets
+              ? messages.dartsMatch.setScore(owner(id), progress.sets[id]!, progress.wins[id]!)
+              : messages.dartsMatch.score(owner(id), progress.wins[id]!)}
+          </li>{/each}
+      </ul>
+      {#if progress.setWinnerId}<p role="status">
+          {messages.dartsMatch.setWinner(owner(progress.setWinnerId))}
+        </p>
+      {:else if progress.legWinnerId}<p role="status">
+          {messages.dartsMatch.legWinner(owner(progress.legWinnerId))}
+        </p>{/if}
+      {#if progress.nextStarterId}<p>
+          {messages.dartsMatch.nextStarter(owner(progress.nextStarterId))}
+        </p>
+        {#if status === 'in_progress' && !selfOnly}<button
+            class="button"
+            disabled={saving || view.projection.lastEventSequence >= MAX_JOURNAL_EVENTS}
+            onclick={startNextLeg}
+            ><Icon name="arrow-right" />{progress.setWinnerId
+              ? messages.dartsMatch.nextSet(progress.setNumber + 1)
+              : messages.dartsMatch.nextLeg(progress.number + 1)}</button
+          >{/if}{/if}
+    </section>{/if}
 {/snippet}
 
-<GameHeader renderer={header} {actions} {rules} />
+{#snippet handoffButton()}
+  <button class="button secondary handoff-action" disabled={!canArm} onclick={armBoard}>
+    <Icon name="arrow-right" />{messages.granboard.nextPlayer}
+  </button>
+{/snippet}
+
+{#snippet scoreboard()}
+  {@const moving = handoff?.ownerId ?? current}
+  {@const completed = handoff ? scorecard.sides.get(moving)?.recent.at(-1) : undefined}
+  <DartsScoreboard
+    {match}
+    ownerIds={config.ownerIds}
+    totals={position.totals}
+    active={moving}
+    next={progress?.nextStarterId ??
+      (handoff ? current : config.ownerIds[(position.turn + 1) % config.ownerIds.length])}
+    name={owner}
+    headline={handoff
+      ? messages.granboard.visitComplete(owner(moving))
+      : messages.four21.turn(owner(current))}
+    detail={handoff
+      ? messages.granboard.waitForButton
+      : 'visitStart' in position
+        ? messages.darts.visit(position.dartsUsed + 1, position.visitStart)
+        : messages.cricket.visit(position.dartsUsed + 1)}
+    teamPlayer={displayedPlayer}
+    {scorecard}
+    checkout={!handoff && !progress?.nextStarterId ? checkouts[0] : undefined}
+    darts={completed?.darts ?? scorecard.darts}
+    aggregate={completed?.total}
+    points={statsWithPoints}
+    marks={'marks' in position ? position.marks : undefined}
+    {seriesLabels}
+    legs={progress?.wins}
+    sets={progress?.sets}
+    leg={progress?.number}
+    set={progress?.sets ? progress.setNumber : undefined}
+    {connected}
+    awaiting={Boolean(handoff || progress?.nextStarterId)}
+    label={checkoutLabel}
+    continuation={handoff ? handoffButton : undefined}
+  />
+{/snippet}
+
+<GameHeader
+  renderer={header}
+  {actions}
+  scoreboard={status === 'in_progress' ? scoreboard : undefined}
+/>
 
 <section class="game-play-area stack" aria-labelledby="darts-title">
   <h2 id="darts-title">
@@ -407,73 +619,30 @@
         : messages.darts.title}
   </h2>
 
-  <EntrySituation {status}>
-    <div class="situation-player situation-active">
-      <h3>
-        {handoff
-          ? messages.granboard.visitComplete(owner(handoff.ownerId))
-          : messages.four21.turn(owner(current))}
-      </h3>
-      {#if displayedPlayer}<p role="status">
-          <strong>{messages.generic.activeTeamPlayer(displayedPlayer)}</strong>
-        </p>{/if}
-      <p aria-live="polite">
-        {handoff
-          ? messages.granboard.waitForButton
-          : 'visitStart' in position
-            ? messages.darts.visit(position.dartsUsed + 1, position.visitStart)
-            : messages.cricket.visit(position.dartsUsed + 1)}
-      </p>
-    </div>
-    <div class="situation-phase">
-      {#if progress && series}<section class="legs-summary" aria-labelledby="legs-title">
-          <h3 id="legs-title">{messages.dartsMatch.title}</h3>
-          <p>
-            {series.options.setsToWin === undefined
-              ? messages.dartsMatch.format(series.options.legsToWin, progress.number)
-              : messages.dartsMatch.setFormat(
-                  series.options.setsToWin,
-                  progress.setNumber,
-                  progress.number,
-                )}
-          </p>
-          <p>
-            {series.options.startingRule === 'alternate'
-              ? messages.dartsMatch.alternate
-              : messages.dartsMatch.loser}
-          </p>
-          <ul>
-            {#each seriesConfig.ownerIds as id (id)}<li>
-                {progress.sets
-                  ? messages.dartsMatch.setScore(owner(id), progress.sets[id]!, progress.wins[id]!)
-                  : messages.dartsMatch.score(owner(id), progress.wins[id]!)}
-              </li>{/each}
-          </ul>
-          {#if progress.setWinnerId}<p role="status">
-              {messages.dartsMatch.setWinner(owner(progress.setWinnerId))}
-            </p>
-          {:else if progress.legWinnerId}<p role="status">
-              {messages.dartsMatch.legWinner(owner(progress.legWinnerId))}
-            </p>{/if}
-          {#if progress.nextStarterId}<p>
-              {messages.dartsMatch.nextStarter(owner(progress.nextStarterId))}
-            </p>
-            {#if status === 'in_progress' && !selfOnly}<button
-                class="button"
-                disabled={saving || view.projection.lastEventSequence >= MAX_JOURNAL_EVENTS}
-                onclick={() =>
-                  act({
-                    type: 'record',
-                    ownerId: progress!.nextStarterId!,
-                    values: { nextLeg: 1 },
-                  })}
-                ><Icon name="arrow-right" />{progress.setWinnerId
-                  ? messages.dartsMatch.nextSet(progress.setNumber + 1)
-                  : messages.dartsMatch.nextLeg(progress.number + 1)}</button
-              >{/if}{/if}
-        </section>{/if}
-    </div>
-  </EntrySituation>
+  {#if status === 'in_progress'}
+    {@render seriesSummary()}
+  {:else}<EntrySituation {status}>
+      <div class="situation-player situation-active">
+        <h3>
+          {handoff
+            ? messages.granboard.visitComplete(owner(handoff.ownerId))
+            : messages.four21.turn(owner(current))}
+        </h3>
+        {#if displayedPlayer}<p role="status">
+            <strong>{messages.generic.activeTeamPlayer(displayedPlayer)}</strong>
+          </p>{/if}
+        <p aria-live="polite">
+          {handoff
+            ? messages.granboard.waitForButton
+            : 'visitStart' in position
+              ? messages.darts.visit(position.dartsUsed + 1, position.visitStart)
+              : messages.cricket.visit(position.dartsUsed + 1)}
+        </p>
+      </div>
+      <div class="situation-phase">
+        {@render seriesSummary()}
+      </div>
+    </EntrySituation>{/if}
   {#if stats.length}
     <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
     <div class="grid-scroll" role="region" aria-label={messages.dartsStats.title} tabindex="0">
@@ -537,11 +706,7 @@
       </table>
     </div>{/if}
   {#if 'bust' in position && position.bust}<p role="status">{messages.darts.bust}</p>{/if}
-  {#if status === 'in_progress' && handoff}
-    <button class="button secondary handoff-action" disabled={!canArm} onclick={armBoard}>
-      <Icon name="arrow-right" />{messages.granboard.nextPlayer}
-    </button>
-  {:else if status === 'in_progress' && !progress?.nextStarterId}
+  {#if status === 'in_progress' && !handoff && !progress?.nextStarterId}
     {#if !isCricket}<aside
         class="checkout-panel"
         aria-labelledby="checkouts-title"
@@ -681,6 +846,9 @@
 </section>
 <dialog
   bind:this={dialog}
+  oncancel={(event) => {
+    if (saving) event.preventDefault();
+  }}
   onclose={() => {
     prompt = null;
   }}
@@ -691,7 +859,7 @@
   <div class="button-row">
     <button class="button secondary" disabled={saving} onclick={() => dialog.close()}
       ><Icon name="close" />{messages.players.cancel}</button
-    ><button class="button" disabled={saving} onclick={() => prompt && act(prompt, promptVersion)}
+    ><button class="button" disabled={saving} onclick={submitConfirmation}
       ><Icon name="check" />{messages.petanque.confirm}</button
     >
   </div>

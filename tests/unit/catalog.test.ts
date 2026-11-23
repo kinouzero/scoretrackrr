@@ -71,15 +71,18 @@ describe('local catalog and immutable versions', () => {
     expect(result.versions.map((row) => row.id)).toEqual(['counter-v1', 'counter-v2']);
     expect((await db.games.get(gameId))?.currentVersionId).toBe('counter-v2');
     const darts = await catalog.readSetupVersions('x01-301-double-v1');
-    expect(darts.versions).toHaveLength(6);
-    expect(darts.versions.every((row) => row.gameId === 'darts')).toBe(true);
+    expect(darts.versions).toHaveLength(4);
+    expect(darts.versions.every((row) => row.definition.engine === 'x01')).toBe(true);
+    const cricket = await catalog.readSetupVersions('cricket-points-v1');
+    expect(cricket.versions).toHaveLength(2);
+    expect(cricket.versions.every((row) => row.definition.engine === 'cricket')).toBe(true);
     await expect(catalog.readSetupVersions('missing')).rejects.toMatchObject({
       code: 'missing_reference',
     });
   });
-  it('initializes exactly twenty families and immutable built-in presets without resetting favorites', async () => {
+  it('initializes 21 games and immutable built-in presets without resetting favorites', async () => {
     const { db, catalog } = await setup();
-    expect(await db.games.count()).toBe(20);
+    expect(await db.games.count()).toBe(21);
     expect(await db.gameVersions.count()).toBe(32);
     expect(await db.variants.count()).toBe(4);
     await catalog.setFavorite('petanque', true);

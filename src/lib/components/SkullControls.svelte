@@ -2,7 +2,6 @@
   import { skullCounterLimits, type SkullResultDraft } from '#lib/application/skull-counters';
   import EntrySituation from './EntrySituation.svelte';
   import { entryDraft } from '../application/entry-draft.svelte';
-  import GameRules from './GameRules.svelte';
   import Icon from './Icon.svelte';
   import GameHeader, { type HeaderRenderer } from './GameHeader.svelte';
   import type { MatchRecord } from '#lib/domain/records';
@@ -229,11 +228,7 @@
   {/if}
 {/snippet}
 
-{#snippet rules()}
-  <GameRules {match} />
-{/snippet}
-
-<GameHeader renderer={header} {actions} {rules} />
+<GameHeader renderer={header} {actions} />
 
 <section class="game-play-area stack" aria-labelledby="skull-title">
   <h2 id="skull-title">{header ? messages.matches.scoreEntry : messages.skull.title}</h2>

@@ -408,7 +408,6 @@ export function bindMessages(resolve: Translator) {
         title: 'granboard.title',
         bluetooth: 'granboard.bluetooth',
         relay: 'granboard.relay',
-        code: 'granboard.code',
         connecting: 'granboard.connecting',
         disconnect: 'granboard.disconnect',
         connected: 'granboard.connected',

@@ -9,9 +9,8 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "docker" / "granboard"))
-from relay import COOKIE, LIGHTS, NOTIFY, PREFIX, RelayServer, stream_board
+from relay import COOKIE, COOKIE_PATH, LIGHTS, NOTIFY, PREFIX, RelayServer, stream_board
 
-CODE = "test_code_for_the_fake_board_only"
 LIGHT = bytes([4] * 20)
 DOUBLE_BULL = bytes([0x1F, 0, 220, 0, 0, 60, 255, 0, 220, 0, 2, 0, 20, 2, 0, 1])
 
@@ -37,7 +36,7 @@ class RelayTest(unittest.TestCase):
                     self.light_received.set()
                 await asyncio.sleep(0.01)
 
-        self.server = RelayServer(("127.0.0.1", 0), CODE, simulated_board)
+        self.server = RelayServer(("127.0.0.1", 0), simulated_board)
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
         self.addCleanup(self.server.server_close)
@@ -51,8 +50,8 @@ class RelayTest(unittest.TestCase):
         connection.request(method, PREFIX + route, body, headers or {})
         return connection.getresponse()
 
-    def pair(self, code=CODE, **headers):
-        return self.request("POST", "session", body=json.dumps({"code": code}), headers={
+    def reserve(self, body=b"{}", **headers):
+        return self.request("POST", "session", body=body, headers={
             "Content-Type": "application/json",
             **headers,
         })
@@ -60,15 +59,15 @@ class RelayTest(unittest.TestCase):
     def test_stream_requires_authorization_and_delivers_identical_hits_separately(self):
         status = self.request("GET", "status")
         self.assertEqual(status.status, 200)
-        self.assertEqual(json.load(status), {"protocol": "granboard-v1"})
+        self.assertEqual(json.load(status), {"protocol": "granboard-v2"})
         self.assertEqual(self.request("GET", "events").status, 401)
         self.assertFalse(self.board_requested.is_set())
-        response = self.pair()
+        response = self.reserve()
         self.assertEqual(response.status, 204)
         self.assertFalse(self.board_requested.is_set())
         cookie = response.getheader("Set-Cookie")
         self.assertIn("HttpOnly; Secure; SameSite=Strict", cookie)
-        self.assertIn("Path=" + PREFIX, cookie)
+        self.assertIn("Path=" + COOKIE_PATH, cookie)
         token = cookie.split(";", 1)[0]
         self.assertTrue(token.startswith(COOKIE + "="))
         def light(frame=LIGHT, **headers):
@@ -77,12 +76,15 @@ class RelayTest(unittest.TestCase):
             })
 
         self.assertEqual(light().status, 401)
+        self.assertEqual(self.request("GET", "events", headers={
+            "Cookie": token, "Sec-Fetch-Site": "cross-site",
+        }).status, 403)
         stream = self.request("GET", "events", headers={"Cookie": token})
         self.addCleanup(stream.close)
         self.assertEqual(stream.status, 200)
         self.assertEqual(stream.getheader("Content-Type"), "text/event-stream")
         self.assertEqual(stream.getheader("Cache-Control"), "no-store")
-        self.assertEqual(self.pair().status, 409)
+        self.assertEqual(self.reserve().status, 409)
         self.assertEqual(self.request("GET", "events", headers={"Cookie": token}).status, 409)
         self.assertEqual(stream.readline().strip(), b": connecting")
         self.assertEqual(stream.readline().strip(), b"")
@@ -112,10 +114,15 @@ class RelayTest(unittest.TestCase):
         self.assertEqual(light().status, 401)
         self.assertEqual(self.request("GET", "events", headers={"Cookie": token}).status, 401)
 
-    def test_rejects_cross_site_and_limits_failed_pairing(self):
-        self.assertEqual(self.pair(**{"Sec-Fetch-Site": "cross-site"}).status, 403)
-        self.assertEqual(self.pair(code="wrong").status, 403)
-        self.assertEqual(self.pair().status, 429)
+    def test_rejects_cross_site_and_old_public_session_requests(self):
+        self.assertEqual(self.reserve(**{"Sec-Fetch-Site": "cross-site"}).status, 403)
+        self.assertEqual(self.reserve(body=b'{"code":"unused"}').status, 400)
+        self.assertEqual(self.reserve(body=b"[]").status, 400)
+        old_proxy = http.client.HTTPConnection(*self.server.server_address, timeout=3)
+        self.addCleanup(old_proxy.close)
+        old_proxy.request("POST", COOKIE_PATH + "session", b"{}", {"Content-Type": "application/json"})
+        self.assertEqual(old_proxy.getresponse().status, 404)
+        self.assertFalse(self.board_requested.is_set())
 
 
 class BoardTransportTest(unittest.IsolatedAsyncioTestCase):

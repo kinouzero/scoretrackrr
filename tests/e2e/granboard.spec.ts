@@ -52,9 +52,15 @@ test('explains why GranBoard pairing is unavailable without hiding the section',
 test('explains unavailable Bluetooth or relay support on a secure page', async ({ page }) => {
   await page.addInitScript(() => {
     Object.defineProperty(navigator, 'bluetooth', { value: undefined });
+    const fetch = window.fetch.bind(window);
+    window.fetch = (resource, options) =>
+      resource === '/api/granboard/status'
+        ? Promise.resolve(new Response(null, { status: 403 }))
+        : fetch(resource, options);
   });
   await createMatch(page, '301 · sortie double');
   await expect(page.getByText(/La connexion GranBoard est indisponible ici/)).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Connecter via le relais' })).toHaveCount(0);
   await expect(
     page.getByRole('button', { name: 'Connecter en Bluetooth', exact: true }),
   ).toHaveCount(0);
@@ -165,13 +171,15 @@ test('direct Bluetooth survives a pause and leg change, then closes on cancellat
     window.fetch = (resource, options) => {
       if (resource === '/api/granboard/status') {
         document.documentElement.dataset.relayProbed = 'true';
-        return Promise.resolve(Response.json({ protocol: 'granboard-v1' }));
+        return Promise.resolve(Response.json({ protocol: 'granboard-v2' }));
       }
       return fetch(resource, options);
     };
   });
   await createMatch(page, '301 · sortie double', 'legs');
-  await expect(page.getByLabel('Code de connexion au relais')).toHaveCount(0);
+  await expect(
+    page.getByRole('button', { name: 'Connecter via le relais', exact: true }),
+  ).toHaveCount(0);
   await expect(page.locator('html')).not.toHaveAttribute('data-relay-probed', 'true');
   const emit = (...frames: string[]) =>
     page.evaluate(
@@ -344,11 +352,10 @@ async function mockRelay(page: Page) {
     const fetch = window.fetch.bind(window);
     let streams = 0;
     window.fetch = async (resource, options) => {
-      if (resource === '/api/granboard/status') return Response.json({ protocol: 'granboard-v1' });
+      if (resource === '/api/granboard/status') return Response.json({ protocol: 'granboard-v2' });
       if (resource === '/api/granboard/session') {
         return new Response(null, {
-          status:
-            options?.method === 'POST' && options.body === '{"code":"test-pairing"}' ? 204 : 403,
+          status: options?.method === 'POST' && options.body === '{}' ? 204 : 403,
         });
       }
       if (resource === '/api/granboard/lights') {
@@ -393,7 +400,6 @@ for (const transport of ['Bluetooth', 'relay'] as const) {
     const relay = transport === 'relay';
     await (relay ? mockRelay(page) : mockBluetooth(page));
     await createMatch(page, '301 · sortie double');
-    if (relay) await page.getByLabel('Code de connexion au relais').fill('test-pairing');
     await page
       .getByRole('button', {
         name: relay ? 'Connecter via le relais' : 'Connecter en Bluetooth',
@@ -461,7 +467,8 @@ test('relay advances legs and sets without a new stream or an extra activation',
   await mockRelay(page);
   await createMatch(page, '101 · sortie simple', 'sets');
   await page.clock.install();
-  await page.getByLabel('Code de connexion au relais').fill('test-pairing');
+  await expect(page.locator('input[type="password"]')).toHaveCount(0);
+  await expect(page.locator('html')).not.toHaveAttribute('data-board-streams');
   await page.getByRole('button', { name: 'Connecter via le relais', exact: true }).click();
   await arm(page).click();
   let sequence = 0;
@@ -510,7 +517,6 @@ test('relay restores the connection without replaying hits or rearming the visit
   await expect(
     page.getByRole('button', { name: 'Connecter en Bluetooth', exact: true }),
   ).toHaveCount(0);
-  await page.getByLabel('Code de connexion au relais').fill('test-pairing');
   await page.getByRole('button', { name: 'Connecter via le relais', exact: true }).click();
   await arm(page).click();
   const emit = (sequence: number, frame = '4.0@') =>

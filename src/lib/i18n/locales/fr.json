@@ -473,9 +473,6 @@
   "granboard.relay": {
     "defaultMessage": "Connecter via le relais"
   },
-  "granboard.code": {
-    "defaultMessage": "Code de connexion au relais"
-  },
   "granboard.connecting": {
     "defaultMessage": "Connexion à la cible…"
   },
@@ -504,13 +501,13 @@
     "defaultMessage": "Ouvre Scoretrackrr avec une adresse HTTPS pour connecter une GranBoard."
   },
   "granboard.unavailable": {
-    "defaultMessage": "La connexion GranBoard est indisponible ici. Ouvre Scoretrackrr dans Chrome sur Android pour le Bluetooth direct, ou utilise une instance avec le relais GranBoard."
+    "defaultMessage": "La connexion GranBoard est indisponible ici. Pour utiliser le relais, rejoins le réseau Wi-Fi local. Sur Android, Chrome peut se connecter directement en Bluetooth."
   },
   "granboard.help": {
     "defaultMessage": "Avant de lancer, appuie sur le bouton de la cible ou active la saisie à l’écran. Appuie sur le bouton de la cible pour passer au joueur suivant. Les fléchettes restantes comptent comme des ratés."
   },
   "granboard.failed": {
-    "defaultMessage": "Connexion impossible. Vérifie que la cible est allumée et disponible, ainsi que le code si tu utilises le relais."
+    "defaultMessage": "Connexion impossible. Vérifie que la cible est allumée et disponible. Pour le relais, reste sur le réseau Wi-Fi local."
   },
   "granboard.reconnecting": {
     "defaultMessage": "Connexion à la cible perdue. Reconnexion en cours…"

@@ -4,17 +4,17 @@ const relayPath = '/api/granboard/';
 
 export async function relayAvailable(signal: AbortSignal) {
   const response = await fetch(relayPath + 'status', { signal, cache: 'no-store' });
-  return response.ok && (await response.json()).protocol === 'granboard-v1';
+  return response.ok && (await response.json()).protocol === 'granboard-v2';
 }
 
-export async function connectRelay(code: string, signal: AbortSignal, receiver: BoardReceiver) {
+export async function connectRelay(signal: AbortSignal, receiver: BoardReceiver) {
   const response = await fetch(relayPath + 'session', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ code }),
+    body: '{}',
     signal,
   });
-  if (!response.ok) throw new Error('Relay pairing failed');
+  if (!response.ok) throw new Error('Relay connection failed');
   signal.throwIfAborted();
   const stream = new EventSource(relayPath + 'events');
   signal.addEventListener('abort', () => stream.close(), { once: true });

@@ -9,7 +9,6 @@ services:
     environment:
       DBUS_SYSTEM_BUS_ADDRESS: unix:path=/run/dbus/system_bus_socket
       GRANBOARD_ADDRESS: '${GRANBOARD_ADDRESS:-}'
-      GRANBOARD_PAIRING_CODE: '${GRANBOARD_PAIRING_CODE:-}'
     volumes:
       - type: bind
         source: /run/dbus/system_bus_socket

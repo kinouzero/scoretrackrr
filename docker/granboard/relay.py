@@ -1,4 +1,4 @@
-"""Forward live GranBoard notifications to a single authorized browser."""
+"""Forward live GranBoard notifications to one browser on the allowed network."""
 
 import asyncio
 import hmac
@@ -14,7 +14,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 SERVICE = "442f1570-8a00-9a28-cbe1-e1d4212d53eb"
 NOTIFY = "442f1571-8a00-9a28-cbe1-e1d4212d53eb"
 LIGHTS = "442f1572-8a00-9a28-cbe1-e1d4212d53eb"
-PREFIX = "/api/granboard/"
+PREFIX = "/_granboard_lan/"
+COOKIE_PATH = "/api/granboard/"
 COOKIE = "scoretrackrr_granboard"
 
 
@@ -33,27 +34,19 @@ def valid_light_frame(frame):
 
 
 class Sessions:
-    def __init__(self, code):
-        self.code = code.encode()
+    def __init__(self):
         self.lock = threading.Lock()
         self.pending = None
         self.active = None
         self.lights_enabled = False
         self.light = None
-        self.next_attempt = 0
 
-    def pair(self, code):
+    def reserve(self):
         with self.lock:
-            now = time.monotonic()
-            if now < self.next_attempt:
-                return 429, None
-            if not hmac.compare_digest(code.encode(), self.code):
-                self.next_attempt = now + 1
-                return 403, None
             if self.active:
                 return 409, None
             token = secrets.token_urlsafe(32)
-            self.pending = (token, now + 20)
+            self.pending = (token, time.monotonic() + 20)
             return 204, token
 
     def claim(self, token):
@@ -165,9 +158,9 @@ async def stream_board(address, send, heartbeat, take_light):
 class RelayServer(ThreadingHTTPServer):
     daemon_threads = True
 
-    def __init__(self, address, code, transport):
+    def __init__(self, address, transport):
         super().__init__(address, RelayHandler)
-        self.sessions = Sessions(code)
+        self.sessions = Sessions()
         self.transport = transport
         self.slots = threading.BoundedSemaphore(8)
 
@@ -220,19 +213,15 @@ class RelayHandler(BaseHTTPRequestHandler):
             return
         try:
             size = int(self.headers.get("Content-Length", "0"))
-            if not 1 <= size <= 512 or self.headers.get_content_type() != "application/json":
+            if (size != 2 or self.headers.get_content_type() != "application/json"
+                    or self.rfile.read(size) != b"{}"):
                 raise ValueError
-            payload = json.loads(self.rfile.read(size))
-            code = payload.get("code") if isinstance(payload, dict) else None
-            if not isinstance(code, str) or len(code) > 128:
-                raise ValueError
-            code.encode("ascii")
         except (ValueError, TimeoutError):
             self.respond(400)
             return
-        status, token = self.server.sessions.pair(code)
+        status, token = self.server.sessions.reserve()
         cookie = (
-            f"{COOKIE}={token}; Path={PREFIX}; HttpOnly; Secure; SameSite=Strict"
+            f"{COOKIE}={token}; Path={COOKIE_PATH}; HttpOnly; Secure; SameSite=Strict"
             if token else None
         )
         self.respond(status, cookie=cookie)
@@ -263,10 +252,13 @@ class RelayHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == PREFIX + "status":
-            self.respond(200, b'{"protocol":"granboard-v1"}')
+            self.respond(200, b'{"protocol":"granboard-v2"}')
             return
         if self.path != PREFIX + "events":
             self.respond(404)
+            return
+        if self.headers.get("Sec-Fetch-Site") not in (None, "same-origin"):
+            self.respond(403)
             return
         token = self.session_token()
         if token is None:
@@ -304,14 +296,10 @@ def main():
     address = os.environ.get("GRANBOARD_ADDRESS", "")
     if not re.fullmatch(r"(?:[A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2}", address):
         raise SystemExit("Set GRANBOARD_ADDRESS to the board's Bluetooth address.")
-    code = os.environ.get("GRANBOARD_PAIRING_CODE", "")
-    if not re.fullmatch(r"[A-Za-z0-9_-]{32,128}", code):
-        raise SystemExit("Set GRANBOARD_PAIRING_CODE to a random 32–128 character URL-safe code.")
-
     async def transport(send, heartbeat, take_light):
         await stream_board(address, send, heartbeat, take_light)
 
-    with RelayServer(("0.0.0.0", 8081), code, transport) as server:
+    with RelayServer(("0.0.0.0", 8081), transport) as server:
         server.serve_forever()
 
 

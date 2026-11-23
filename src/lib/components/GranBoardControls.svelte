@@ -31,7 +31,6 @@
   let relay = $state<boolean>();
   let secureContext = $state<boolean>();
   const connectionState = $derived(granBoard.matchId === matchId ? granBoard.status : undefined);
-  let code = $state('');
 
   function disconnect() {
     granBoard.stop(matchId);
@@ -41,13 +40,7 @@
     if (method === 'bluetooth') {
       granBoard.start(matchId, bluetoothConnector(), 60000);
     } else {
-      const pairingCode = code.trim();
-      code = '';
-      granBoard.start(
-        matchId,
-        (signal, receiver) => connectRelay(pairingCode, signal, receiver),
-        20000,
-      );
+      granBoard.start(matchId, connectRelay, 20000);
     }
   }
 
@@ -121,21 +114,9 @@
           <Icon name="bluetooth" />{messages.granboard.bluetooth}
         </button>
       {:else}
-        <form
-          class="relay-form"
-          onsubmit={(event) => {
-            event.preventDefault();
-            start('relay');
-          }}
-        >
-          <label class="game-field">
-            {messages.granboard.code}
-            <input type="password" bind:value={code} required maxlength={128} autocomplete="off" />
-          </label>
-          <button class="button" disabled={!code.trim()}>
-            <Icon name="link" />{messages.granboard.relay}
-          </button>
-        </form>
+        <button type="button" class="button" onclick={() => start('relay')}>
+          <Icon name="link" />{messages.granboard.relay}
+        </button>
       {/if}
     {:else if relay === false}
       <p role="status">{messages.granboard.unavailable}</p>
@@ -195,20 +176,14 @@
   .board-help {
     color: var(--muted-text);
   }
-  .board-actions,
-  .relay-form {
+  .board-actions {
     display: flex;
     flex-wrap: wrap;
     align-items: end;
     gap: var(--space-2);
     inline-size: 100%;
   }
-  .relay-form .game-field {
-    flex: 1 1 12rem;
-    min-inline-size: 0;
-  }
-  .board-actions > button,
-  .relay-form > button {
+  .board-actions > button {
     flex: 1 1 auto;
   }
 </style>

@@ -473,9 +473,6 @@
   "granboard.relay": {
     "defaultMessage": "Connect via relay"
   },
-  "granboard.code": {
-    "defaultMessage": "Relay pairing code"
-  },
   "granboard.connecting": {
     "defaultMessage": "Connecting to the board…"
   },
@@ -504,13 +501,13 @@
     "defaultMessage": "Open Scoretrackrr over HTTPS to connect a GranBoard."
   },
   "granboard.unavailable": {
-    "defaultMessage": "GranBoard connection is unavailable here. Open Scoretrackrr in Chrome on Android for direct Bluetooth, or use an instance with the GranBoard relay."
+    "defaultMessage": "GranBoard connection is unavailable here. Join the local Wi-Fi network to use the relay. Chrome on Android can connect directly via Bluetooth."
   },
   "granboard.help": {
     "defaultMessage": "Press the board button or enable input on screen before throwing. Press the board button to move on. It records remaining darts as misses."
   },
   "granboard.failed": {
-    "defaultMessage": "Could not connect to the board. Check that it is on and available, and verify the relay code if you used one."
+    "defaultMessage": "Could not connect to the board. Check that it is on and available. Stay on the local Wi-Fi network when using the relay."
   },
   "granboard.reconnecting": {
     "defaultMessage": "Board connection lost. Reconnecting…"

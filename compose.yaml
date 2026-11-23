@@ -7,6 +7,8 @@ services:
     restart: unless-stopped
     environment:
       GRANBOARD_HOST: '${GRANBOARD_HOST:-granboard}'
+      GRANBOARD_TRUSTED_PROXY: '${GRANBOARD_TRUSTED_PROXY:-}'
+      GRANBOARD_LAN_CIDR: '${GRANBOARD_LAN_CIDR:-}'
     ports:
       - '${SCORETRACKRR_BIND_ADDRESS:-127.0.0.1}:${SCORETRACKRR_PORT:-8090}:8080'
     read_only: true
